@@ -36,6 +36,7 @@
     "react-native-sqlite-2": "^3.3.0",
     "react-native-unimodules": "^0.13.3",
     "react-native-vector-icons": "^8.1.0",
+    "react-native-webview": "^11.6.4",
     "react-redux": "^7.2.4",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0"
