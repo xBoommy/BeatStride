@@ -7,7 +7,7 @@ const Tab = createBottomTabNavigator();
 
 import ExerciseMain from '../screens/ExerciseScreen/ExerciseMain'
 import MusicMain from '../screens/MusicScreen/MusicMain'
-import CommunityMain from '../screens/CommunityScreen/CommunityMain'
+import SocialMain from '../screens/SocialScreen/SocialMain'
 import ProfileMain from '../screens/ProfileScreen/ProfileMain'
 
 const AppTab = () => {
@@ -50,8 +50,8 @@ const AppTab = () => {
                 component={MusicMain}
             />
             <Tab.Screen
-                name="CommunityMain"
-                component={CommunityMain}
+                name="SocialMain"
+                component={SocialMain}
             />
             <Tab.Screen
                 name="ProfileMain"
