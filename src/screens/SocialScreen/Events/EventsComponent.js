@@ -7,6 +7,11 @@ import Event from './Event'
 
 const {width, height} = Dimensions.get("window")
 
+/* Retrieve events data from database
+    1. insert each event into array 
+    2. sort by date?
+    3. insert array into flatlist*/
+    
 //EXAMPLE DATA
 const events = [
     {
@@ -46,7 +51,9 @@ const events = [
 const EventsComponent = ({navigation}) => {
     return(
         <Screen>
-            <View style={{alignItems: 'center',}}>
+            <View style={{
+                alignItems: 'center',
+            }}>
                 <FlatList
                     data={events}
                     keyExtractor={item => item.id}

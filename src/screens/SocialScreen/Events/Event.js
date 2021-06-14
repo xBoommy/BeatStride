@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Dimensions, Animated, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { View, Dimensions, Animated, Text, TouchableOpacity, TouchableWithoutFeedback, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
 
 import color from '../../../constants/color';
@@ -36,18 +36,8 @@ const Event = (props) => {
         reactive.setValue(- progressWidth + (progressWidth * completed) / target);
     },[completed, progressWidth])
 
-    useEffect(()=>{
-        console.log("=join")
-        console.log(join)
-    },[join])
-    
-    useEffect(()=>{
-        console.log("=popToggle")
-        console.log(popToggle)
-    },[popToggle])
-
     return(
-        <View style={{paddingBottom: 0.01 * height}}>
+        <View style={{paddingBottom: 0.02 * height}}>
             <TouchableWithoutFeedback onPress={() => navigation.navigate("EventInfo", {url: url})}>
                 {/* Event Container */}
                 <View style={{
@@ -59,7 +49,7 @@ const Event = (props) => {
                     justifyContent: 'flex-start',
                     paddingHorizontal: 0.02 * width,
                     paddingTop: 0.02 * height,
-                    elevation: 5,
+                    elevation: 10,
                 }}> 
                     {/* Details Segment  */}
                     <View style={{alignContent: 'flex-start', width: 0.9 *  width, paddingHorizontal: 0.04 * width,}}> 
@@ -89,10 +79,16 @@ const Event = (props) => {
                                     width: 0.25 * width,
                                     justifyContent:'center',
                                     alignItems: 'center',
+                                    elevation: 5,
                                 }}
                                 onPress={() => {
                                     if (join) {
-                                        setJoin(false)
+                                        Alert.alert(
+                                            "Quit Event",
+                                            "Are you sure you want to leave the event?",
+                                            [ { text:"Cancel", onPress: () => {}}, 
+                                            { text:"Confirm", onPress: () => {setJoin(false)}} ]
+                                        )
                                     } else {
                                         setPopToggle(true)
                                     }
@@ -122,7 +118,7 @@ const Event = (props) => {
                     <View style={{position:'absolute', bottom: 0.02 * height,}}>
 
                         {/* Numerical Progress */}
-                        <Text style={{fontWeight: 'bold', fontSize: 0.015 * height,}}>Progress: {completed}/{target}</Text>
+                        <Text style={{fontWeight: 'bold', fontSize: 0.015 * height,}}>Progress: {completed}/{target} km</Text>
 
                         {/* Progress Bar */}
                         <View 
@@ -134,7 +130,7 @@ const Event = (props) => {
                                 height: 0.02 * height,
                                 borderRadius:height,
                                 width: 0.8 *  width,
-                                backgroundColor: color.secondary,
+                                backgroundColor: '#DDDDDD',
                                 overflow: 'hidden',
                         }}>
                             <Animated.View style={{
