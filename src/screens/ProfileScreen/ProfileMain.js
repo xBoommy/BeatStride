@@ -1,11 +1,13 @@
 import React, { } from 'react';
 import { View, Text } from 'react-native';
 
+import Screen from '../../constants/screen';
+
 const ProfileMain = ({navigation}) => {
     return(
-        <View>
+        <Screen>
             <Text>ProfileMain</Text>
-        </View>
+        </Screen>
     );
 };
 
