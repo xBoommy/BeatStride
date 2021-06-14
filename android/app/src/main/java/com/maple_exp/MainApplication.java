@@ -11,7 +11,11 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;import java.util.Arrays;
+import java.util.List;
+import java.util.Arrays;
+
+import com.reactlibrary.RNSpotifyRemotePackage;
+import com.lufinkey.react.eventemitter.RNEventEmitterPackage;
  
 import org.unimodules.adapters.react.ModuleRegistryAdapter;
 import org.unimodules.adapters.react.ReactModuleRegistryProvider;
@@ -38,11 +42,16 @@ public class MainApplication extends Application implements ReactApplication {
 
           // packages.add( new VectorIconsPackage());
 
+          //Add Spotify SDK
+          packages.add(new RNEventEmitterPackage());
+  	      //packages.add(new RNSpotifyRemotePackage());
+
           // Add unimodules
           List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
             new ModuleRegistryAdapter(mModuleRegistryProvider)
           );
           packages.addAll(unimodules);
+          
           return packages;
         }
 

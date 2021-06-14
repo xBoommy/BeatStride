@@ -209,6 +209,10 @@ dependencies {
     //Vector Icons
     compile project(':react-native-vector-icons')
 
+    //Spotify
+    implementation project(':react-native-spotify-remote')
+    implementation project(':react-native-events')
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }
