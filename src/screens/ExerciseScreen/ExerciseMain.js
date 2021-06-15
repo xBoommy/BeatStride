@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, Image, Animated } from 'react-native';
+import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native';
 
 import * as LocationLib from '../../api/LocationPermissions';
+
+import textStyle from '../../constants/textStyle';
 
 import TempoRun from './MainTabs/TempoRun';
 import BasicRun from './MainTabs/BasicRun';
@@ -45,15 +47,75 @@ const ExerciseMain = ({navigation}) => {
 
     
     /*  */
-    const scrollX = useRef(new Animated.Value(0)).current;
+    const [scrollRef , setScrollRef] = useState(null)
+    const scrollHandler = (num) => {
+        scrollRef.scrollTo({
+            x: width * num,
+            animated: true
+        })
+    }
 
     return (
         <SafeAreaView style={styles.screenStyle}>
             <View style={styles.headerContainer}>
                 <Text style={styles.headerText}>Exercise</Text>
             </View>
+
+                {/* Component Navigation */}
+                <View style={{
+                    flexDirection: 'row', 
+                    // backgroundColor:'pink', 
+                    justifyContent:'space-around',
+                    width: 0.7 * width,
+                    paddingTop: 0.01 * height,
+                }}
+                >
+                    <TouchableOpacity onPress={() => scrollHandler(0)}>
+                        <Text style={textStyle.subHeader}>Individual</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => scrollHandler(1)}>
+                        <Text style={textStyle.subHeader}>Community</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => scrollHandler(2)}>
+                        <Text style={textStyle.subHeader}>Events</Text>
+                    </TouchableOpacity>
+                </View>
+                {/* Navigation Indicator */}
+                <View style={{
+                    flexDirection: 'row', 
+                    // backgroundColor:'pink', 
+                    justifyContent:'space-around',
+                    width: 0.7 * width,
+                    paddingBottom: 0.01 * height,
+                }}
+                >
+                    <View style={{
+                        width: 0.185 * width,
+                        height:0.005 * height,
+                        backgroundColor: (scrollRef == "Individual") ? color.primary : 'transparent',
+                        borderRadius: 0.005 * height,
+                    }}/>
+
+                    <View style={{
+                        width: 0.22 * width,
+                        height:0.005 * height,
+                        backgroundColor: (scrollRef == "Community") ? color.primary : 'transparent',
+                        borderRadius: 0.005 * height,
+                    }}/>
+
+                    <View style={{
+                        width: 0.12 * width,
+                        height:0.005 * height,
+                        backgroundColor: (scrollRef == "Events") ? color.primary : 'transparent',
+                        borderRadius: 0.005 * height,
+                    }}/>
+                    
+                </View>
             
             <Animated.ScrollView 
+                ref={(ref) => setScrollRef(ref)}
                 horizontal 
                 pagingEnabled={true}
                 snapToInterval={width} 
@@ -62,15 +124,11 @@ const ExerciseMain = ({navigation}) => {
                 bounces={false}
                 overScrollMode='never'
                 disableIntervalMomentum={true}
-                onScroll={Animated.event(
-                    [{nativeEvent: {contentOffset: {x: scrollX}}}],
-                    {useNativeDriver: false}
-                    )}
                 style={styles.mainComponentContainer}>
                 
                 {/* Run components */}
                 <View  style={styles.componentContainer}>
-                    {/* <TempoRun/> */}
+                    <TempoRun/>
                     <BasicRun/>
                     <RunHistory/>
                 </View>

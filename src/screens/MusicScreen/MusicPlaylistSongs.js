@@ -80,7 +80,7 @@ const MusicPlaylistSongs = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    // backgroundColor: 'black',
   },
   innerContainer: {
     height: 0.7 * Dimensions.get('window').height,
