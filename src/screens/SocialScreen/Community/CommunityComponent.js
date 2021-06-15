@@ -71,8 +71,11 @@ const user_data = {
         name: "James",
         id: "userID_1",
         region: "North",
+        age: 18,
+        gender: "Male",
         total_distance: 27,
         total_runs: 3,
+        image: require('../../../assets/icons/defaultprofile.png'),
     }
 }
 

@@ -9,8 +9,8 @@ import EventInfo from '../screens/SocialScreen/Events/EventInfo';
 
 import Loading from '../screens/LoadingScreen';
 import Login from '../screens/OnBoardingScreen/LoginScreen';
-import Register1 from '../screens/OnBoardingScreen/Register/RegisterOne';
-import Register2 from '../screens/OnBoardingScreen/Register/RegisterTwo';
+import RegisterOne from '../screens/OnBoardingScreen/Register/RegisterOne';
+import RegisterTwo from '../screens/OnBoardingScreen/Register/RegisterTwo';
 import Guide from '../screens/OnBoardingScreen/GuideScreen/Guide';
 
 const Stack = createStackNavigator();
@@ -30,7 +30,6 @@ const AppStack = () => {
                 key="MusicPlaylistSongs"
                 name="MusicPlaylistSongs"
                 component={MusicPlaylistSongs}
-                options={{headerShown: false}}
             />
             <Stack.Screen
                 key="EventInfo"
@@ -47,16 +46,16 @@ const AppStack = () => {
 
             />
             <Stack.Screen
-                key="Register1"
-                name="Register1"
-                component={Register1}
+                key="RegisterOne"
+                name="RegisterOne"
+                component={RegisterOne}
                 options={{headerShown: false}}
 
             />
             <Stack.Screen
-                key="Register2"
-                name="Register2"
-                component={Register2}
+                key="RegisterTwo"
+                name="RegisterTwo"
+                component={RegisterTwo}
                 options={{headerShown: false}}
 
             />

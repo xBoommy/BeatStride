@@ -1,6 +1,8 @@
 import React from 'react';
 import {SafeAreaView, TouchableOpacity, StyleSheet, Text, Image, Dimensions} from 'react-native';
 
+const {width, height} = Dimensions.get('window');
+
 const ControlPanel = props => {
 
     //Constant props
@@ -16,10 +18,10 @@ const ControlPanel = props => {
       <SafeAreaView style={styles.container}>
         <SafeAreaView style={styles.currentPlayingContainer}>
           {currentlyPlaying && (
-            <SafeAreaView style={{flexDirection: 'row'}}>
-                <Image style={{width: 50, height: 50}} source={{uri: currentlyPlaying.imageUri}} />
-                <SafeAreaView>
-                    <Text>{currentlyPlaying.title}</Text>
+            <SafeAreaView style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <Image style={{width: 50, height: 50, borderRadius: 5, marginHorizontal: 5}} source={{uri: currentlyPlaying.imageUri}} />
+                <SafeAreaView style={{width: 0.5 * width}}>
+                    <Text numberOfLines={1}>{currentlyPlaying.title}</Text>
                     {currentlyPlaying.artist !== 'undefined' && <Text>{currentlyPlaying.artist}</Text>}
                 </SafeAreaView>
             </SafeAreaView>
@@ -69,9 +71,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     currentPlayingContainer: {
-        //alignItems: 'center',
         justifyContent: 'center',
-        width: '65%',
+        width: 0.65 * width,
     },
     controlContainer: {
         flexDirection: 'row',

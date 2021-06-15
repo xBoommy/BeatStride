@@ -2,14 +2,15 @@ import React from 'react';
 import {SafeAreaView, StyleSheet, Image, Text, Dimensions} from 'react-native';
 import { Card } from 'react-native-elements';
 
+const {width, height} = Dimensions.get('window');
+
 const PlaylistItem = props => {
   return (
     <Card containerStyle={styles.container}>
       <SafeAreaView style={styles.innerContainer}>
-        <Image style={styles.SafeAreaViewImage} source={{uri: props.item.imageUri}} />
-        <SafeAreaView>
-          <Text style={styles.SafeAreaViewTitle}>{props.item.title}</Text>
-          {props.item.artist !== 'undefined' && <Text>By: {props.item.artist}</Text>}
+        <Image style={styles.image} source={{uri: props.item.imageUri}} />
+        <SafeAreaView style={{width: 0.41 * width}}>
+          <Text numberOfLines={1} style={styles.title}>{props.item.title}</Text>
         </SafeAreaView>
       </SafeAreaView>
     </Card>
@@ -19,18 +20,24 @@ const PlaylistItem = props => {
 const styles = StyleSheet.create({
   container:{
     borderRadius: 15,
-    width: 0.86 * Dimensions.get('window').width,
+    width: 0.43 * width,
   },
   innerContainer: {
-    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  SafeAreaViewImage: {
-    height: 100,
-    width: 100,
+  image: {
+    height: 0.15 * height,
+    width: 0.15 * height,
+    borderRadius: 0.015 * height,
   },
-  SafeAreaViewTitle: {
-    //textAlign: 'center',
+  title: {
+    fontSize: 0.03 * height,
+    //fontWeight: '800',
   },
+  text:{
+    
+  }
 });
 
 export default PlaylistItem;

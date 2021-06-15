@@ -30,10 +30,10 @@ export default async ({offset, limit, q}) => {
       return [];
   }
 
-  //console.log(items);
-  //console.log(items[0]);
-  // console.log(items[0].id);
-  // console.log(items[0].uri);
+  console.log(items);
+  console.log(items[0]);
+  console.log(items[0].id);
+  console.log(items[0].uri);
 
   //Searches playlists
   return items.map(item => ({

@@ -3,6 +3,7 @@ import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, Image, B
 
 import MusicPlayer from './MusicPlayer';
 import TrackItem from './components/TrackItem';
+import * as Spotify from './components/spotify_player_controls';
 
 const MusicPlaylistSongs = props => {
     const tracks = props.route.params?.tracks ?? [];
@@ -18,43 +19,29 @@ const MusicPlaylistSongs = props => {
           //Spotify.pause();
         }
     });
-    const playAll = () => {
-        // try {
-        //     Spotify.playDirect(playlistUri);
-        setIsPlaying(true);
-        setCurrentlyPlaying(tracks[0]);
-        setCurrentIndex(0);
-        // } catch (e) {
-        //     console.error('Error in playAll in ListOfTracks: ', e);
-        // }
+    const updatePlaying = async () => {
+      const track = await Spotify.currentPlayingTrack();
+      if (track === undefined) {
+        updatePlaying();
+      } else {
+        setCurrentlyPlaying(track);
+      }
     };
-
-    const playHandler = () => {
-      setCurrentlyPlaying(tracks[currentIndex]);
-      setIsPlaying(true);
-    }
-    const nextHandler = () => {
-      if (currentIndex === tracks.length - 1) {
-        setCurrentIndex(0);
-        setCurrentlyPlaying(tracks[0]);
-        setIsPlaying(true);
-      } else {
-        setCurrentIndex(currentIndex + 1);
-        setCurrentlyPlaying(tracks[currentIndex + 1]);
-        setIsPlaying(true);
-      }
-    }
-    const previousHandler = () => {
-      if (currentIndex === 0) {
-        setCurrentIndex(tracks.length - 1);
-        setCurrentlyPlaying(tracks[tracks.length - 1]);
-        setIsPlaying(true);
-      } else {
-        setCurrentIndex(currentIndex - 1);
-        setCurrentlyPlaying(tracks[currentIndex - 1]);
-        setIsPlaying(true);
-      }
-    }
+    useEffect(() => {
+        if (isPlaying) {
+          updatePlaying();
+        }
+    });
+    const playAll = () => {
+        try {
+          Spotify.playDirect(playlistUri);
+          setIsPlaying(true);
+          setCurrentlyPlaying(tracks[0]);
+          setCurrentIndex(0);
+        } catch (e) {
+          console.error('Error in playAll in ListOfTracks: ', e);
+        }
+    };
 
     return (
       <SafeAreaView style={styles.container}>
@@ -86,10 +73,6 @@ const MusicPlaylistSongs = props => {
           currentlyPlaying={currentlyPlaying}
           setCurrentlyPlaying={setCurrentlyPlaying}
           defaultUri={playlistUri}
-
-          play={playHandler}
-          next={nextHandler}
-          previous={previousHandler}
         />
       </SafeAreaView>
     );
@@ -104,7 +87,7 @@ const styles = StyleSheet.create({
     height: 0.7 * Dimensions.get('window').height,
   },
   buttonTab: {
-    height: 0.15 * Dimensions.get('window').height,
+    height: 0.08 * Dimensions.get('window').height,
     width: Dimensions.get('window').width,
     justifyContent: 'center',
     alignItems: 'center',

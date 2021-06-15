@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, Image, Animated } from 'react-native';
 
 import Controller from './components/ControlPanel';
-//import * as Spotify from '../../../api/spotify/spotify_player_controls';
+import * as Spotify from './components/spotify_player_controls';
 
 
 const SpotifyPlayer = props => {
@@ -10,36 +10,22 @@ const SpotifyPlayer = props => {
     const {isPlaying, setIsPlaying, currentlyPlaying, setCurrentlyPlaying} = props;
     const playlistUri = props.defaultUri;
 
-    // const updatePlaying = async () => {
-    //   const track = await Spotify.currentPlayingTrack();
-    //   if (track === undefined) {
-    //     updatePlaying();
-    //   } else {
-    //     setCurrentlyPlaying(track);
-    //   }
-    // };
-    // useEffect(() => {
-    //     if (isPlaying) {
-    //       updatePlaying();
-    //     }
-    // });
-
     //common methods
-    const playHandler = () => {
-      //await Spotify.play(playlistUri);
-      props.play();
+    const playHandler = async () => {
+      await Spotify.play(playlistUri);
+      setIsPlaying(true);
     };
     const pauseHandler = () => {
       setIsPlaying(false);
-      //Spotify.pause();
+      Spotify.pause();
     };
-    const previousHandler = () => {
-      //await Spotify.previous();
-      props.previous();
+    const previousHandler = async () => {
+      await Spotify.previous();
+      setIsPlaying(true);
     };
-    const nextHandler = () => {
-      //await Spotify.next();
-      props.next();
+    const nextHandler = async () => {
+      await Spotify.next();
+      setIsPlaying(true);
     };
     return (
         <View style={styles.container}>

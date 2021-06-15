@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, Image, Button, TouchableOpacity, FlatList } from 'react-native';
+import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, Image, Button, TouchableWithoutFeedback, FlatList } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import * as playlistActions from '../../../SpotifyStore/playlist-actions';
@@ -7,6 +7,7 @@ import PlaylistItem from './components/PlaylistItem';
 import MusicPlayer from './MusicPlayer';
 import MusicPlaylistSearch from './MusicPlaylistSearch';
 import Tracks_Getter from '../../api/spotify/spotify_tracks_getter';
+import * as Spotify from './components/spotify_player_controls';
 
 import Screen from '../../constants/screen';
 import textStyle from '../../constants/textStyle';
@@ -34,15 +35,26 @@ const MusicMain = ({navigation}) => {
     //For SpotifyPlayer
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentlyPlaying, setCurrentlyPlaying] = useState();
-    const playNextAndPrevHandler = () => {
-      setIsPlaying(true);
-    }
-    // navigation.addListener('beforeRemove', () => {
-    //   if (isPlaying) {
-    //     setIsPlaying(false);
-    //     //Spotify.pause();
-    //   }
-    // });
+
+    navigation.addListener('beforeRemove', () => {
+      if (isPlaying) {
+        setIsPlaying(false);
+        //Spotify.pause();
+      }
+    });
+    const updatePlaying = async () => {
+      const track = await Spotify.currentPlayingTrack();
+      if (track === undefined) {
+        updatePlaying();
+      } else {
+        setCurrentlyPlaying(track);
+      }
+    };
+    useEffect(() => {
+        if (isPlaying) {
+          updatePlaying();
+        }
+    });
 
 
     return (
@@ -63,13 +75,14 @@ const MusicMain = ({navigation}) => {
               top: 0.01 * height,
             }}>
             <FlatList
+              numColumns={2}
               data={playlists}
               renderItem={({item}) => {
                 return (
-                  <TouchableOpacity
+                  <TouchableWithoutFeedback
                     onPress={() => getPlaylistDetails(item.playlistUri)}>
                     <PlaylistItem item={item} />
-                  </TouchableOpacity>
+                  </TouchableWithoutFeedback>
                 );
               }}
               keyExtractor={item => item.id}
@@ -90,10 +103,6 @@ const MusicMain = ({navigation}) => {
               currentlyPlaying={currentlyPlaying}
               setCurrentlyPlaying={setCurrentlyPlaying}
               defaultUri={selectedPlaylistUri}
-
-              play={playNextAndPrevHandler}
-              next={playNextAndPrevHandler}
-              previous={playNextAndPrevHandler}
             />
           </View>
 

@@ -93,7 +93,10 @@ const RegisterTwo = ({navigation, route}) => {
                     setValue={setGender}
                     list={genderList}
                     visible={showGenderDropDown}
-                    showDropDown={() => setShowGenderDropDown(true)}
+                    showDropDown={() => {
+                        setShowGenderDropDown(true);
+                        Keyboard.dismiss();
+                    }}
                     onDismiss={() => setShowGenderDropDown(false)}
                     dropDownStyle={{marginTop: 0.05 * height}}
                     blurOnSubmit={false}
@@ -115,7 +118,10 @@ const RegisterTwo = ({navigation, route}) => {
                     setValue={setRegion}
                     list={RegionList}
                     visible={showRegionDropDown}
-                    showDropDown={() => setShowRegionDropDown(true)}
+                    showDropDown={() => {
+                        setShowRegionDropDown(true);
+                        Keyboard.dismiss();
+                    }}
                     onDismiss={() => setShowRegionDropDown(false)}
                     dropDownStyle={{marginTop: 0.05 * height}}
                     inputProps={{
