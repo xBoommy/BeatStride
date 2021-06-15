@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
+import * as Paper from "react-native-paper";
 
 import AppStack from './src/navigation/AppStack'
 import AppTab from './src/navigation/AppTab'
@@ -28,9 +29,11 @@ const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <AppStack />
-      </NavigationContainer>
+      <Paper.Provider>
+        <NavigationContainer>
+          <AppStack />
+        </NavigationContainer>
+      </Paper.Provider>
     </Provider>
   );
 };

@@ -7,10 +7,10 @@ import AppTab from './AppTab';
 import MusicPlaylistSongs from '../screens/MusicScreen/MusicPlaylistSongs';
 import EventInfo from '../screens/SocialScreen/Events/EventInfo';
 
-//Test
-import LoginScreen from '../screens/LoginScreen';
-import RegisterOne from '../screens/RegisterOne';
-import RegisterTwo from '../screens/RegisterTwo';
+import Loading from '../screens/LoadingScreen';
+import Login from '../screens/OnBoardingScreen/LoginScreen';
+import Register1 from '../screens/OnBoardingScreen/Register/RegisterOne';
+import Register2 from '../screens/OnBoardingScreen/Register/RegisterTwo';
 import Guide from '../screens/OnBoardingScreen/GuideScreen/Guide';
 
 const Stack = createStackNavigator();
@@ -18,7 +18,7 @@ const Stack = createStackNavigator();
 const AppStack = () => {
     return(
         <Stack.Navigator
-            initialRouteName="Guide"
+            initialRouteName="Loading"
         >
             <Stack.Screen
                 key="AppTab"
@@ -40,24 +40,24 @@ const AppStack = () => {
 
             />
             <Stack.Screen
-                key="LoginScreen"
-                name="LoginScreen"
-                component={LoginScreen}
-                options={{title: "Login"}}
+                key="Login"
+                name="Login"
+                component={Login}
+                options={{headerShown: false}}
 
             />
             <Stack.Screen
-                key="RegisterOne"
-                name="RegisterOne"
-                component={RegisterOne}
-                options={{title: "Registering"}}
+                key="Register1"
+                name="Register1"
+                component={Register1}
+                options={{headerShown: false}}
 
             />
             <Stack.Screen
-                key="RegisterTwo"
-                name="RegisterTwo"
-                component={RegisterTwo}
-                options={{title: "Registering"}}
+                key="Register2"
+                name="Register2"
+                component={Register2}
+                options={{headerShown: false}}
 
             />
             <Stack.Screen
@@ -65,7 +65,12 @@ const AppStack = () => {
                 name="Guide"
                 component={Guide}
                 options={{headerShown: false}}
-
+            />
+            <Stack.Screen
+                key="Loading"
+                name="Loading"
+                component={Loading}
+                options={{headerShown: false}}
             />
         </Stack.Navigator>
     )

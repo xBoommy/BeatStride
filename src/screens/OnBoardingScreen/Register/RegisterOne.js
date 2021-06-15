@@ -3,8 +3,10 @@ import {  SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable, Keyboard 
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 
-import * as Authentication from "../api/auth";
-import Screen from '../constants/screen';
+import * as Authentication from "../../../api/auth";
+
+import Screen from '../../../constants/screen';
+import color from '../../../constants/color';
 
 const RegisterOne = ({navigation}) => {
     const [username, setUsername] = useState("");
@@ -24,7 +26,7 @@ const RegisterOne = ({navigation}) => {
           (user) => {
             navigation.dispatch(CommonActions.reset({ 
                 index: 0, 
-                routes: [{ name: "AppTab" }]
+                routes: [{ name: "RegisterTwo" }]
             }))
           },
           (error) => {
@@ -54,8 +56,8 @@ const RegisterOne = ({navigation}) => {
                 returnKeyType="next"
                 onSubmitEditing={() => emailTextInput.current.focus()}
                 blurOnSubmit={false}
-                left={<TextInput.Icon name="account" color={username ? "#e32f45" : "#748c94"} />}
-                theme={{ colors: { primary: "#e32f45",underlineColor:'transparent',}}}
+                left={<TextInput.Icon name="account" color={username ? color.primary : color.secondary} />}
+                theme={{ colors: { primary: color.primary, underlineColor:'transparent',}}}
             />
 
             <TextInput
@@ -71,8 +73,8 @@ const RegisterOne = ({navigation}) => {
                 returnKeyType="next"
                 onSubmitEditing={() => passwordTextInput.current.focus()}
                 blurOnSubmit={false}
-                left={<TextInput.Icon name="at" color={email ? "#e32f45" : "#748c94"} />}
-                theme={{ colors: { primary: "#e32f45",underlineColor:'transparent',}}}
+                left={<TextInput.Icon name="at" color={email ? color.primary : color.secondary} />}
+                theme={{ colors: { primary: color.primary, underlineColor:'transparent',}}}
             />
 
             <TextInput
@@ -83,24 +85,26 @@ const RegisterOne = ({navigation}) => {
                 placeholder="Minimum 6 characters"
                 value={password}
                 onChangeText={setPassword}
-                left={<TextInput.Icon name="form-textbox-password" color={password ? "#e32f45" : "#748c94"} />}
+                left={<TextInput.Icon name="form-textbox-password" color={password ? color.primary : color.secondary} />}
                 secureTextEntry={!isPasswordVisible}
                 autoCapitalize="none"
                 right={<TextInput.Icon name={isPasswordVisible ? "eye-off" : "eye"} onPress={() => setIsPasswordVisible((state) => !state)} />}
-                theme={{ colors: { primary: "#e32f45",underlineColor:'transparent',}}}
+                theme={{ colors: { primary: color.primary, underlineColor:'transparent',}}}
             />
 
             <Button
                 mode="contained"
                 style={{ marginTop: 20, borderRadius: 10 }}
                 contentStyle={{ paddingVertical: 5 }}
-                onPress={goToRegisterTwo}
+                onPress={handleRegister}
                 loading={isRegisterLoading}
                 disabled={isRegisterLoading}
-                theme={{ colors: { primary: "#e32f45",underlineColor:'transparent',}}}
-            >Next</Button>
+                theme={{ colors: { primary: color.primary, underlineColor:'transparent',}}}
+            >
+                <Text style={{color: '#FFFFFF'}}>Create Account</Text>
+            </Button>
 
-            <Text style={{ color: "#748c94", paddingHorizontal: 10, paddingTop: 10 }}>
+            <Text style={{ color: color.secondary, paddingHorizontal: 10, paddingTop: 10 }}>
                 By proceeding and tapping on Create Account, you agree to Simplist's Terms of Service and Privacy Policy.
             </Text>
 
@@ -122,7 +126,7 @@ const RegisterOne = ({navigation}) => {
                 contentStyle={{ paddingVertical: 5 }}
                 onPress={() => navigation.goBack()}
                 icon="arrow-left"
-                theme={{ colors: { primary: "#e32f45",underlineColor:'transparent',}}}
+                theme={{ colors: { primary: color.primary, underlineColor:'transparent',}}}
             >Log in instead</Button>
         </Screen>
     )

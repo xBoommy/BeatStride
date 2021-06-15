@@ -6,7 +6,7 @@ import textStyle from '../../../constants/textStyle';
 
 
 /*
-top: position & total distance
+top: position & total distance, total runs
 
 List of ranking in region vs global ()drop down list select:
     in list only position and user id 
