@@ -12,6 +12,8 @@ import Login from '../screens/OnBoardingScreen/LoginScreen';
 import RegisterOne from '../screens/OnBoardingScreen/Register/RegisterOne';
 import RegisterTwo from '../screens/OnBoardingScreen/Register/RegisterTwo';
 import Guide from '../screens/OnBoardingScreen/GuideScreen/Guide';
+import RunningMain from  '../screens/ExerciseScreen/RunningComponents/RunningMain';
+import EndRun from '../screens/ExerciseScreen/RunningComponents/EndRun';
 
 const Stack = createStackNavigator();
 
@@ -69,6 +71,18 @@ const AppStack = () => {
                 key="Loading"
                 name="Loading"
                 component={Loading}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen
+                key="RunningMain"
+                name="RunningMain"
+                component={RunningMain}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen
+                key="EndRun"
+                name="EndRun"
+                component={EndRun}
                 options={{headerShown: false}}
             />
         </Stack.Navigator>
