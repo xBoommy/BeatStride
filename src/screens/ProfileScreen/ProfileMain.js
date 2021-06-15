@@ -38,7 +38,7 @@ const ProfileMain = ({navigation}) => {
 
   const [isLogoutLoading, setIsLogoutLoading] = useState(false);
 
-  const [uid, setUid] = useState(Authentication.getCurrentUserId);
+  const [uid, setUid] = useState(Authentication.getCurrentUserId())
 
   const handleLogout = () => {
     setIsLogoutLoading(true);
@@ -55,6 +55,7 @@ const ProfileMain = ({navigation}) => {
     return (
       <Screen>
         <Text style={textStyle.header}>Profile</Text>
+        <Text>{uid}</Text>
         <ScrollView style={styles.container}>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <ProfilePicture image={user_data.profile.image} />

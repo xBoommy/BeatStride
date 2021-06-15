@@ -13,9 +13,10 @@ const RunHistory = () => {
     useEffect(() => {
         Firestore.db_historyView(
             (historyList) => { setHistory(historyList)},
-            (error) => {console.log('this')}
+            (error) => {console.log('history view fail')}
         )
-    },[])
+    })
+
     return (
         <View style={ExerciseComponentStyles.containerBuffer}>
             <View style={ExerciseComponentStyles.componentContainer}>

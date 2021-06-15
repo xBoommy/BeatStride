@@ -1,10 +1,8 @@
 import firebase from "./firebase";
 import * as Authentication from "./auth";
 
-const auth = firebase.auth();
-const user_id = "heNM4FLpPidT0lmUu4J1ZyFfG5W2"
+// const auth = firebase.auth();
 const db = firebase.firestore();
-
 
 const db_createAccount1 = (credentials, onSuccess, onError) => {
     try {
@@ -49,15 +47,16 @@ export const db_createAccount = (credentials, onSuccess, onError) => {
 
 //Works
 const db_updateUserHistory = ( record ) => {
+    const user_id = Authentication.getCurrentUserId()
     try {
         db.collection("users").doc(user_id).collection("history").add(record);
-        console.log(user_id)
     } catch (error) {
         console.log("Fail history record")
     }
 }
 //Works
 const db_updateUserTotalDistance = ( record ) => {
+    const user_id = Authentication.getCurrentUserId()
     try {
         db.collection("users").doc(user_id).update({totalDistance: firebase.firestore.FieldValue.increment(record.distance)})
     } catch (error) {
@@ -66,6 +65,7 @@ const db_updateUserTotalDistance = ( record ) => {
 }
 //Works
 const db_updateUserRunCount = () => {
+    const user_id = Authentication.getCurrentUserId()
     try {
         db.collection("users").doc(user_id).update({runCount: firebase.firestore.FieldValue.increment(1)})   
     } catch (error) {
@@ -167,6 +167,7 @@ export const db_recordRun = (record, onSuccess, onError) => {
  * @returns {array} historyList => list of run records in history
  */
 export const db_historyView = (onSuccess, onError) => {
+    const user_id = Authentication.getCurrentUserId()
     try {
         db.collection("users").doc(user_id)
         .collection("history")
