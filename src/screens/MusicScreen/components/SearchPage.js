@@ -14,7 +14,7 @@ import {useDispatch} from 'react-redux';
 import PlaylistItem from './PlaylistItem';
 
 //TBC later
-import Spotify_Search from '../../../../spotify/api/spotify_search';
+import Spotify_Search from '../../../api/spotify/spotify_search';
 import * as playlistActions from '../../../../SpotifyStore/playlist-actions';
 
 const SearchPage = props => {

@@ -1,11 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {  Dimensions, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, View, Image, Button, Modal, TouchableOpacity } from 'react-native';
+import {  Dimensions, KeyboardAvoidingView, StyleSheet, View, Modal, TouchableOpacity } from 'react-native';
 
-//Search page
 import SearchPage from './components/SearchPage';
 
-
-//Throw bottom sheet content here
 const MusicPlaylistSearch = (props) => {
     const popToggle = props.popToggle;
     const setPopToggle = props.setPopToggle;

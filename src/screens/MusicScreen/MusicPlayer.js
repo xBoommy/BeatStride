@@ -25,21 +25,21 @@ const SpotifyPlayer = props => {
     // });
 
     //common methods
-    const playHandler = async () => {
+    const playHandler = () => {
       //await Spotify.play(playlistUri);
-      setIsPlaying(true);
+      props.play();
     };
     const pauseHandler = () => {
       setIsPlaying(false);
       //Spotify.pause();
     };
-    const previousHandler = async () => {
+    const previousHandler = () => {
       //await Spotify.previous();
-      setIsPlaying(true);
+      props.previous();
     };
-    const nextHandler = async () => {
+    const nextHandler = () => {
       //await Spotify.next();
-      setIsPlaying(true);
+      props.next();
     };
     return (
         <View style={styles.container}>
@@ -58,8 +58,9 @@ const SpotifyPlayer = props => {
 const styles = StyleSheet.create({
     container:{
         position: 'absolute',
-        width: Dimensions.get('window').width,
+        width: '100%',
         height: 0.12 * Dimensions.get('window').height,
+        borderRadius: 15,
         backgroundColor: 'blue',
         justifyContent: 'center',
         alignItems: 'center',

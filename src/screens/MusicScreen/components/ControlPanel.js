@@ -30,7 +30,7 @@ const ControlPanel = props => {
             onPress={previousHandler}>
             <Image
               style={styles.controlButton}
-              source={require('../../../../icons/previous.png')}
+              source={require('../../../assets/icons/previous.png')}
             />
           </TouchableOpacity>
           {isPlaying ? (
@@ -38,7 +38,7 @@ const ControlPanel = props => {
               onPress={pauseHandler}>
               <Image
                 style={styles.controlButton}
-                source={require('../../../../icons/pause.png')}
+                source={require('../../../assets/icons/pause.png')}
               />
             </TouchableOpacity>
           ) : (
@@ -46,7 +46,7 @@ const ControlPanel = props => {
               onPress={playHandler}>
               <Image
                 style={styles.controlButton}
-                source={require('../../../../icons/play.png')}
+                source={require('../../../assets/icons/play.png')}
               />
             </TouchableOpacity>
           )}
@@ -54,7 +54,7 @@ const ControlPanel = props => {
             onPress={nextHandler}>
             <Image
               style={styles.controlButton}
-              source={require('../../../../icons/next.png')}
+              source={require('../../../assets/icons/next.png')}
             />
           </TouchableOpacity>
         </SafeAreaView>
@@ -64,18 +64,19 @@ const ControlPanel = props => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        backgroundColor: 'orange',
+        backgroundColor: '#ffffff',
         height: '100%',
+        borderRadius: 15,
     },
     currentPlayingContainer: {
         //alignItems: 'center',
         justifyContent: 'center',
-        width: 0.65 * Dimensions.get('window').width,
+        width: '65%',
     },
     controlContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: 0.35 * Dimensions.get('window').width,
+        width: '35%',
     },
     controlButton: {
         margin: 5,

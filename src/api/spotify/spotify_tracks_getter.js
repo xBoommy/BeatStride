@@ -15,7 +15,6 @@ export default async (playlistUri) => {
   });
 
   const json = await res.json();
-  //console.log('json:');
 
   if (!res.ok) {
     return [];
@@ -25,13 +24,6 @@ export default async (playlistUri) => {
   if (items.length === 0) {
     return [];
   }
-
-  // console.log(items[0]);
-  // console.log(items[0].track.id);
-  // console.log(items[0].track.name);
-  // console.log(items[0].track.album.artists.length >= 1 ? items[0].track.album.artists[0].name : 'undefined');
-  // console.log(items[0].track.album.images.length >= 1 ? items[0].track.album.images[0].url : 'undefined');
-  // console.log(items[0].track.uri);
 
   return items.map(item => ({
     id: item.track.id,

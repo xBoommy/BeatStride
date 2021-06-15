@@ -6,10 +6,13 @@ import * as playlistActions from '../../../SpotifyStore/playlist-actions';
 import PlaylistItem from './components/PlaylistItem';
 import MusicPlayer from './MusicPlayer';
 import MusicPlaylistSearch from './MusicPlaylistSearch';
-import Tracks_Getter from '../../../spotify/api/spotify_tracks_getter';
+import Tracks_Getter from '../../api/spotify/spotify_tracks_getter';
 
 import Screen from '../../constants/screen';
 import textStyle from '../../constants/textStyle';
+
+
+const {width, height} = Dimensions.get("window")
 
 const MusicMain = ({navigation}) => {
 
@@ -31,6 +34,9 @@ const MusicMain = ({navigation}) => {
     //For SpotifyPlayer
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentlyPlaying, setCurrentlyPlaying] = useState();
+    const playNextAndPrevHandler = () => {
+      setIsPlaying(true);
+    }
     // navigation.addListener('beforeRemove', () => {
     //   if (isPlaying) {
     //     setIsPlaying(false);
@@ -42,49 +48,71 @@ const MusicMain = ({navigation}) => {
     return (
       <Screen>
         <Text style={textStyle.header}>MusicMain</Text>
-        <SafeAreaView style={styles.list}>
-          <FlatList
-            data={playlists}
-            renderItem={({item}) => {
-              return (
-                <TouchableOpacity
-                  onPress={() => getPlaylistDetails(item.playlistUri)}>
-                  <PlaylistItem item={item} />
-                </TouchableOpacity>
-              );
-            }}
-            keyExtractor={item => item.id}
+        <View
+          style={{
+            alignItems: 'center',
+            //backgroundColor:'blue'
+          }}>
+          <View
+            style={{
+              backgroundColor: '#FFFFFF',
+              width: 0.95 * width,
+              height: 0.62 * height,
+              borderRadius: 15,
+              elevation: 5,
+              top: 0.01 * height,
+            }}>
+            <FlatList
+              data={playlists}
+              renderItem={({item}) => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => getPlaylistDetails(item.playlistUri)}>
+                    <PlaylistItem item={item} />
+                  </TouchableOpacity>
+                );
+              }}
+              keyExtractor={item => item.id}
+            />
+          </View>
+          <View
+            style={{
+              backgroundColor: '#CCC',
+              width: 0.95 * width,
+              height: 0.1 * height,
+              borderRadius: 15,
+              elevation: 5, 
+              top: 0.05 * height,
+            }}>
+            <MusicPlayer
+              isPlaying={isPlaying}
+              setIsPlaying={setIsPlaying}
+              currentlyPlaying={currentlyPlaying}
+              setCurrentlyPlaying={setCurrentlyPlaying}
+              defaultUri={selectedPlaylistUri}
+
+              play={playNextAndPrevHandler}
+              next={playNextAndPrevHandler}
+              previous={playNextAndPrevHandler}
+            />
+          </View>
+
+          {/* Add Playlist Button */}
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => setPopToggle(true)}></TouchableOpacity>
+
+          {/* PopUp upon selecting "Add" */}
+          <MusicPlaylistSearch
+            popToggle={popToggle}
+            setPopToggle={setPopToggle}
           />
-        </SafeAreaView>
-        <MusicPlayer
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-          currentlyPlaying={currentlyPlaying}
-          setCurrentlyPlaying={setCurrentlyPlaying}
-          defaultUri={selectedPlaylistUri}
-        />
-
-        {/* Add Playlist Button */}
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => setPopToggle(true)}></TouchableOpacity>
-
-        {/* PopUp upon selecting "Add" */}
-        <MusicPlaylistSearch
-          popToggle={popToggle}
-          setPopToggle={setPopToggle}
-        />
-
+        </View>
       </Screen>
     );
 };
 
 const styles = StyleSheet.create({
-  list:{
-    paddingTop: 20,
-    height: 0.78 * Dimensions.get('window').height,
-    bottom: 0.12 * Dimensions.get('window').height,
-  },
   addButton:{
       position: 'absolute',
       width: 0.1 * Dimensions.get('window').height,
@@ -93,6 +121,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'black',
       bottom: 0.13 * Dimensions.get('window').height,
       right: 0.01 * Dimensions.get('window').height,
+      elevation: 10,
   },
 });
 

@@ -10,6 +10,7 @@ const MusicPlaylistSongs = props => {
     //Temp
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentlyPlaying, setCurrentlyPlaying] = useState();
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     props.navigation.addListener('beforeRemove', () => {
         if (isPlaying) {
@@ -20,11 +21,41 @@ const MusicPlaylistSongs = props => {
     const playAll = () => {
         // try {
         //     Spotify.playDirect(playlistUri);
-        //     setIsPlaying(true);
+        setIsPlaying(true);
+        setCurrentlyPlaying(tracks[0]);
+        setCurrentIndex(0);
         // } catch (e) {
         //     console.error('Error in playAll in ListOfTracks: ', e);
         // }
     };
+
+    const playHandler = () => {
+      setCurrentlyPlaying(tracks[currentIndex]);
+      setIsPlaying(true);
+    }
+    const nextHandler = () => {
+      if (currentIndex === tracks.length - 1) {
+        setCurrentIndex(0);
+        setCurrentlyPlaying(tracks[0]);
+        setIsPlaying(true);
+      } else {
+        setCurrentIndex(currentIndex + 1);
+        setCurrentlyPlaying(tracks[currentIndex + 1]);
+        setIsPlaying(true);
+      }
+    }
+    const previousHandler = () => {
+      if (currentIndex === 0) {
+        setCurrentIndex(tracks.length - 1);
+        setCurrentlyPlaying(tracks[tracks.length - 1]);
+        setIsPlaying(true);
+      } else {
+        setCurrentIndex(currentIndex - 1);
+        setCurrentlyPlaying(tracks[currentIndex - 1]);
+        setIsPlaying(true);
+      }
+    }
+
     return (
       <SafeAreaView style={styles.container}>
         {/* PASTE CONTENT HERE */}
@@ -55,6 +86,10 @@ const MusicPlaylistSongs = props => {
           currentlyPlaying={currentlyPlaying}
           setCurrentlyPlaying={setCurrentlyPlaying}
           defaultUri={playlistUri}
+
+          play={playHandler}
+          next={nextHandler}
+          previous={previousHandler}
         />
       </SafeAreaView>
     );
