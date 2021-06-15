@@ -4,6 +4,7 @@ import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, Touchabl
 import * as LocationLib from '../../api/LocationPermissions';
 
 import textStyle from '../../constants/textStyle';
+import color from '../../constants/color';
 
 import TempoRun from './MainTabs/TempoRun';
 import BasicRun from './MainTabs/BasicRun';
@@ -52,8 +53,9 @@ const ExerciseMain = ({navigation}) => {
         scrollRef.scrollTo({
             x: width * num,
             animated: true
-        })
-    }
+    })}
+
+    const [tab, setTab] = useState("Tempo")
 
     return (
         <SafeAreaView style={styles.screenStyle}>
@@ -70,16 +72,58 @@ const ExerciseMain = ({navigation}) => {
                     paddingTop: 0.01 * height,
                 }}
                 >
-                    <TouchableOpacity onPress={() => scrollHandler(0)}>
-                        <Text style={textStyle.subHeader}>Individual</Text>
+                    <TouchableOpacity 
+                        onPress={() => {
+                            scrollHandler(0)
+                            setTab("Tempo")
+                    }}>
+                        <Text style={{
+                            ...textStyle.subHeader,
+                            color: (tab == "Tempo") ? color.primary : color.secondary,
+                        }}>
+                            Tempo Run
+                        </Text>
+                        <View style={{
+                            height:0.005 * height,
+                            backgroundColor: (tab == "Tempo") ? color.primary : 'transparent',
+                            borderRadius: height,
+                        }}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => scrollHandler(1)}>
-                        <Text style={textStyle.subHeader}>Community</Text>
+                    <TouchableOpacity 
+                        onPress={() => {
+                            scrollHandler(1)
+                            setTab("Basic")
+                    }}>
+                        <Text style={{
+                            ...textStyle.subHeader,
+                            color: (tab == "Basic") ? color.primary : color.secondary,
+                        }}>
+                            Basic Run
+                        </Text>
+                        <View style={{
+                            height:0.005 * height,
+                            backgroundColor: (tab == "Basic") ? color.primary : 'transparent',
+                            borderRadius: height,
+                        }}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => scrollHandler(2)}>
-                        <Text style={textStyle.subHeader}>Events</Text>
+                    <TouchableOpacity 
+                        onPress={() => {
+                            scrollHandler(2)
+                            setTab("History")
+                    }}>
+                        <Text style={{
+                            ...textStyle.subHeader,
+                            color: (tab == "History") ? color.primary : color.secondary,
+                        }}>
+                            History
+                        </Text>
+                        <View style={{
+                            height:0.005 * height,
+                            backgroundColor: (tab == "History") ? color.primary : 'transparent',
+                            borderRadius: height,
+                        }}/>
                     </TouchableOpacity>
                 </View>
                 {/* Navigation Indicator */}
@@ -91,12 +135,7 @@ const ExerciseMain = ({navigation}) => {
                     paddingBottom: 0.01 * height,
                 }}
                 >
-                    <View style={{
-                        width: 0.185 * width,
-                        height:0.005 * height,
-                        backgroundColor: (scrollRef == "Individual") ? color.primary : 'transparent',
-                        borderRadius: 0.005 * height,
-                    }}/>
+                    
 
                     <View style={{
                         width: 0.22 * width,
@@ -125,6 +164,7 @@ const ExerciseMain = ({navigation}) => {
                 overScrollMode='never'
                 disableIntervalMomentum={true}
                 style={styles.mainComponentContainer}>
+                    
                 
                 {/* Run components */}
                 <View  style={styles.componentContainer}>

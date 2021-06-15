@@ -38,6 +38,8 @@ const ProfileMain = ({navigation}) => {
 
   const [isLogoutLoading, setIsLogoutLoading] = useState(false);
 
+  const [uid, setUid] = useState(Authentication.getCurrentUserId);
+
   const handleLogout = () => {
     setIsLogoutLoading(true);
     Authentication.signOut(() => {

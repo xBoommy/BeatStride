@@ -4,7 +4,7 @@ import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 import DropDown from "react-native-paper-dropdown";
 
-//Import database store function
+import * as Firestore from '../../../api/firestore';
 
 import Screen from '../../../constants/screen';
 import color from '../../../constants/color';
@@ -12,9 +12,12 @@ import color from '../../../constants/color';
 const {width, height} = Dimensions.get("window")
 
 const RegisterTwo = ({navigation, route}) => {
+    const uid = route.params.uid;
+    const displayName = route.params.displayName;
 
     const [picture, setPicture] = useState({})
     const [age, setAge] = useState();
+
 
     const [showGenderDropDown, setShowGenderDropDown] = useState(false); 
     const [gender, setGender] = useState('');
@@ -35,27 +38,44 @@ const RegisterTwo = ({navigation, route}) => {
 
     const [isRegisterLoading, setIsRegisterLoading] = useState(false);
     
+    /* [Store user data into database] 
+    Upon success => navigate user to main page*/
     const profileHandler = () =>{
         Keyboard.dismiss();
         setIsRegisterLoading(true);
 
-        // (success) => {
-        //     navigation.dispatch(CommonActions.reset({ 
-        //       index: 0, 
-        //       routes: [{ name: "AppTab" }]
-        // },
-
-        // (error) => {
-        //     setIsRegisterLoading(false);
-        //     return console.error(error);
-        // }
+        const credentials = {
+            displayName: displayName,
+            uid: uid,
+            age: age,
+            gender: gender,
+            region: region,
+            events: [],
+            totalDistance: 0,
+            runCount: 0,
+        }
+    
+        Firestore.db_createAccount(credentials,
+            ()=>{
+                console.log('registration complete')
+                navigation.dispatch(CommonActions.reset({ 
+                    index: 0, 
+                    routes: [{ name: "AppTab" }] 
+                }))
+            },
+            () =>{
+                console.log('registration failed')
+                setIsRegisterLoading(false);
+            }    
+        )
     }
 
     return (
         <Screen scrollable>
-          {/* Imagepicker to take/upload profile picture */}
+          
             <Text style={styles.subtitle}>Set up your Profile!</Text>
 
+            {/* Imagepicker to take/upload profile picture */}
             <View style={{width: 0.9 * width, alignItems:'center', paddingVertical: 0.01 * height}}> 
                 <View style={{
                   backgroundColor: color.primary,
@@ -68,7 +88,7 @@ const RegisterTwo = ({navigation, route}) => {
                 <Text style={{color: color.secondary, paddingTop: 0.01 * height}}>Profile Picture</Text>
             </View>
             
-
+            {/* Age input */}
             <TextInput
                 mode="outlined"
                 label="Age"
@@ -84,6 +104,8 @@ const RegisterTwo = ({navigation, route}) => {
                 left={<TextInput.Icon name="slack" color={age ? color.primary : color.secondary} />}
                 theme={{ colors: { primary: color.primary, underlineColor:'transparent',}}}
             />
+
+            {/* Gender input */}
             <View style={{ marginTop: 10, marginBottom: 10}}>
                 <DropDown
                     mode="outlined"
@@ -108,7 +130,7 @@ const RegisterTwo = ({navigation, route}) => {
                 />
             </View>
             
-
+            {/* Region Input */}
             <View style={{ marginTop: 10, marginBottom: 10}}>
                 <DropDown
                     mode="outlined"
@@ -137,12 +159,12 @@ const RegisterTwo = ({navigation, route}) => {
             </View>          
             
 
-
+            {/* Set profile button */}
             <Button
                 mode="contained"
                 style={{ marginTop: 20, borderRadius: 10 }}
                 contentStyle={{ paddingVertical: 5 }}
-                onPress={()=>{}}
+                onPress={profileHandler}
                 loading={isRegisterLoading}
                 disabled={isRegisterLoading}
                 theme={{ colors: { primary: color.primary, underlineColor:'transparent',}}}

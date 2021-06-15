@@ -26,7 +26,7 @@ const RegisterOne = ({navigation}) => {
           (user) => {
             navigation.dispatch(CommonActions.reset({ 
                 index: 0, 
-                routes: [{ name: "RegisterTwo" }]
+                routes: [{ name: "RegisterTwo", params: {uid : user.uid, displayName: user.displayName} }]
             }))
           },
           (error) => {

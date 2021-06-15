@@ -11,9 +11,9 @@ const RunEnd = ({navigation, route}) => {
     const steps = route.params.steps;           //Total Steps
     const positions = route.params.positions;   //Array of Positions Travelled
     const duration = route.params.duration;     //Total Run Duration
-    const timeStart = route.params.timeStart;   //Start Time of Run
-    const day = route.params.day;   //Start Time of Run
-    const date = route.params.date;   //Start Time of Run
+    const time = route.params.time;             //Start Time of Run
+    const day = route.params.day;               //Start Time of Run
+    const date = route.params.date;             //Start Time of Run
 
     return (
         <SafeAreaView style={styles.overallContainer}>
@@ -23,7 +23,7 @@ const RunEnd = ({navigation, route}) => {
             <Text>{message}</Text>
             <Text>Day: {day}</Text>
             <Text>Date: {date}</Text>
-            <Text>Time Started: {timeStart}</Text>
+            <Text>Time Started: {time}</Text>
             <Text>Distance: {distance}</Text>
             <Text>Steps: {steps}</Text>
             <Text>Duration: {duration}</Text>

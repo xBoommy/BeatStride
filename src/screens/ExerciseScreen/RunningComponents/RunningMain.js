@@ -4,6 +4,7 @@ import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import * as geolib from 'geolib';
 import moment from 'moment';
+import * as Firestore from '../../../api/firestore';
 
 import color from '../../../constants/color';
 
@@ -224,16 +225,33 @@ const RunningMain = ({navigation}) => {
         }
         if (runStatus === 6) {
             console.log("RunStatus - 6: Run End");
-            navigation.navigate("EndRun", {
-                message:"Run Concluded",
+            //Compile Data
+            const record = {
                 distance:distance, 
                 positions:positions, 
                 steps:steps, 
                 duration:duration,
-                timeStart:timeStart,
+                time:timeStart,
                 day:day,
                 date:date,
-            });
+                id:moment().format(),
+            }
+            //Add to history + update personal stats
+            Firestore.db_recordRun(record,
+                () => {
+                    navigation.navigate("EndRun", {
+                        message:"Run Concluded",
+                        distance:distance, 
+                        positions:positions, 
+                        steps:steps, 
+                        duration:duration,
+                        time:timeStart,
+                        day:day,
+                        date:date,
+                    });
+                },
+                () => {console.log(error)}    
+            )
         }
     },[runStatus])
 
