@@ -52,7 +52,7 @@ const ControlPanel = props => {
               onPress={playHandler}>
                 <View style={styles.pausePlayContainer}>
               <Image
-                style={styles.pausePlayButton}
+                style={{...styles.pausePlayButton, transform: [{translateX: 0.003 * height}]}}
                 source={require('../../../assets/icons/play.png')}
               />
               </View>

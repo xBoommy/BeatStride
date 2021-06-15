@@ -68,7 +68,7 @@ const MusicMain = ({navigation}) => {
           <View
             style={{
               backgroundColor: '#FFFFFF',
-              width: 0.95 * width,
+              alignItems: 'center',
               height: 0.62 * height,
               borderRadius: 15,
               elevation: 5,
@@ -76,14 +76,17 @@ const MusicMain = ({navigation}) => {
             }}>
             <FlatList
               numColumns={2}
+              style={{width: 0.9 * width}}
+              //contentContainerStyle={{alignItems: 'flex-start'}}
               data={playlists}
               keyExtractor={item => item.id}
               renderItem={({item}) => {
                 return (
                   <TouchableWithoutFeedback
                     onPress={() => getPlaylistDetails(item.playlistUri)}>
-                      <View>
-                    <PlaylistItem item={item} /></View>
+                    <View>
+                      <PlaylistItem item={item} />
+                    </View>
                   </TouchableWithoutFeedback>
                 );
               }}
@@ -95,7 +98,7 @@ const MusicMain = ({navigation}) => {
               width: 0.95 * width,
               height: 0.1 * height,
               borderRadius: 15,
-              elevation: 5, 
+              elevation: 5,
               top: 0.05 * height,
             }}>
             <MusicPlayer

@@ -49,11 +49,11 @@ const styles = StyleSheet.create({
     },
     closeButton:{
         position: 'absolute',
-        width: 0.05 * Dimensions.get('window').height,
-        height: 0.05 * Dimensions.get('window').height,
-        borderRadius: 0.05 * Dimensions.get('window').height / 2,
+        width: 0.07 * Dimensions.get('window').height,
+        height: 0.07 * Dimensions.get('window').height,
+        borderRadius: Dimensions.get('window').height / 2,
         backgroundColor: 'black',
-        top: 0.01 * Dimensions.get('window').height,
+        top: 0.03 * Dimensions.get('window').height,
         left: 0.01 * Dimensions.get('window').height,
     },
 });

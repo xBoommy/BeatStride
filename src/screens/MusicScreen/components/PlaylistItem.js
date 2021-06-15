@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Image, Text, Dimensions} from 'react-native';
+import {View, SafeAreaView, StyleSheet, Image, Text, Dimensions} from 'react-native';
 import { Card } from 'react-native-elements';
 
 import color from '../../../constants/color';
@@ -7,9 +7,9 @@ const {width, height} = Dimensions.get('window');
 
 const PlaylistItem = props => {
   const noOfSongs = (props.item.totalSongs || "0.0");
-  const num = noOfSongs.substr(0, noOfSongs.length - 2);
+  const num = noOfSongs.toString();
   return (
-    <Card containerStyle={styles.container}>
+    <View style={styles.container}>
       <SafeAreaView style={styles.innerContainer}>
         <Image style={styles.image} source={{uri: props.item.imageUri}} />
         <SafeAreaView style={styles.text}>
@@ -17,24 +17,29 @@ const PlaylistItem = props => {
           <Text style={{color: color.secondary, fontSize: 0.018 * height}}>{num} Songs</Text>
         </SafeAreaView>
       </SafeAreaView>
-    </Card>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container:{
-    borderRadius: 15,
-    width: 0.38 * width,
+    //backgroundColor: 'orange',
+    //borderRadius: 15,
+    width: 0.45 * width,
+    alignItems: 'center',
+    padding: 0.01 * height,
   },
   innerContainer: {
+    //backgroundColor: 'blue',
     justifyContent: 'center',
     alignItems: 'center',
+    width: 0.42 * width,
   },
   image: {
-    height: 0.15 * height,
-    width: 0.15 * height,
-    borderRadius: 0.015 * height,
-    marginBottom: 10,
+    height: 0.42 * width,
+    width: 0.42 * width,
+
+    
   },
   title: {
     fontSize: 0.03 * height,
@@ -42,7 +47,8 @@ const styles = StyleSheet.create({
   },
   text:{
     width: 0.36 * width,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   }
 });
 

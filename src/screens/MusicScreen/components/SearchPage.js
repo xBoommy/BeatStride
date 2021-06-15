@@ -1,21 +1,26 @@
 import React, {useState} from 'react';
 import {
   SafeAreaView,
-  Text,
+  View,
   TouchableOpacity,
   StyleSheet,
-  TextInput,
   FlatList,
   Alert,
   Dimensions,
+  Keyboard,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
+import { Button, TextInput, IconButton } from "react-native-paper";
+
+import color from '../../../constants/color';
 
 import PlaylistItem from './PlaylistItem';
 
 //TBC later
 import Spotify_Search from '../../../api/spotify/spotify_search';
 import * as playlistActions from '../../../../SpotifyStore/playlist-actions';
+
+const {width, height} = Dimensions.get('window');
 
 const SearchPage = props => {
 
@@ -69,30 +74,38 @@ const SearchPage = props => {
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaView style={styles.searchBarContainer}>
-        <TextInput
-            style={styles.textinput}
-            placeholder="Playlist to search..."
-            placeholderTextColor="#ccc"
+          <TextInput
+            mode="outlined"
+            label="Search Playlists..."
+            keyboardType="default"
+            style={{marginTop: 10, width: 0.7 * width}}
+            placeholder="Name of playlist..."
             value={searchTitle}
-            onChangeText={titleChangeHandler}
-        />
-        <TouchableOpacity style={styles.buttonContainer} onPress={getPlaylists}>
-            <Text>Search</Text>
-        </TouchableOpacity>
+            onChangeText={setSearchTitle}
+            autoCapitalize="none"
+            returnKeyType="default"
+            onSubmitEditing={() => Keyboard.dismiss()}
+            blurOnSubmit={false}
+            right={<TextInput.Icon name="search-web" onPress={getPlaylists} />}
+            theme={{
+              colors: {primary: color.primary, underlineColor: 'transparent'},
+            }}
+          />
+        
       </SafeAreaView>
       {/* Next/Previous page options... */}
       <FlatList
         numColumns={2}
         data={playlists}
-        renderItem={({ item }) => {
-            return (
+        renderItem={({item}) => {
+          return (
             //Need to be selectable...
             <TouchableOpacity onPress={() => onSelect(item)}>
-              <PlaylistItem item={item}/>
+              <PlaylistItem item={item} />
             </TouchableOpacity>
-          );}
-        }
-        keyExtractor={(item, index)=>index.toString()}
+          );
+        }}
+        keyExtractor={(item, index) => index.toString()}
       />
     </SafeAreaView>
   );
@@ -106,30 +119,30 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     borderRadius: 15,
-    paddingTop: 35,
   },
-  buttonContainer: {
-    height: 50,
-    width: 0.2 * Dimensions.get('window').width,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: 'black',
-    borderWidth: 1,
-  },
-  textinput: {
-    color: 'black',
-    fontSize: 20,
-    width: 0.68 * Dimensions.get('window').width,
-    height: 50,
-    borderColor: 'black',
-    borderWidth: 1,
-    //padding: 10,
-  },
+  // buttonContainer: {
+  //   height: 50,
+  //   width: 0.2 * Dimensions.get('window').width,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   borderColor: 'black',
+  //   borderWidth: 1,
+  // },
+  // textinput: {
+  //   color: 'black',
+  //   fontSize: 20,
+  //   width: 0.68 * Dimensions.get('window').width,
+  //   height: 50,
+  //   borderColor: 'black',
+  //   borderWidth: 1,
+  //   //padding: 10,
+  // },
   searchBarContainer: {
       flexDirection: 'row',
-      justifyContent: 'center',
+      justifyContent: 'flex-end',
+      //backgroundColor: 'blue',
+      width: 0.8 * width,
       alignItems: 'center',
-      marginTop: 10,
   },
 });
 
