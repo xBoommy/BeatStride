@@ -30,10 +30,10 @@ export default async ({offset, limit, q}) => {
       return [];
   }
 
-  console.log(items);
-  console.log(items[0]);
-  console.log(items[0].id);
-  console.log(items[0].uri);
+  console.log(items[0].tracks.total);
+  // console.log(items[0]);
+  // console.log(items[0].id);
+  // console.log(items[0].uri);
 
   //Searches playlists
   return items.map(item => ({
@@ -42,5 +42,6 @@ export default async ({offset, limit, q}) => {
     artist: item.artists ? item.artists[0].name : 'undefined',
     imageUri: item.images ? item.images[0].url : 'undefined',
     playlistUri: item.uri,
+    totalSongs: item.tracks.total,
   }));
 };

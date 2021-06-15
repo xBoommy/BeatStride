@@ -14,10 +14,8 @@ const MusicPlaylistSongs = props => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     props.navigation.addListener('beforeRemove', () => {
-        if (isPlaying) {
-          setIsPlaying(false);
-          //Spotify.pause();
-        }
+        setIsPlaying(false);
+        //Spotify.pause();
     });
     const updatePlaying = async () => {
       const track = await Spotify.currentPlayingTrack();
@@ -62,6 +60,7 @@ const MusicPlaylistSongs = props => {
                 <TrackItem item={item} />
               </TouchableOpacity>
             )}
+            style={{margin: 0}}
           />
         </SafeAreaView>
         <Text>Songs</Text>

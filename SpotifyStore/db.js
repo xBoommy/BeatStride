@@ -8,7 +8,7 @@ export const init = () => {
   const promise = new Promise((resolve, reject) => {
     db.transaction(tx => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS playlists (id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, artist TEXT NOT NULL, imageUri TEXT NOT NULL, playlistUri TEXT NOT NULL);',
+        'CREATE TABLE IF NOT EXISTS playlists (id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, artist TEXT NOT NULL, imageUri TEXT NOT NULL, playlistUri TEXT NOT NULL, totalSongs INTEGER NOT NULL);',
         [],
         () => {
           resolve();
@@ -22,13 +22,13 @@ export const init = () => {
   return promise;
 };
 
-export const insertPlaylist = (id, title, artist,imageUri, playlistUri) => {
+export const insertPlaylist = (id, title, artist, imageUri, playlistUri, totalSongs) => {
     const promise = new Promise((resolve, reject) => {
         db.transaction(tx => {
             tx.executeSql(
-                `INSERT INTO playlists (id, title, artist, imageUri, playlistUri)
-                VALUES (?, ?, ?, ?, ?)`,
-                [id, title, artist, imageUri, playlistUri],
+                `INSERT INTO playlists (id, title, artist, imageUri, playlistUri, totalSongs)
+                VALUES (?, ?, ?, ?, ?, ?)`,
+                [id, title, artist, imageUri, playlistUri, totalSongs],
                 (_, result) => {
                     resolve(result);
                 },

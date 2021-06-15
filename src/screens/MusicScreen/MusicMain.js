@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, Image, Button, TouchableWithoutFeedback, FlatList } from 'react-native';
+import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, Image, Button, TouchableWithoutFeedback, FlatList, TouchableOpacity } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import * as playlistActions from '../../../SpotifyStore/playlist-actions';
@@ -77,15 +77,16 @@ const MusicMain = ({navigation}) => {
             <FlatList
               numColumns={2}
               data={playlists}
+              keyExtractor={item => item.id}
               renderItem={({item}) => {
                 return (
                   <TouchableWithoutFeedback
                     onPress={() => getPlaylistDetails(item.playlistUri)}>
-                    <PlaylistItem item={item} />
+                      <View>
+                    <PlaylistItem item={item} /></View>
                   </TouchableWithoutFeedback>
                 );
               }}
-              keyExtractor={item => item.id}
             />
           </View>
           <View

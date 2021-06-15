@@ -1,5 +1,7 @@
 import React from 'react';
-import {SafeAreaView, TouchableOpacity, StyleSheet, Text, Image, Dimensions} from 'react-native';
+import {SafeAreaView, View, TouchableOpacity, StyleSheet, Text, Image, Dimensions} from 'react-native';
+
+import color from '../../../constants/color';
 
 const {width, height} = Dimensions.get('window');
 
@@ -18,9 +20,9 @@ const ControlPanel = props => {
       <SafeAreaView style={styles.container}>
         <SafeAreaView style={styles.currentPlayingContainer}>
           {currentlyPlaying && (
-            <SafeAreaView style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <SafeAreaView style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Image style={{width: 50, height: 50, borderRadius: 5, marginHorizontal: 5}} source={{uri: currentlyPlaying.imageUri}} />
-                <SafeAreaView style={{width: 0.5 * width}}>
+                <SafeAreaView style={{width: '60%'}}>
                     <Text numberOfLines={1}>{currentlyPlaying.title}</Text>
                     {currentlyPlaying.artist !== 'undefined' && <Text>{currentlyPlaying.artist}</Text>}
                 </SafeAreaView>
@@ -38,18 +40,22 @@ const ControlPanel = props => {
           {isPlaying ? (
             <TouchableOpacity
               onPress={pauseHandler}>
+                <View style={styles.pausePlayContainer}>
               <Image
-                style={styles.controlButton}
+                style={styles.pausePlayButton}
                 source={require('../../../assets/icons/pause.png')}
               />
+              </View>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
               onPress={playHandler}>
+                <View style={styles.pausePlayContainer}>
               <Image
-                style={styles.controlButton}
+                style={styles.pausePlayButton}
                 source={require('../../../assets/icons/play.png')}
               />
+              </View>
             </TouchableOpacity>
           )}
           <TouchableOpacity
@@ -72,17 +78,31 @@ const styles = StyleSheet.create({
     },
     currentPlayingContainer: {
         justifyContent: 'center',
-        width: 0.65 * width,
+        width: '60%',
     },
     controlContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: '35%',
+        justifyContent: 'center',
+        width: '40%',
     },
     controlButton: {
         margin: 5,
         width: 25,
         height: 25,
+    },
+    pausePlayButton: {
+      width: 25,
+      height: 25,
+      tintColor: '#FFFFFF'
+    },
+    pausePlayContainer: {
+      backgroundColor: color.primary,
+      width: 0.08 * height,
+      height: 0.08 * height,
+      borderRadius: 0.04 * height,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
 });
 

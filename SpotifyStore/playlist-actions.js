@@ -27,7 +27,7 @@ export const addPlaylist = (playlist) => {
     const hashID = stringHash(playlist.id);
     return async dispatch => {
         try {
-            await insertPlaylist(hashID, playlist.title, playlist.artist, playlist.imageUri, playlist.playlistUri);
+            await insertPlaylist(hashID, playlist.title, playlist.artist, playlist.imageUri, playlist.playlistUri, playlist.totalSongs);
 
             console.log('Playlist added');
             dispatch({

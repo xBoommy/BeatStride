@@ -82,6 +82,7 @@ const SearchPage = props => {
       </SafeAreaView>
       {/* Next/Previous page options... */}
       <FlatList
+        numColumns={2}
         data={playlists}
         renderItem={({ item }) => {
             return (

@@ -11,7 +11,7 @@ const TrackItem = props => {
     <Card containerStyle={styles.container}>
       <SafeAreaView style={styles.innerContainer}>
         <Image style={styles.trackImage} source={{uri: props.item.imageUri}} />
-        <SafeAreaView style={{width: 0.5 * width}}>
+        <SafeAreaView style={styles.textView}>
           <Text numberOfLines={1} style={styles.trackTitle}>{props.item.title}</Text>
           {props.item.artist !== 'undefined' && <Text style={{color: color.secondary, fontSize: 0.018 * height}}>{props.item.artist}</Text>}
         </SafeAreaView>
@@ -38,6 +38,11 @@ const styles = StyleSheet.create({
   trackTitle: {
     fontSize: 0.025 * height,
     fontWeight: 'bold',
+  },
+  textView: {
+    width: 0.5 * width,
+    marginLeft: 10,
+
   },
 });
 
