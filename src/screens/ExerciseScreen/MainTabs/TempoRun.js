@@ -99,8 +99,8 @@ const TempoRun = () => {
                         {/* Total Distance Indicator */}
                         <View style={{alignItems: 'center', paddingTop:20}}>
                             <View style={{flexDirection: 'row', alignItems: 'flex-end',}}>
-                                <Text style={{fontWeight: 'bold', fontSize: 50}}>110.7</Text>
-                                <Text style={{...textStyle.subHeader, fontWeight: 'bold',}}> km</Text>
+                                <Text style={{fontWeight: 'bold', fontSize: 50}}>45.2</Text>
+                                <Text style={{...textStyle.subHeader, fontWeight: 'bold',}}> m</Text>
                             </View>
                             <Text style={textStyle.subHeader}>Total Distance</Text>
                         </View>

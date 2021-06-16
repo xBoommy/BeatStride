@@ -85,8 +85,8 @@ const BasicRun = () => {
                             {/* Total Distance Indicator */}
                             <View style={{alignItems: 'center', paddingTop:20}}>
                                 <View style={{flexDirection: 'row', alignItems: 'flex-end', paddingBottom: 5}}>
-                                    <Text style={{fontWeight: 'bold', fontSize: 50}}>110.7</Text>
-                                    <Text style={{...textStyle.subHeader, fontWeight: 'bold',}}> km</Text>
+                                    <Text style={{fontWeight: 'bold', fontSize: 50}}>45.2</Text>
+                                    <Text style={{...textStyle.subHeader, fontWeight: 'bold',}}> m</Text>
                                 </View>
                                 <Text style={textStyle.subHeader}>Total Distance</Text>
                             </View>
@@ -94,7 +94,7 @@ const BasicRun = () => {
                             {/* Total Runs Indicator */}
                             <View style={{alignItems: 'center', paddingTop:20 }}>
                                 <View style={{flexDirection: 'row', alignItems: 'flex-end', paddingBottom: 5}}>
-                                    <Text style={{fontWeight: 'bold', ...textStyle.header}}>38</Text>
+                                    <Text style={{fontWeight: 'bold', ...textStyle.header}}>3</Text>
                                     <Text style={{fontWeight: 'bold',}}> runs</Text>
                                 </View>
                                 <Text style={textStyle.subHeader}>Total Runs</Text>

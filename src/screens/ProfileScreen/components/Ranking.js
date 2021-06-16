@@ -10,8 +10,8 @@ export default () => {
         <View style={styles.container}>
             {/* <Text style={{fontSize: 0.02 * height}}>Highest Ever:</Text> */}
             <View style={styles.bestRankContainer}>
-                <Text style={styles.bestRankText}>National level: 12th</Text>
-                <Text style={styles.bestRankText}>Regional level: 3rd</Text>
+                <Text style={styles.bestRankText}>National level: 5178th</Text>
+                <Text style={styles.bestRankText}>Regional level: 1007th</Text>
             </View>
         </View>
     );
