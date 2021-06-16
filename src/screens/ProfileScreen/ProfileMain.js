@@ -189,7 +189,7 @@ const ProfileMain = ({navigation}) => {
                     </Text>
                     <Text style={{fontSize: 0.035 * height}}>
                       {totalDistance < 1000
-                        ? totalDistance + ' m'
+                        ? totalDistance.toFixed(0) + ' m'
                         : (totalDistance / 1000).toFixed(2) + 'km'}
                     </Text>
                   </View>

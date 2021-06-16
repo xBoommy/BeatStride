@@ -24,6 +24,7 @@ export default async (playlistUri) => {
   if (items.length === 0) {
     return [];
   }
+  //console.log(items[0].track.duration_ms);
 
   return items.map(item => ({
     id: item.track.id,
@@ -31,5 +32,6 @@ export default async (playlistUri) => {
     artist: item.track.album.artists.length >= 1 ? item.track.album.artists[0].name : 'undefined',
     imageUri: item.track.album.images.length >= 1 ? item.track.album.images[0].url : 'undefined',
     trackUri: item.track.uri,
+    duration: item.track.duration_ms,
   }));
 };
