@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 
 import color from '../../../constants/color';
+import textStyles from '../../../constants/textStyle';
 const { width } = Dimensions.get('window');
 
 export default GuideItem = ({item}) => {
@@ -23,8 +24,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     image: {
-        height: 100,
-        width: 100,
+        height: 0.5 * width,
+        width: 0.5 * width,
         justifyContent: 'center',
     },
     title: {

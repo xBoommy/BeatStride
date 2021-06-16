@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, Dimensions } from 'react-native';
-import * as FireStore from '../../../api/firestore';
+import * as Firestore from '../../../api/firestore';
 
 import Screen from '../../../constants/screen';
 
@@ -53,11 +53,11 @@ const EventsComponent = ({navigation}) => {
     const [eventList, setEventList] = useState([]);
 
     useEffect(()=>{
-        FireStore.db_events(
+        Firestore.db_events(
             (events) => {setEventList(events)},
             (error) => {console.log("Events list error")}
         )
-    })
+    },[])
     
     return(
         <Screen>

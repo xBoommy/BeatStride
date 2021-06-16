@@ -20,7 +20,6 @@ const Guide = props => {
 
     return (
       <View style={styles.container}>
-        <Text>Guide</Text>
         <View style={{flex: 3}}>
         <FlatList
           data={guideSlides}

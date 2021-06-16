@@ -9,7 +9,7 @@ import * as Paper from "react-native-paper";
 
 import AppStack from './src/navigation/AppStack'
 import AppTab from './src/navigation/AppTab'
-import playlistReducer from './SpotifyStore/playlist-reducer';
+import playlistReducer from './store/playlist-reducer';
 // import { init } from './SpotifyStore/db';
 
 

@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {  Dimensions, Alert, ScrollView, StyleSheet, Text, View, Image, Button, TouchableWithoutFeedback, FlatList, TouchableOpacity } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
 
-import * as playlistActions from '../../../SpotifyStore/playlist-actions';
 import PlaylistItem from './components/PlaylistItem';
 import MusicPlayer from './MusicPlayer';
 import MusicPlaylistSearch from './MusicPlaylistSearch';

@@ -110,3 +110,20 @@ export async function currentPlayingTrack() {
     console.log('Error with currentPlayingTrack: ', e);
   }
 }
+
+//For RunningPlayer
+
+export async function queueTracks(arrOfTracks) {
+  try {
+    const isConnected = await SpotifyRemote.isConnectedAsync();
+    if (!isConnected) {
+      const session = await SpotifyAuth.authorize(spotifyConfig);
+      await SpotifyRemote.connect(session.accessToken);
+    }
+    for (let i = 0; i < arrOfTracks.length; i++) {
+      await SpotifyRemote.queueUri(arrOfTracks[i].trackUri);
+    }
+  } catch (e) {
+    console.error('Error with queueTracks: ', e);
+  }
+}

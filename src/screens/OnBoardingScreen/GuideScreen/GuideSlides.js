@@ -1,26 +1,27 @@
 export default [
     {
         id: '1',
-        title: 'Page 1 Tester',
-        description: 'This will be the first page you see upon entering',
-        image: require('../../../assets/icons/ExercisePlay.png'),
+        title: 'Motivation from music',
+        description: 'Add your favourite playlist from Spotify',
+        image: require('../../../assets/icons/Guide1.png'),
     },
     {
         id: '2',
-        title: 'Page 2 Tester',
-        description: 'This will be the second page you see upon entering',
-        image: require('../../../assets/icons/ExercisePause.png'),
+        title: 'Run to the beat',
+        description: 'Get customized songs to match your pacing and achieve your goals',
+        image: require('../../../assets/icons/Guide2.png'),
     },
     {
         id: '3',
-        title: 'Page 3 Tester',
-        description: 'This will be the third page you see upon entering',
-        image: require('../../../assets/icons/ExerciseStop.png'),
+        title: 'Real time ranking',
+        description: 'Represent your region or compete individually at the national level',
+        image: require('../../../assets/icons/Guide3.png'),
     },
     {
         id: '4',
-        title: 'Page 4 Tester',
-        description: 'This will be the fourth page you see upon entering',
-        image: require('../../../assets/icons/TabMusic.png'),
+        title: 'Participate in events',
+        description: 'Contribute to charity through virtual run events',
+        image: require('../../../assets/icons/Guide4.png'),
     },
+    
 ]

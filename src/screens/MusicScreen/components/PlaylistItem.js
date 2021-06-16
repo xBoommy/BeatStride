@@ -1,12 +1,11 @@
 import React from 'react';
 import {View, SafeAreaView, StyleSheet, Image, Text, Dimensions} from 'react-native';
-import { Card } from 'react-native-elements';
 
 import color from '../../../constants/color';
 const {width, height} = Dimensions.get('window');
 
 const PlaylistItem = props => {
-  const noOfSongs = (props.item.totalSongs || "0.0");
+  const noOfSongs = (props.item.totalSongs || "0");
   const num = noOfSongs.toString();
   return (
     <View style={styles.container}>
