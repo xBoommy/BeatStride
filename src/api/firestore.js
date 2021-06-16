@@ -73,7 +73,7 @@ const db_updateUserRunCount = () => {
     }
 }
 /**get all the events that user is participating in, as an array - NOT WORKING */ 
-const db_getUserData = async() => {
+export const db_getUserData = async() => {
     const user_id = Authentication.getCurrentUserId()
     try {
         const user_snapshot = await db.collection('users').doc(user_id).get();

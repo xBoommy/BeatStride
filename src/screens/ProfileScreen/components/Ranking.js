@@ -16,5 +16,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'orange',
         width: 0.45 * width,
         height: 0.1 * height,
+        elevation: 5,
     },
 })

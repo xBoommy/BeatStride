@@ -1,44 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, Dimensions} from 'react-native';
 import { Button } from 'react-native-paper';
 import { CommonActions } from "@react-navigation/native";
+import Icon from 'react-native-vector-icons/Foundation'
+import Icon2 from 'react-native-vector-icons/Ionicons';
 
 import Screen from '../../constants/screen';
 import textStyle from '../../constants/textStyle';
 import color from '../../constants/color';
 
 import ProfilePicture from './components/ProfilePicture';
-import PersonalInfo from './components/Personalnfo';
 import Ranking from './components/Ranking';
 import Achievements from './components/Achievements';
 
 import * as Authentication from "../../api/auth";
+import * as Firestore from '../../api/firestore';
 
 
 
-//Sample user_data
-const user_data = {
-    events: {},
-    history: {},
-    profile:{
-        name: "James",
-        id: "userID_1",
-        region: "North",
-        age: 18,
-        gender: "Male",
-        total_distance: 27,
-        total_runs: 3,
-        image: require('../../assets/icons/defaultprofile.png'),
-    }
-}
 
-const {height} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 const ProfileMain = ({navigation}) => {
 
   const [isLogoutLoading, setIsLogoutLoading] = useState(false);
 
-  const [uid, setUid] = useState(Authentication.getCurrentUserId())
+  const [displayName, setDisplayName] = useState('');
+  const [uid, setUid] = useState('');
+  const [age, setAge] = useState(0);
+  const [gender, setGender] = useState('');
+  const [region, setRegion] = useState('');
+  const [runCount, setRunCount] = useState(0);
+  const [totalDistance, setTotalDistance] = useState(0);
+
+  useEffect(() => {
+    Firestore.db_getUserData().then((user) => {
+      setDisplayName(user.displayName);
+      setUid(user.uid);
+      setAge(user.age);
+      setGender(user.gender);
+      setRegion(user.region);
+      setRunCount(user.runCount);
+      setTotalDistance(user.totalDistance);
+    })
+  })
+
+  
 
   const handleLogout = () => {
     setIsLogoutLoading(true);
@@ -55,20 +62,86 @@ const ProfileMain = ({navigation}) => {
     return (
       <Screen>
         <Text style={textStyle.header}>Profile</Text>
-        <Text>{uid}</Text>
         <ScrollView style={styles.container}>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <ProfilePicture image={user_data.profile.image} />
-            <PersonalInfo
-              name={user_data.profile.name}
-              displayname={user_data.profile.id}
-              region={user_data.profile.region}
-              age={user_data.profile.age}
-              gender={user_data.profile.gender}
-              totaldistance={user_data.profile.total_distance}
-              totalruns={user_data.profile.total_runs}
-            />
-            <View style={{flexDirection: 'row'}}>
+          <View>
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <ProfilePicture
+                image={require('../../assets/icons/defaultprofile.png')}
+              />
+            </View>
+            <View style={{height: 0.3 * height}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  height: 0.1 * height,
+                  
+                  justifyContent: 'center',
+                  elevation: 10,
+                }}>
+                <View
+                  style={{
+                    width: 0.1 * height,
+                    flex: 1,
+                    justifyContent: 'center',
+                    backgroundColor: 'cyan',
+                  }}>
+                  <Text style={{fontSize: 0.04 * height, textAlign: 'center'}}>
+                    {age}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 3,
+                    backgroundColor: '#FFFFFF',
+                    justifyContent: 'center',
+                  }}>
+                  <Text style={{fontSize: 0.04 * height, textAlign: 'center'}}>
+                    {displayName}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    width: 0.1 * height,
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'yellow',
+                  }}>
+                  {gender === 'Male' ? (
+                    <Icon name="male-symbol" size={0.12 * width} />
+                  ) : gender === 'Female' ? (
+                    <Icon name="Female-symbol" size={0.12 * width} />
+                  ) : (
+                    <Icon2 name="male-female" size={0.12 * width} />
+                  )}
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  height: 0.2 * height,
+                  paddingTop: 0.05 * height,
+                  justifyContent: 'space-around',
+                }}>
+                <View style={{backgroundColor: 'orange', width: '45%', elevation: 10}}>
+                  <Text style={{fontSize: 0.025 * height}}>Total Runs:</Text>
+                  <Text style={{fontSize: 0.03 * height}}>{runCount}</Text>
+                </View>
+                <View style={{backgroundColor: 'yellow', width: '45%', elevation: 10}}>
+                  <Text style={{fontSize: 0.025 * height}}>
+                    Total Distance:
+                  </Text>
+                  <Text style={{fontSize: 0.03 * height}}>
+                    {totalDistance < 1000
+                      ? totalDistance + ' m'
+                      : totalDistance / 1000 + 'km'}
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <View style={{flexDirection: 'row', paddingTop: 0.05 * height}}>
               <Ranking />
               <Achievements />
             </View>
