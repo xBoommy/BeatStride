@@ -48,7 +48,9 @@ const RunHistoryEntry = (props) => {
                     <View>
                         <View style={{flexDirection: 'row', alignItems:'center'}}>
                             <Icon name="running" color= {color.primary} size={0.04 * height}/>
-                            <Text style={{fontSize: 0.04 * height, fontWeight: 'bold', paddingHorizontal: 0.01 * height,}}>{distance} km</Text>
+                            <Text style={{fontSize: 0.04 * height, paddingHorizontal: 0.01 * height,}}>
+                                {(distance > 1000) ? (distance/1000).toFixed(2) +" km" : distance.toFixed(2) + " m"}
+                                </Text>
                         </View>
                         <View style={{
                             // backgroundColor: 'pink'

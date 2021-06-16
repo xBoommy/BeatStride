@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Dimensions, Animated, Text, TouchableOpacity, TouchableWithoutFeedback, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
+import * as Firestore from '../../../api/firestore';
 
 import color from '../../../constants/color';
 
@@ -16,8 +17,9 @@ const Event = (props) => {
     const completed = props.completed;          //current progress value
     const target = props.target;                //targeted value
     const url = props.url;                      //Event url for info
+    const id = props.id;                        //event id
 
-    const [join, setJoin] = useState(false);
+    const [join, setJoin] = useState();
     const [popToggle, setPopToggle] = useState(false);
 
     const [progressWidth, setProgressWidth] = useState(0);
@@ -35,6 +37,15 @@ const Event = (props) => {
     useEffect(() => {
         reactive.setValue(- progressWidth + (progressWidth * completed) / target);
     },[completed, progressWidth])
+
+    useEffect(() => {
+        Firestore.db_userEventStatus(
+            (eventList) => {
+                (eventList.includes(id) ? setJoin(true) : setJoin(false))
+            },
+            (error) => {console.log(error)},
+        )
+    },[])
 
     return(
         <View style={{paddingBottom: 0.02 * height}}>
@@ -87,7 +98,10 @@ const Event = (props) => {
                                             "Quit Event",
                                             "Are you sure you want to leave the event?",
                                             [ { text:"Cancel", onPress: () => {}}, 
-                                            { text:"Confirm", onPress: () => {setJoin(false)}} ]
+                                            { text:"Confirm", onPress: () => {
+                                                Firestore.db_leaveEvent(id);
+                                                setJoin(false)
+                                            }} ]
                                         )
                                     } else {
                                         setPopToggle(true)
@@ -154,6 +168,7 @@ const Event = (props) => {
                 popToggle={popToggle}
                 setPopToggle={setPopToggle}
                 setJoin={setJoin}
+                id={id}
             />
         </View>
     );

@@ -45,7 +45,7 @@ export const db_createAccount = (credentials, onSuccess, onError) => {
 
 
 
-//Works
+//Add run record to history
 const db_updateUserHistory = ( record ) => {
     const user_id = Authentication.getCurrentUserId()
     try {
@@ -54,7 +54,7 @@ const db_updateUserHistory = ( record ) => {
         console.log("Fail history record")
     }
 }
-//Works
+//Update cummulative distance
 const db_updateUserTotalDistance = ( record ) => {
     const user_id = Authentication.getCurrentUserId()
     try {
@@ -63,7 +63,7 @@ const db_updateUserTotalDistance = ( record ) => {
         console.log("fail user update distance record")
     }
 }
-//Works
+//Update run count
 const db_updateUserRunCount = () => {
     const user_id = Authentication.getCurrentUserId()
     try {
@@ -77,8 +77,12 @@ const db_getUserData = async() => {
     const user_id = Authentication.getCurrentUserId()
     try {
         const user_snapshot = await db.collection('users').doc(user_id).get();
-        const user = await user_snapshot.data();
-        return user
+        try{
+            const user = await user_snapshot.data();
+            return user
+        } catch (error) {
+            console.log(error)
+        }
     } catch (error) {
         console.log(error)
     }
@@ -129,24 +133,26 @@ export const db_recordRun = async(record, onSuccess, onError) => {
 
         //update event info
         const distance = record.distance
-        const user = await db_getUserData();
+        try{
+            const user = await db_getUserData();
         
         const events = user.events;
-        db_updateAllUserEvents(eventsList, distance);
+        db_updateAllUserEvents(events, distance);
 
         //update region info
         const region = user.region;
         db_updateAllUserRegionTotalDistance(region, distance);
         db_updateAllUserRegionUserDistance(region, distance);
-
         return onSuccess();
+
+        } catch (error) {
+            console.log(error)
+        }
+        
     } catch (error) {
         return onError(error)
     }
 }
-
-
-
 
 /**Obtain user's run history from docs in 'history' collection under user doc - WORKS
  * 
@@ -168,6 +174,7 @@ export const db_historyView = (onSuccess, onError) => {
     }
 }
 
+/**Add playlist */
 export const db_addUserPlaylists = ( playlist ) => {
     const user_id = Authentication.getCurrentUserId()
     try {
@@ -177,6 +184,7 @@ export const db_addUserPlaylists = ( playlist ) => {
     }
 }
 
+/**Remove playlist */
 export const db_removeUserPlaylists = ( playlist ) => {
     const user_id = Authentication.getCurrentUserId()
     try {
@@ -225,6 +233,27 @@ export const db_events = (onSuccess, onError) => {
     }
 }
 
+
+/**increase event particpation count */
+const db_joinEvent1 = (event_id) => {
+    try {
+        console.log(event_id)
+        db.collection('events').doc(event_id).update({participants: firebase.firestore.FieldValue.increment(1)})
+        console.log("increased")
+    } catch (error) {
+        console.log(error)
+    }
+}
+/**add event id to user info */
+const db_joinEvent2 = (event_id) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection('users').doc(user_id).update({events: firebase.firestore.FieldValue.arrayUnion(event_id)})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 /**Increase event participant count & add event_id to user field
  * 
  * @param {string} event_id 
@@ -232,42 +261,59 @@ export const db_events = (onSuccess, onError) => {
  * @param {function} onError 
  * @returns 
  */
-export const db_joinEvent = (event_id, onSuccess, onError) => {
+export const db_joinEvent = (event_id) => {
     try {
-        db.collection('events').doc(event_id).update('participants', FieldValue.increment(1));
-        db.collection('users').doc(user_id).update('events', FieldValue.arrayUnion(event_id))
+        db_joinEvent1(event_id);
+        db_joinEvent2(event_id);
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-        return onSuccess();
+/**decrease event particpation count */
+const db_leaveEvent1 = (event_id) => {
+    try {
+        db.collection('events').doc(event_id).update({participants: firebase.firestore.FieldValue.increment(-1)});
+    } catch (error) {
+        console.log(error)
+    }
+}
+/**remove event_id fom user field */
+ const db_leaveEvent2 = (event_id) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection('users').doc(user_id).update({events: firebase.firestore.FieldValue.arrayRemove(event_id)})
+    } catch (error) {
+        console.log(error)
+    }
+}
+/** Decrease event participant count & remove event_id to user field*/
+export const db_leaveEvent = (event_id) => {
+    try{
+        db_leaveEvent1(event_id);
+        db_leaveEvent2(event_id);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const db_userEventStatus = (onSuccess, onError) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users").doc(user_id)
+        .onSnapshot((doc) => {
+            const user = doc.data();
+            const eventList = user.events;
+            console.log(eventList)
+            return onSuccess(eventList);
+        })
     } catch (error) {
         return onError(error);
     }
 }
 
 
-/**Decrease event participant count & remove event_id fom user field
- * 
- * @param {string} event_id 
- * @param {function} onSuccess 
- * @param {function} onError 
- * @returns 
- */
-export const db_leaveEvent = async(event_id, onSuccess, onError) => {
-    try {
-        //Decrease participant count
-        db.collection('events').doc(event_id).update('participants', FieldValue.increment(-1));
-        
-        //extract and filter events array
-        const user = db.collection('users').doc(user_id).get();
-        let events = user.events;
-        events = events.filter(item => (item == event_id) )
-        //update events array
-        db.collection('users').doc(user_id).update('events', events);
 
-        return onSuccess();
-    } catch (error) {
-        return onError(error);
-    }
-}
 
 
 

@@ -31,7 +31,7 @@ const MusicMain = ({navigation}) => {
           (playlists) => { setPlaylists(playlists)},
           (error) => {console.log('Failed to initiate playlist in music main')}
       )
-    })
+    }, [])
 
     const [selectedPlaylistUri, setSelectedPlaylistUri] = useState('');
     const getPlaylistDetails = async (playlistUri) => {

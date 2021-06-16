@@ -74,6 +74,7 @@ const EventsComponent = ({navigation}) => {
                             completed={item.progress} 
                             target={item.target}
                             url={item.uri}
+                            id={item.id}
                         />}
                     style={{width:0.9 *  width}}
                 />

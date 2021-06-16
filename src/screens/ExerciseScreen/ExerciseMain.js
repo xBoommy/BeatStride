@@ -9,6 +9,7 @@ import color from '../../constants/color';
 import TempoRun from './MainTabs/TempoRun';
 import BasicRun from './MainTabs/BasicRun';
 import RunHistory from './MainTabs/RunHistory';
+import PreRunSelection from './PreRunSelection';
 
 const {width, height} = Dimensions.get("window")
 
@@ -92,7 +93,7 @@ const ExerciseMain = ({navigation}) => {
                         </View>
                     </TouchableWithoutFeedback>
 
-                    <TouchableWithoutFeedback 
+                    {/* <TouchableWithoutFeedback 
                         onPress={() => {
                             scrollHandler(1)
                             setTab("Basic")
@@ -110,7 +111,7 @@ const ExerciseMain = ({navigation}) => {
                                 borderRadius: height,
                             }}/>
                         </View>
-                    </TouchableWithoutFeedback>
+                    </TouchableWithoutFeedback> */}
 
                     <TouchableWithoutFeedback 
                         onPress={() => {
@@ -175,8 +176,9 @@ const ExerciseMain = ({navigation}) => {
                 {/* Run components */}
                 <View  style={styles.componentContainer}>
                     <TempoRun/>
-                    <BasicRun/>
+                    {/* <BasicRun/> */}
                     <RunHistory/>
+                    <PreRunSelection/>
                 </View>
                 
 

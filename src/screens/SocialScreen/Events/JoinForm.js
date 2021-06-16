@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Modal, Dimensions, Text, TouchableOpacity } from 'react-native';
+import * as Firestore from '../../../api/firestore';
 
 import color from '../../../constants/color'
 
@@ -9,6 +10,7 @@ const JoinForm = (props) => {
     const popToggle = props.popToggle;
     const setPopToggle = props.setPopToggle;
     const setJoin = props.setJoin;
+    const id = props.id;
 
     return(
         <Modal
@@ -82,6 +84,7 @@ const JoinForm = (props) => {
                             onPress={() => {
                                 setPopToggle(false);
                                 setJoin(true);
+                                Firestore.db_joinEvent(id);
                             }}
                         >
                             <Text style={{fontWeight:'bold'}}>Confirm</Text>
