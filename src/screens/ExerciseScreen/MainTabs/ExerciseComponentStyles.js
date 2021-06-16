@@ -38,9 +38,9 @@ const ExerciseComponentStyles = StyleSheet.create({
         width: width - 20,
         height: 0.7 * height,
         borderRadius: 15,
-
+        padding: 0.1 * width,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
     },
     mapContainer:{
         borderRadius: 15,
@@ -51,13 +51,14 @@ const ExerciseComponentStyles = StyleSheet.create({
         height: 0.7 * height,
     },
     playButton:{
+        position:'absolute',
         width: 100,
         height: 100,
         borderRadius:50,
         backgroundColor: color.primary,
         alignItems: 'center',
         justifyContent: 'center',
-        transform: [{translateY:50}],
+        bottom: 0.1 * height
     },
     playIcon:{
         width: 50,

@@ -9,6 +9,7 @@ import color from '../../constants/color';
 import TempoRun from './MainTabs/TempoRun';
 import BasicRun from './MainTabs/BasicRun';
 import RunHistory from './MainTabs/RunHistory';
+import TabIndicator from './TabIndicator';
 
 const {width, height} = Dimensions.get("window")
 
@@ -54,6 +55,7 @@ const ExerciseMain = ({navigation}) => {
             x: width * num,
             animated: true
     })}
+    const scrollX = useRef(new Animated.Value(0)).current;
 
     const [tab, setTab] = useState("Tempo")
 
@@ -76,77 +78,72 @@ const ExerciseMain = ({navigation}) => {
                     scrollHandler(0);
                     setTab('Tempo');
             }}>
-                <View>
+                <View style={{alignItems: 'center'}}>
                     <Text style={{
                         ...textStyle.subHeader,
                         color: tab == 'Tempo' ? color.primary : color.secondary,
                     }}>
                         Tempo Run
                     </Text>
-                    <View style={{
-                        height: 0.005 * height,
-                        backgroundColor: tab == 'Tempo' ? color.primary : 'transparent',
-                        borderRadius: height,
-                    }}/>
+                    <TabIndicator scrollX={scrollX} id={"Tempo"}/>
                 </View>
             </TouchableWithoutFeedback>
 
-            {/* <TouchableWithoutFeedback 
+            <TouchableWithoutFeedback 
                     onPress={() => {
                     scrollHandler(1)
                     setTab("Basic")
             }}>
-                <View>
+                <View style={{alignItems: 'center'}}>
                       <Text style={{
                           ...textStyle.subHeader,
                           color: (tab == "Basic") ? color.primary : color.secondary,
                       }}>
                           Basic Run
                       </Text>
-                      <View style={{
-                          height:0.005 * height,
-                          backgroundColor: (tab == "Basic") ? color.primary : 'transparent',
-                          borderRadius: height,
-                      }}/>
+                      <TabIndicator scrollX={scrollX} id={"Basic"}/>
                   </View>
-            </TouchableWithoutFeedback> */}
+            </TouchableWithoutFeedback>
 
             <TouchableWithoutFeedback 
                 onPress={() => {
-                    scrollHandler(1)
+                    scrollHandler(2)
                     setTab("History")
             }}>
-                <View>
+                <View style={{alignItems: 'center'}}>
                     <Text style={{
                         ...textStyle.subHeader,
                         color: (tab == "History") ? color.primary : color.secondary,
                     }}>
                         History
                     </Text>
-                    <View style={{
-                        height:0.005 * height,
-                        backgroundColor: (tab == "History") ? color.primary : 'transparent',
-                        borderRadius: height,
-                    }}/>
+                    <TabIndicator scrollX={scrollX} id={"History"}/>
                 </View>
             </TouchableWithoutFeedback>
+
         </View>
+        
 
         <Animated.ScrollView
-          ref={ref => setScrollRef(ref)}
-          horizontal
-          pagingEnabled={true}
-          snapToInterval={width}
-          decelerationRate="fast"
-          showsHorizontalScrollIndicator={false}
-          bounces={false}
-          overScrollMode="never"
-          disableIntervalMomentum={true}
-          style={styles.mainComponentContainer}>
+            ref={ref => setScrollRef(ref)}
+            horizontal
+            pagingEnabled={true}
+            snapToInterval={width}
+            decelerationRate="fast"
+            showsHorizontalScrollIndicator={false}
+            bounces={false}
+            overScrollMode="never"
+            disableIntervalMomentum={true}
+            style={styles.mainComponentContainer}
+            onScroll={Animated.event(
+                [{nativeEvent: {contentOffset: {x: scrollX}}}],
+                {useNativeDriver: false},
+             )}>
+
           {/* Run components */}
           <View style={styles.componentContainer}>
             <TempoRun />
-            {/* <BasicRun/> */}
+            <BasicRun/>
             <RunHistory />
           </View>
         </Animated.ScrollView>

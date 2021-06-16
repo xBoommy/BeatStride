@@ -22,7 +22,7 @@ const RunHistory = () => {
             <View style={ExerciseComponentStyles.componentContainer}>
 
                 {/* Section Content */}
-                <View style={ExerciseComponentStyles.contentContainer}>
+                <View>
                 <FlatList
                     data={history}
                     keyExtractor={item => item.id}
@@ -36,10 +36,11 @@ const RunHistory = () => {
                             steps={item.steps}
                             positions={item.positions}
                         />}
-                    style={{width: 0.9 *  width, 
-                        // backgroundColor: 'yellow',
+                    style={{
+                        width: 0.9 *  width, 
                         paddingTop: 0.01 * height,
                     }}
+                    contentContainerStyle={{paddingBottom: 0.02*height}}
                 />
                 </View>
                 

@@ -35,12 +35,12 @@ const SocialMain = ({navigation}) => {
                 }}
                 >
                     <TouchableOpacity onPress={() => setComponent("Individual")}>
-                        <Text style={textStyle.subHeader}>Individual</Text>
+                        <Text style={textStyle.subHeader}>Ranking</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => setComponent("Community")}>
+                    {/* <TouchableOpacity onPress={() => setComponent("Community")}>
                         <Text style={textStyle.subHeader}>Community</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     <TouchableOpacity onPress={() => setComponent("Events")}>
                         <Text style={textStyle.subHeader}>Events</Text>
@@ -56,18 +56,18 @@ const SocialMain = ({navigation}) => {
                 }}
                 >
                     <View style={{
-                        width: 0.185 * width,
+                        width: 0.15 * width,
                         height:0.005 * height,
                         backgroundColor: (component == "Individual") ? color.primary : 'transparent',
                         borderRadius: 0.005 * height,
                     }}/>
 
-                    <View style={{
+                    {/* <View style={{
                         width: 0.22 * width,
                         height:0.005 * height,
                         backgroundColor: (component == "Community") ? color.primary : 'transparent',
                         borderRadius: 0.005 * height,
-                    }}/>
+                    }}/> */}
 
                     <View style={{
                         width: 0.12 * width,
@@ -86,7 +86,8 @@ const SocialMain = ({navigation}) => {
                     borderRadius: 15,
                     elevation: 5,
                 }}>
-                    {(component == "Individual") ? <Individual/> : ((component == "Community") ? <Community/> : ((component == "Events") ? <Events/> : <></>) )}
+                    {/* {(component == "Individual") ? <Individual/> : ((component == "Community") ? <Community/> : ((component == "Events") ? <Events/> : <></>) )} */}
+                    {(component == "Individual") ? <Individual/> : <Events/>}
                 </View>
             </View>
         

@@ -3,8 +3,10 @@ import {  Dimensions, StyleSheet, Text, View, Image, TouchableOpacity, Alert } f
 import MapView from 'react-native-maps';
 import { useNavigation, CommonActions } from '@react-navigation/native'; 
 import * as Location from 'expo-location';
+import { Button } from "react-native-paper";
 
 import ExerciseComponentStyles from './ExerciseComponentStyles';
+import color from '../../../constants/color';
 
 const {width, height} = Dimensions.get("window")
 
@@ -70,7 +72,34 @@ const BasicRun = () => {
 
                 {/* Section Content */}
                 <View style={ExerciseComponentStyles.contentContainer}>
-                    <Text>BasicRun</Text>
+                    <View style={{
+                            width: 0.7 * width,
+                            height: 0.3 * height,
+                            borderRadius: 15,
+                            backgroundColor: "#FFFFFF",
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
+
+                            {/* Total Distance Indicator */}
+                            <View style={{alignItems: 'center', }}>
+                                <View style={{flexDirection: 'row', alignItems: 'flex-end',}}>
+                                    <Text style={{fontWeight: 'bold', fontSize: 0.07* height}}>110.7</Text>
+                                    <Text style={{fontWeight: 'bold',}}> km</Text>
+                                </View>
+                                <Text style={styles.label}>Total Distance</Text>
+                            </View>
+
+                            {/* Total Runs Indicator */}
+                            <View style={{alignItems: 'center', }}>
+                                <View style={{flexDirection: 'row', alignItems: 'flex-end',}}>
+                                    <Text style={{fontWeight: 'bold', fontSize: 0.05* height}}>38</Text>
+                                    <Text style={{fontWeight: 'bold',}}> runs</Text>
+                                </View>
+                                <Text style={styles.label}>Total Runs</Text>
+                            </View>
+                    
+                        </View>
 
                     {/* Button */}
                     <TouchableOpacity 

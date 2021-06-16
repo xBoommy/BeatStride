@@ -3,9 +3,14 @@ import {  Dimensions, StyleSheet, Text, View, Image, TouchableOpacity, Alert } f
 import MapView from 'react-native-maps';
 import { useNavigation, CommonActions } from '@react-navigation/native'; 
 import * as Location from 'expo-location';
+import { Button } from "react-native-paper";
+
+import color from '../../../constants/color';
 
 import ExerciseComponentStyles from './ExerciseComponentStyles';
 import PreRunSelection from '../PreRunSelection';
+
+const {width, height} = Dimensions.get("window")
 
 const TempoRun = () => {
     const navigation = useNavigation();
@@ -49,6 +54,10 @@ const TempoRun = () => {
 
 
     const [selectionToggle, setSelectionToggle] = useState(false);
+
+    // GOAL
+    const [goalDistance, setGoalDistance] = useState(0);
+    const [goalTiming, setGoalTiming] = useState(0);
     
     return (
         <View style={ExerciseComponentStyles.containerBuffer}>
@@ -77,7 +86,71 @@ const TempoRun = () => {
 
                 {/* Section Content */}
                 <View style={ExerciseComponentStyles.contentContainer}>
-                    <Text>TempoRun</Text>
+                    <View style={{
+                        width: 0.7 * width,
+                        height: 0.4 * height,
+                        borderRadius: 15,
+                        backgroundColor: "#FFFFFF",
+                        justifyContent: 'flex-start'
+                    }}>
+
+                        {/* Total Distance Indicator */}
+                        <View style={{alignItems: 'center', paddingTop: 0.02 * height}}>
+                            <View style={{flexDirection: 'row', alignItems: 'flex-end',}}>
+                                <Text style={{fontWeight: 'bold', fontSize: 0.07* height}}>110.7</Text>
+                                <Text style={{fontWeight: 'bold',}}> km</Text>
+                            </View>
+                            <Text style={styles.label}>Total Distance</Text>
+                        </View>
+                        
+                        {/* Goals Indicator */}
+                        <View style={{alignItems: 'center', paddingTop: 0.02 * height}}>
+                            {/* Header */}
+                            <Text style={{fontWeight: 'bold', fontSize: 0.025 * height}}>Goals:</Text>
+
+                            {/* Distance */}
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'flex-end',
+                                // backgroundColor: 'blue',
+                                width: 0.5 * width,
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                            }}>
+                                <Text style={{fontSize: 0.02 * height}}>Distance</Text>
+                                <Text style={{fontWeight: 'bold', fontSize: 0.02 * height}}>5 km</Text>
+                            </View>
+
+                            {/* Timing */}
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'flex-end',
+                                // backgroundColor: 'blue',
+                                width: 0.5 * width,
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                            }}>
+                                <Text style={{fontSize: 0.02 * height}}>Timing</Text>
+                                <Text style={{fontWeight: 'bold', fontSize: 0.02 * height}}>35 mins</Text>
+                            </View>
+
+                            <View style={{alignItems:'center', paddingTop: 0.02 * height, paddingBottom: 0.01 * height}}>
+                                <Text style={{fontWeight: 'bold', fontSize: 0.02 * height}}>Recommended Pace</Text>
+                                <Text>110 bpm</Text>
+                            </View>
+
+                            <Button
+                                mode="contained"
+                                style={{ borderRadius: 10 }}
+                                contentStyle={{backgroundColor: color.primary}}
+                                onPress={() => {}}
+                                theme={{ colors: { primary: color.primary}}}
+                            >
+                                <Text style={{color: "#FFFFFF"}}>Edit Goals</Text>
+                            </Button>
+                            
+                        </View>
+                    </View>
 
                     {/* Button */}
                     <TouchableOpacity 

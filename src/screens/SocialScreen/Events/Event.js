@@ -72,15 +72,20 @@ const Event = (props) => {
                             alignItems: 'center', 
                             justifyContent: 'space-between',
                             paddingBottom: 0.005 * height,
+                            width: 0.8 * width
                         }}>
 
                             {/* Title */}
-                            <Text style={{
-                                fontSize: 0.03 * height,
-                                fontWeight: 'bold',
-                            }}>
-                                {title}
-                            </Text>
+                            <View style={{width: 0.5 * width}}>
+                                <Text style={{
+                                    fontSize: 0.03 * height,
+                                    fontWeight: 'bold',}}
+                                    numberOfLines={1}    
+                                >
+                                    {title}
+                                </Text>
+                            </View>
+                            
 
                             {/* Join Button */}
                             <TouchableOpacity 
