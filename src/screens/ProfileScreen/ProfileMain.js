@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Dimensions} from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
 import { Button } from 'react-native-paper';
 import { CommonActions } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/Foundation'
@@ -33,6 +33,8 @@ const ProfileMain = ({navigation}) => {
   const [runCount, setRunCount] = useState(0);
   const [totalDistance, setTotalDistance] = useState(0);
 
+  const [isRanking, setIsRanking] = useState(true);
+
   useEffect(() => {
     Firestore.db_getUserData().then((user) => {
       setDisplayName(user.displayName);
@@ -42,8 +44,8 @@ const ProfileMain = ({navigation}) => {
       setRegion(user.region);
       setRunCount(user.runCount);
       setTotalDistance(user.totalDistance);
-    })
-  })
+    });
+  },[]);
 
   
 
@@ -60,113 +62,207 @@ const ProfileMain = ({navigation}) => {
   };
 
     return (
-      <Screen>
-        <Text style={textStyle.header}>Profile</Text>
-        <ScrollView style={styles.container}>
-          <View>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <ProfilePicture
-                image={require('../../assets/icons/defaultprofile.png')}
-              />
-            </View>
-            <View style={{height: 0.3 * height}}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  height: 0.1 * height,
-                  
-                  justifyContent: 'center',
-                  elevation: 10,
-                }}>
-                <View
-                  style={{
-                    width: 0.1 * height,
-                    flex: 1,
-                    justifyContent: 'center',
-                    backgroundColor: 'cyan',
-                  }}>
-                  <Text style={{fontSize: 0.04 * height, textAlign: 'center'}}>
-                    {age}
-                  </Text>
+      <View style={styles.container}>
+        <Screen>
+          <Text style={textStyle.header}>Profile</Text>
+          <View style={styles.innerContainer}>
+            <View>
+              {/* Profile Picture */}
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <ProfilePicture
+                  image={require('../../assets/icons/defaultprofile.png')}
+                />
+              </View>
+              {/* Age, Name, Gender Block */}
+
+              <View style={{height: 0.315 * height}}>
+                <View style={{width: 0.9 * width, alignItems: 'center'}}>
+                  <View
+                    style={{
+                      width: 0.8 * width,
+                      flexDirection: 'row',
+                      height: 0.075 * height,
+                      justifyContent: 'center',
+                      backgroundColor: '#FFFFFF',
+                      borderRadius: 5,
+                      overflow: 'hidden',
+                      elevation: 10,
+                    }}>
+                    {/* Age */}
+                    <View
+                      style={{
+                        height: 0.075 * height,
+                        width: 0.075 * height,
+                        justifyContent: 'center',
+                        backgroundColor: 'cyan',
+                      }}>
+                      <Text
+                        style={{fontSize: 0.03 * height, textAlign: 'center'}}>
+                        {age}
+                      </Text>
+                    </View>
+                    {/* Name */}
+                    <View
+                      style={{
+                        width: 0.55 * width,
+                        backgroundColor: '#FFFFFF',
+                        justifyContent: 'center',
+                      }}>
+                      <Text
+                        style={{fontSize: 0.04 * height, textAlign: 'center'}}>
+                        {displayName}
+                      </Text>
+                    </View>
+                    {/* Gender Icon */}
+                    <View
+                      style={{
+                        width: 0.075 * height,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: 'yellow',
+                      }}>
+                      {gender === 'Male' ? (
+                        <Icon name="male-symbol" size={0.12 * width} />
+                      ) : gender === 'Female' ? (
+                        <Icon name="Female-symbol" size={0.12 * width} />
+                      ) : (
+                        <Icon2 name="male-female" size={0.12 * width} />
+                      )}
+                    </View>
+                  </View>
                 </View>
+                {/* Region */}
                 <View
                   style={{
-                    flex: 3,
-                    backgroundColor: '#FFFFFF',
-                    justifyContent: 'center',
-                  }}>
-                  <Text style={{fontSize: 0.04 * height, textAlign: 'center'}}>
-                    {displayName}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    width: 0.1 * height,
-                    flex: 1,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: 'yellow',
+                    height: 0.1 * height,
                   }}>
-                  {gender === 'Male' ? (
-                    <Icon name="male-symbol" size={0.12 * width} />
-                  ) : gender === 'Female' ? (
-                    <Icon name="Female-symbol" size={0.12 * width} />
-                  ) : (
-                    <Icon2 name="male-female" size={0.12 * width} />
-                  )}
+                  <View
+                    style={{
+                      paddingVertical: 0.015 * height,
+                      backgroundColor: 'pink',
+                      width: '100%',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      elevation: 5,
+                    }}>
+                    <Text style={{fontSize: 0.03 * height}}>{region}</Text>
+                  </View>
+                </View>
+                {/* Run Boxes */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    height: 0.12 * height,
+                    //paddingTop: 0.03 * height,
+                    justifyContent: 'space-between',
+                  }}>
+                  {/* Total Runs */}
+                  <View
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      width: '47%',
+                      paddingTop: 0.015 * height,
+                      alignItems: 'center',
+                      borderRadius: 15,
+                      elevation: 5,
+                    }}>
+                    <Text style={{fontSize: 0.025 * height}}>Total Runs</Text>
+                    <View style={{height: '50%', justifyContent: 'center'}}>
+                      <Text style={{fontSize: 0.035 * height}}>{runCount}</Text>
+                    </View>
+                  </View>
+
+                  {/* Total Distance */}
+                  <View
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      width: '47%',
+                      paddingTop: 0.015 * height,
+                      alignItems: 'center',
+                      elevation: 5,
+                      borderRadius: 15,
+                    }}>
+                    <Text style={{fontSize: 0.025 * height}}>
+                      Total Distance:
+                    </Text>
+                    <Text style={{fontSize: 0.035 * height}}>
+                      {totalDistance < 1000
+                        ? totalDistance + ' m'
+                        : (totalDistance / 1000).toFixed(2) + 'km'}
+                    </Text>
+                  </View>
                 </View>
               </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  height: 0.2 * height,
-                  paddingTop: 0.05 * height,
-                  justifyContent: 'space-around',
-                }}>
-                <View style={{backgroundColor: 'orange', width: '45%', elevation: 10}}>
-                  <Text style={{fontSize: 0.025 * height}}>Total Runs:</Text>
-                  <Text style={{fontSize: 0.03 * height}}>{runCount}</Text>
+              <View style={{height: 0.2 * height}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => setIsRanking(true)}
+                    style={{
+                      backgroundColor: isRanking ? '#FFFFFF' : '#ccc',
+                      width: '45%',
+                      borderTopLeftRadius: 15,
+                      borderTopRightRadius: 15,
+                      elevation: 5,
+                    }}>
+                    <Text
+                      style={{fontSize: 0.03 * height, textAlign: 'center'}}>
+                      Ranking
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setIsRanking(false)}
+                    style={{
+                      backgroundColor: isRanking ? '#ccc' : '#FFFFFF',
+                      width: '45%',
+                      borderTopLeftRadius: 15,
+                      borderTopRightRadius: 15,
+                      elevation: 5,
+                    }}>
+                    <Text
+                      style={{fontSize: 0.03 * height, textAlign: 'center'}}>
+                      Achievements
+                    </Text>
+                  </TouchableOpacity>
                 </View>
-                <View style={{backgroundColor: 'yellow', width: '45%', elevation: 10}}>
-                  <Text style={{fontSize: 0.025 * height}}>
-                    Total Distance:
-                  </Text>
-                  <Text style={{fontSize: 0.03 * height}}>
-                    {totalDistance < 1000
-                      ? totalDistance + ' m'
-                      : totalDistance / 1000 + 'km'}
-                  </Text>
-                </View>
+                {isRanking ? <Ranking /> : <Achievements />}
               </View>
             </View>
 
-            <View style={{flexDirection: 'row', paddingTop: 0.05 * height}}>
-              <Ranking />
-              <Achievements />
-            </View>
+            <Button
+              mode="contained"
+              style={{marginTop: 20, borderRadius: 10}}
+              contentStyle={{paddingVertical: 5}}
+              onPress={handleLogout}
+              loading={isLogoutLoading}
+              disabled={isLogoutLoading}
+              theme={{
+                colors: {primary: color.primary, underlineColor: 'transparent'},
+              }}>
+              <Text style={{color: '#FFFFFF'}}>Log Out</Text>
+            </Button>
           </View>
-          <Button
-            mode="contained"
-            style={{marginTop: 20, borderRadius: 10}}
-            contentStyle={{paddingVertical: 5}}
-            onPress={handleLogout}
-            loading={isLogoutLoading}
-            disabled={isLogoutLoading}
-            theme={{
-              colors: {primary: color.primary, underlineColor: 'transparent'},
-            }}>
-            <Text style={{color: '#FFFFFF'}}>Log Out</Text>
-          </Button>
-        </ScrollView>
-      </Screen>
+        </Screen>
+      </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        height: 0.73 * height,
-    }
+      backgroundColor: 'orange',
+      //opacity: 0.7
+    },
+    innerContainer: {
+        height: 0.9 * height,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 15,
+    },
 });
 
 export default ProfileMain;

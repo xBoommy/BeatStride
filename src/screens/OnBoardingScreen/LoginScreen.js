@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import {  SafeAreaView, StyleSheet, Text, View, ScrollView, Keyboard } from 'react-native';
+import {  SafeAreaView, StyleSheet, Text, View, Dimensions, Keyboard, Image } from 'react-native';
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 
@@ -7,6 +7,8 @@ import * as Authentication from "../../api/auth";
 
 import Screen from '../../constants/screen';
 import color from '../../constants/color';
+
+const {width, height} = Dimensions.get('window');
 
 const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState("");
@@ -51,7 +53,9 @@ const LoginScreen = ({navigation}) => {
             </View>
 
             <View style={{alignItems:'center',}}>
-                <View style={{backgroundColor:'yellow', height:150, width:250}}></View>
+                <View style={{height: 0.265 * height, width: 0.7 * width, alignItems: 'center'}}>
+                  <Image source={require('../../assets/icons/Logo.png')} style={{height: 0.3 * height, width: 0.75 * width}}/>
+                </View>
             </View>
 
             <Text style={styles.subtitle}>Welcome!</Text>
