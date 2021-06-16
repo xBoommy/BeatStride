@@ -250,7 +250,7 @@ const RunningMain = ({navigation}) => {
                         date:date,
                     });
                 },
-                () => {console.log(error)}    
+                (error) => {console.log(error)}    
             )
         }
     },[runStatus])

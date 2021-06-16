@@ -73,11 +73,12 @@ const db_updateUserRunCount = () => {
     }
 }
 /**get all the events that user is participating in, as an array - NOT WORKING */ 
-const db_getUserData = () => {
+const db_getUserData = async() => {
+    const user_id = Authentication.getCurrentUserId()
     try {
-        const snapshot = db.collection('users').doc(user_id).get();
-        const data = snapshot.data()
-        return data
+        const user_snapshot = await db.collection('users').doc(user_id).get();
+        const user = await user_snapshot.data();
+        return user
     } catch (error) {
         console.log(error)
     }
@@ -101,18 +102,6 @@ const db_contributeEachEvent = (event_id, distance) =>{
         console.log(error);
     }
 }
-/**get user's region - NOT WORKING */
-const db_getUserRegion = () => {
-    try {
-        const snapshot = db.collection('users').doc(user_id).get();
-        const data = snapshot.data();
-        console.log("data from get user region")
-        console.log(data)
-        return data.region;
-    } catch (error) {
-        console.log(error)
-    }
-}
 /**update region total distance - NOT WORKING*/
 const db_updateAllUserRegionTotalDistance = (region, distance) => {
     try {
@@ -123,6 +112,7 @@ const db_updateAllUserRegionTotalDistance = (region, distance) => {
 }
 /**update region user distance - NOT WORKING*/
 const db_updateAllUserRegionUserDistance = (region, distance) => {
+    const user_id = Authentication.getCurrentUserId()
     try {
         db.collection('region').doc(region).collection('users').doc(user_id).update({distance: firebase.firestore.FieldValue.increment(distance)})
     } catch (error) {
@@ -130,7 +120,7 @@ const db_updateAllUserRegionUserDistance = (region, distance) => {
     }
 }
 
-export const db_recordRun = (record, onSuccess, onError) => {
+export const db_recordRun = async(record, onSuccess, onError) => {
     try {
         //Update personal info
         db_updateUserHistory(record);
@@ -138,24 +128,22 @@ export const db_recordRun = (record, onSuccess, onError) => {
         db_updateUserRunCount();
 
         //update event info
-        // const distance = record.distance
-        // const data = db_getUserData();
-        // const events = data.events
-        // db_updateAllUserEvents(eventsList, distance);
+        const distance = record.distance
+        const user = await db_getUserData();
+        
+        const events = user.events;
+        db_updateAllUserEvents(eventsList, distance);
 
         //update region info
-        // const region = data.region
-        // db_updateAllUserRegionTotalDistance(region, distance);
-        // db_updateAllUserRegionUserDistance(region, distance);
+        const region = user.region;
+        db_updateAllUserRegionTotalDistance(region, distance);
+        db_updateAllUserRegionUserDistance(region, distance);
 
         return onSuccess();
     } catch (error) {
         return onError(error)
     }
 }
-
-
-
 
 
 

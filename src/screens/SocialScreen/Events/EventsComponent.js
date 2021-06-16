@@ -1,5 +1,6 @@
-import React, { } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, FlatList, Dimensions } from 'react-native';
+import * as FireStore from '../../../api/firestore';
 
 import Screen from '../../../constants/screen';
 
@@ -13,7 +14,7 @@ const {width, height} = Dimensions.get("window")
     3. insert array into flatlist*/
     
 //EXAMPLE DATA
-const events = [
+/*const events = [
     {
         id: 1,
         title: "Charity Run 2021",
@@ -46,24 +47,33 @@ const events = [
         target: 50,
         url:"https://www.yahoo.com"
     },
-]
+]*/
 
 const EventsComponent = ({navigation}) => {
+    const [eventList, setEventList] = useState([]);
+
+    useEffect(()=>{
+        FireStore.db_events(
+            (events) => {setEventList(events)},
+            (error) => {console.log("Events list error")}
+        )
+    })
+    
     return(
         <Screen>
             <View style={{
                 alignItems: 'center',
             }}>
                 <FlatList
-                    data={events}
+                    data={eventList}
                     keyExtractor={item => item.id}
                     renderItem={({item}) => 
                         <Event 
                             title={item.title}
                             description={item.description}
-                            completed={item.completed} 
+                            completed={item.progress} 
                             target={item.target}
-                            url={item.url}
+                            url={item.uri}
                         />}
                     style={{width:0.9 *  width}}
                 />
