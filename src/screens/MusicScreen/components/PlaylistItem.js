@@ -2,6 +2,7 @@ import React from 'react';
 import {View, SafeAreaView, StyleSheet, Image, Text, Dimensions} from 'react-native';
 
 import color from '../../../constants/color';
+import textStyle from '../../../constants/textStyle';
 const {width, height} = Dimensions.get('window');
 
 const PlaylistItem = props => {
@@ -41,11 +42,10 @@ const styles = StyleSheet.create({
     
   },
   title: {
-    fontSize: 0.03 * height,
-    fontWeight: 'bold',
+    ...textStyle.title
   },
   text:{
-    width: 0.36 * width,
+    ...textStyle.subtitle,
     alignItems: 'center',
     justifyContent: 'flex-start',
   }

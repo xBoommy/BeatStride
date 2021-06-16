@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as Firestore from '../../../api/firestore';
 
 import color from '../../../constants/color';
+import textStyle from '../../../constants/textStyle';
 
 import Joinform from './JoinForm';
 
@@ -77,9 +78,7 @@ const Event = (props) => {
 
                             {/* Title */}
                             <View style={{width: 0.5 * width}}>
-                                <Text style={{
-                                    fontSize: 0.03 * height,
-                                    fontWeight: 'bold',}}
+                                <Text style={textStyle.title}
                                     numberOfLines={1}    
                                 >
                                     {title}
@@ -126,7 +125,7 @@ const Event = (props) => {
                         <View style={{paddingRight: 0.05 * width,}}>
                             <Text 
                                 numberOfLines={2}
-                                style={{fontSize: 0.018 * height,}}
+                                style={textStyle.subtitle}
                             >
                                 {description}
                             </Text>                         

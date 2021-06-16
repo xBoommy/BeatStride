@@ -35,8 +35,8 @@ const EndMap = (props, {navigation}) => {
             region={{
                 latitude: center.latitude,
                 longitude: center.longitude,
-                latitudeDelta: 0.002,
-                longitudeDelta: 0.002,
+                latitudeDelta: {latDelta},
+                longitudeDelta: {latDelta},
             }}
             >
             <Polyline

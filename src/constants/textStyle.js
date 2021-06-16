@@ -7,12 +7,26 @@ const {width, height} = Dimensions.get("window")
 
 const textStyle = StyleSheet.create({
     header: {
-        fontSize: 0.04 * height,
+        fontSize: 32,
         fontWeight: 'bold',
     },
     subHeader: {
-        fontSize: 0.02 * height,
+        fontSize: 14,
     },
+    title:{
+        fontSize: 18,
+        fontWeight:'bold',
+    },
+    subtitle: {
+        fontSize: 12,
+    },
+    title2:{
+        fontSize: 16,
+        fontWeight:'bold',
+    },
+    subtitle2:{
+        fontSize: 10,
+    }
     
 }) 
 
