@@ -33,7 +33,7 @@ export default TabIndicator = (props) => {
 
 const styles = StyleSheet.create({
     dot: {
-        height: 10,
+        height: 5,
         borderRadius: 5,
         backgroundColor: color.primary,
         marginHorizontal: 8,

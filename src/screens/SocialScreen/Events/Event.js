@@ -50,30 +50,30 @@ const Event = (props) => {
     },[])
 
     return(
-        <View style={{paddingBottom: 0.02 * height}}>
+        <View style={{paddingBottom: 15,}}>
             <TouchableWithoutFeedback onPress={() => navigation.navigate("EventInfo", {url: url})}>
                 {/* Event Container */}
                 <View style={{
                     backgroundColor: 'pink',
                     borderRadius: 15,
-                    width: 0.9 *  width,
-                    height: 0.2 * height,
+                    width: width - 40,
+                    height: 150,
                     alignItems: 'center',
                     justifyContent: 'flex-start',
-                    paddingHorizontal: 0.02 * width,
-                    paddingTop: 0.02 * height,
+                    paddingHorizontal: 15,
+                    paddingTop: 15,
                     elevation: 10,
                 }}> 
                     {/* Details Segment  */}
-                    <View style={{alignContent: 'flex-start', width: 0.9 *  width, paddingHorizontal: 0.04 * width,}}> 
+                    <View style={{alignContent: 'flex-start', width: width - 40, paddingHorizontal: 15,}}> 
 
                         {/* Title & Button */}
                         <View style={{
                             flexDirection: 'row', 
                             alignItems: 'center', 
                             justifyContent: 'space-between',
-                            paddingBottom: 0.005 * height,
-                            width: 0.8 * width
+                            paddingBottom: 5,
+                            width: width - 70
                         }}>
 
                             {/* Title */}
@@ -90,7 +90,7 @@ const Event = (props) => {
                             <TouchableOpacity 
                                 style={{
                                     backgroundColor: (join) ? color.secondary : color.primary,
-                                    padding: 0.01 * height,
+                                    padding: 10,
                                     borderRadius: height,
                                     width: 0.25 * width,
                                     justifyContent:'center',
@@ -114,15 +114,15 @@ const Event = (props) => {
                                 }}
                             > 
                                 {(join) 
-                                ? <Text style={{fontSize: 0.018 * height, fontWeight: 'bold',}}>Joined</Text> 
-                                : <Text style={{fontSize: 0.018 * height, fontWeight: 'bold',}}>Join Now</Text>
+                                ? <Text style={{...textStyle.subHeader, fontWeight: 'bold',}}>Joined</Text> 
+                                : <Text style={{...textStyle.subHeader, fontWeight: 'bold',}}>Join Now</Text>
                                 }
                             </TouchableOpacity>
                         </View>
                         
 
                         {/* Description */}
-                        <View style={{paddingRight: 0.05 * width,}}>
+                        <View style={{paddingRight: 5,}}>
                             <Text 
                                 numberOfLines={2}
                                 style={textStyle.subtitle}
@@ -134,15 +134,15 @@ const Event = (props) => {
                     </View>
                     
                     {/* Progress Segment */}
-                    <View style={{position:'absolute', bottom: 0.02 * height,}}>
+                    <View style={{position:'absolute', bottom: 15,}}>
 
                         {/* Numerical Progress */}
-                        <View style={{flexDirection: 'row', width: 0.78 *  width, justifyContent: 'space-between'}}>
-                            <Text style={{fontWeight: 'bold', fontSize: 0.015 * height,}}>
+                        <View style={{flexDirection: 'row', width: width - 70, justifyContent: 'space-between'}}>
+                            <Text style={{...textStyle.subtitle, fontWeight:'bold'}}>
                                 Progress: {(completed/1000).toFixed(2)}/{(target/1000).toFixed(2)} km
                             </Text>
-                            <Text style={{fontWeight: 'bold', fontSize: 0.015 * height,}}>
-                                {participants} Participating
+                            <Text style={{...textStyle.subtitle, fontWeight:'bold'}}>
+                                {participants} Joined
                             </Text>
                         </View>
 
@@ -153,16 +153,16 @@ const Event = (props) => {
                                 setProgressWidth(newWidth);
                             }}
                             style={{
-                                height: 0.02 * height,
+                                height: 12,
                                 borderRadius:height,
-                                width: 0.8 *  width,
+                                width: width - 70,
                                 backgroundColor: '#DDDDDD',
                                 overflow: 'hidden',
                         }}>
                             <Animated.View style={{
-                                height: 0.02 * height,
+                                height: 12,
                                 borderRadius:height,
-                                width: 0.8 *  width,
+                                width: width - 70,
                                 backgroundColor: color.primary,
                                 position: 'absolute',
                                 left: 0,

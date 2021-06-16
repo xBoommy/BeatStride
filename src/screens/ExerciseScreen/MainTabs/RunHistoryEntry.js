@@ -6,6 +6,7 @@ import { TextInput } from "react-native-paper";
 import moment from 'moment';
 
 import color from '../../../constants/color';
+import textStyle from '../../../constants/textStyle';
 
 
 const {width, height} = Dimensions.get("window")
@@ -26,12 +27,12 @@ const RunHistoryEntry = (props) => {
     return(
         <View style={{paddingVertical: 0.01 * height, alignItems:'center'}}>
             <View style={{
-                backgroundColor: '#FFFFFF',
-                width: 0.88 * width,
+                backgroundColor: 'pink',
+                width: width - 30,
                 height: 0.12 * height,
                 borderRadius: 15,
-                paddingVertical: 0.01 * height,
-                paddingHorizontal: 0.02 * height,
+                paddingVertical: 10,
+                paddingHorizontal: 10,
                 justifyContent: 'center',
                 alignItems:'center',
                 elevation: 5,
@@ -40,15 +41,15 @@ const RunHistoryEntry = (props) => {
                 
                 <View style={{
                     // backgroundColor: 'grey',
-                    width: 0.8 * width,
+                    width: width-60,
                     justifyContent: 'space-between',
                     flexDirection: 'row',
                     alignItems: 'flex-start'
                 }}>
                     <View>
                         <View style={{flexDirection: 'row', alignItems:'center'}}>
-                            <Icon name="running" color= {color.primary} size={0.04 * height}/>
-                            <Text style={{fontSize: 0.04 * height, paddingHorizontal: 0.01 * height,}}>
+                            <Icon name="running" color= {color.primary} size={30}/>
+                            <Text style={{...textStyle.title, paddingHorizontal: 10,}}>
                                 {(distance > 1000) ? (distance/1000).toFixed(2) +" km" : distance.toFixed(2) + " m"}
                                 </Text>
                         </View>
@@ -61,39 +62,30 @@ const RunHistoryEntry = (props) => {
                             }}>
                                 <View style={{flexDirection: 'row', 
                                     alignItems:'center', 
-                                    paddingHorizontal: 0.02 * height,
+                                    paddingHorizontal: 20,
                                 }}>
-                                    <Icon name="stopwatch" color= {color.primary} size={0.03 * height}/>
-                                    <Text style={{fontSize: 0.02 * height, paddingLeft: 0.005 * height,}}>{runTime.hours()}:{runTime.minutes()}:{runTime.seconds()}</Text>
+                                    <Icon name="stopwatch" color= {color.primary} size={20}/>
+                                    <Text style={{...textStyle.title2, paddingLeft: 10,}}>{runTime.hours()}:{runTime.minutes()}:{runTime.seconds()}</Text>
                                 </View>
                                 
                                 <View style={{
                                     flexDirection: 'row', 
                                     alignItems:'center',
-                                    paddingHorizontal: 0.02 * height,
+                                    paddingHorizontal: 10,
                                     }}>
-                                    <Icon name="paw" color= {color.primary} size={0.03 * height}/>
-                                    <Text style={{fontSize: 0.02 * height, paddingLeft: 0.005 * height,}}>{steps}</Text>
+                                    <Icon name="paw" color= {color.primary} size={20}/>
+                                    <Text style={{...textStyle.title2, paddingLeft: 10,}}>{steps}</Text>
                                 </View>
                             </View>
                         </View>
                     </View>
                     
                     <View style={{alignItems: 'flex-end'}}>
-                        <Text style={{fontSize: 0.025 * height, fontWeight: 'bold', color: color.secondary}}>{date}</Text>
-                        <Text style={{fontSize: 0.015 * height, color: color.secondary}}>{day}</Text>
-                        <Text style={{fontSize: 0.015 * height, color: color.secondary}}>{time}</Text>
+                        <Text style={{...textStyle.title2, fontWeight: 'bold', color: color.secondary}}>{date}</Text>
+                        <Text style={{...textStyle.subtitle, color: color.secondary}}>{day}</Text>
+                        <Text style={{...textStyle.subtitle, color: color.secondary}}>{time}</Text>
                     </View>
                 </View>
-
-                
-
-
-                
-                
-
-            
-                
             </View>
         </View>
     );

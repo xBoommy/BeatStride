@@ -401,9 +401,9 @@ const RunningMain = ({navigation}) => {
                     )}
                 </View>
 
-                <RunningMusic
+                {/* <RunningMusic
                     runStatus={runStatus}
-                />
+                /> */}
                 
             </View>
             {/* Data Container End */}

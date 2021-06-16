@@ -6,6 +6,7 @@ import * as Location from 'expo-location';
 import { Button } from "react-native-paper";
 
 import color from '../../../constants/color';
+import textStyle from '../../../constants/textStyle';
 
 import ExerciseComponentStyles from './ExerciseComponentStyles';
 import PreRunSelection from '../PreRunSelection';
@@ -87,26 +88,27 @@ const TempoRun = () => {
                 {/* Section Content */}
                 <View style={ExerciseComponentStyles.contentContainer}>
                     <View style={{
-                        width: 0.7 * width,
-                        height: 0.4 * height,
+                        width: width-20-40,
+                        height: 325,
                         borderRadius: 15,
                         backgroundColor: "#FFFFFF",
-                        justifyContent: 'flex-start'
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
                     }}>
 
                         {/* Total Distance Indicator */}
-                        <View style={{alignItems: 'center', paddingTop: 0.02 * height}}>
+                        <View style={{alignItems: 'center', paddingTop:20}}>
                             <View style={{flexDirection: 'row', alignItems: 'flex-end',}}>
-                                <Text style={{fontWeight: 'bold', fontSize: 0.07* height}}>110.7</Text>
-                                <Text style={{fontWeight: 'bold',}}> km</Text>
+                                <Text style={{fontWeight: 'bold', fontSize: 50}}>110.7</Text>
+                                <Text style={{...textStyle.subHeader, fontWeight: 'bold',}}> km</Text>
                             </View>
-                            <Text style={styles.label}>Total Distance</Text>
+                            <Text style={textStyle.subHeader}>Total Distance</Text>
                         </View>
                         
                         {/* Goals Indicator */}
-                        <View style={{alignItems: 'center', paddingTop: 0.02 * height}}>
+                        <View style={{alignItems: 'center', paddingTop:20}}>
                             {/* Header */}
-                            <Text style={{fontWeight: 'bold', fontSize: 0.025 * height}}>Goals:</Text>
+                            <Text style={textStyle.title}>Goals:</Text>
 
                             {/* Distance */}
                             <View style={{
@@ -117,8 +119,8 @@ const TempoRun = () => {
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                             }}>
-                                <Text style={{fontSize: 0.02 * height}}>Distance</Text>
-                                <Text style={{fontWeight: 'bold', fontSize: 0.02 * height}}>5 km</Text>
+                                <Text style={textStyle.subHeader}>Distance</Text>
+                                <Text style={{...textStyle.subHeader, fontWeight: 'bold',}}>5 km</Text>
                             </View>
 
                             {/* Timing */}
@@ -130,13 +132,13 @@ const TempoRun = () => {
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                             }}>
-                                <Text style={{fontSize: 0.02 * height}}>Timing</Text>
-                                <Text style={{fontWeight: 'bold', fontSize: 0.02 * height}}>35 mins</Text>
+                                <Text style={textStyle.subHeader}>Timing</Text>
+                                <Text style={{...textStyle.subHeader, fontWeight: 'bold',}}>35 mins</Text>
                             </View>
 
-                            <View style={{alignItems:'center', paddingTop: 0.02 * height, paddingBottom: 0.01 * height}}>
-                                <Text style={{fontWeight: 'bold', fontSize: 0.02 * height}}>Recommended Pace</Text>
-                                <Text>110 bpm</Text>
+                            <View style={{alignItems:'center', paddingTop: 20, paddingBottom: 10}}>
+                                <Text style={{...textStyle.title}}>Recommended Pace</Text>
+                                <Text style={{...textStyle.subtitle}}>110 bpm</Text>
                             </View>
 
                             <Button

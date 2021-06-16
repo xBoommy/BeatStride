@@ -36,7 +36,8 @@ const EventsComponent = ({navigation}) => {
                             id={item.id}
                             participants={item.participants}
                         />}
-                    style={{width:0.9 *  width}}
+                    style={{width:width-40}}
+                    showsVerticalScrollIndicator={false}
                 />
             </View>
         </Screen>

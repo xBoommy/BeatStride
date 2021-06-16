@@ -30,8 +30,8 @@ const SocialMain = ({navigation}) => {
                     flexDirection: 'row', 
                     // backgroundColor:'pink', 
                     justifyContent:'space-around',
-                    width: 0.7 * width,
-                    paddingTop: 0.01 * height,
+                    width: width - 120,
+                    paddingTop: 5,
                 }}
                 >
                     <TouchableOpacity onPress={() => setComponent("Individual")}>
@@ -51,15 +51,15 @@ const SocialMain = ({navigation}) => {
                     flexDirection: 'row', 
                     // backgroundColor:'pink', 
                     justifyContent:'space-around',
-                    width: 0.7 * width,
-                    paddingBottom: 0.01 * height,
+                    width: width - 120,
+                    paddingBottom: 5,
                 }}
                 >
                     <View style={{
-                        width: 0.15 * width,
-                        height:0.005 * height,
+                        width: 55,
+                        height: 3,
                         backgroundColor: (component == "Individual") ? color.primary : 'transparent',
-                        borderRadius: 0.005 * height,
+                        borderRadius: height,
                     }}/>
 
                     {/* <View style={{
@@ -70,10 +70,10 @@ const SocialMain = ({navigation}) => {
                     }}/> */}
 
                     <View style={{
-                        width: 0.12 * width,
-                        height:0.005 * height,
+                        width: 45,
+                        height: 3,
                         backgroundColor: (component == "Events") ? color.primary : 'transparent',
-                        borderRadius: 0.005 * height,
+                        borderRadius: height,
                     }}/>
                     
                 </View>

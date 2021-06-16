@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Dimensions } from 'react-native';
 import * as geolib from 'geolib';
 
-const {width, height} = Dimensions.get("window")
+import textStyle from '../../../constants/textStyle';
 
 const RunningDistance = (props) => {
     const distance = props.distance
@@ -32,15 +32,13 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     dataText:{
-        fontWeight: 'bold',
-        fontSize: 0.045 * height,
+        ...textStyle.header,
     },
     unitText:{
-        fontWeight: 'bold',
-        fontSize: 0.02 * height,
+        ...textStyle.title,
     },
     label:{
-        fontSize: 0.018 * height,
+        ...textStyle.subtitle,
     }
 })
 export default RunningDistance;

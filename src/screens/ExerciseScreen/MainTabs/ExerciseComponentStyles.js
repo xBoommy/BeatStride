@@ -7,17 +7,14 @@ const {width, height} = Dimensions.get("window")
 
 const ExerciseComponentStyles = StyleSheet.create({
     containerBuffer: {
-        paddingLeft: 10,
-        paddingRight: 10,
+      paddingHorizontal: 10,
     },
     componentContainer:{
         // Container
         width: width-20,
         height: 0.7 * height,
-        backgroundColor: "#ffffff",
+        backgroundColor: "#FFFFFF",
         borderRadius: 15,
-        // borderWidth: 1,
-        // borderColor: '#444',
 
         // Shadow
         shadowColor: '#7F5DF0',
@@ -38,7 +35,7 @@ const ExerciseComponentStyles = StyleSheet.create({
         width: width - 20,
         height: 0.7 * height,
         borderRadius: 15,
-        padding: 0.1 * width,
+        padding: 20,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
@@ -58,7 +55,7 @@ const ExerciseComponentStyles = StyleSheet.create({
         backgroundColor: color.primary,
         alignItems: 'center',
         justifyContent: 'center',
-        bottom: 0.1 * height
+        bottom: 30
     },
     playIcon:{
         width: 50,

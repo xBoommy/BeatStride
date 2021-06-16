@@ -14,8 +14,8 @@ const Card = () => {
              <View style={{padding: 0.01 * width}}>
                     <View style={{
                         backgroundColor: '#9C4FF1',
-                        width: 0.9 * width,
-                        height: 0.2 * height,
+                        width: width-40,
+                        height: 125,
                         borderRadius: 15,
                         justifyContent:'space-between',
                         alignItems:'center',
@@ -24,32 +24,32 @@ const Card = () => {
                     }}> 
 
                         {/* Position */}
-                        <View style={{paddingLeft: 0.015 * height}}>
+                        <View style={{paddingLeft: 10}}>
                             <View style={{
                                 flexDirection: 'row', 
                                 backgroundColor: '#BB85F7',
-                                width: 0.17 * height,
-                                height: 0.17 * height,
+                                width: 105,
+                                height: 105,
                                 borderRadius: 15,
                             }}>
-                                <View style={{alignItems:'center', justifyContent:'center', paddingLeft: 0.03 * height,}}>
+                                <View style={{alignItems:'center', justifyContent:'center', paddingLeft: 15,}}>
                                     
                                         <Text style={{
                                             textAlign:'center', 
                                             fontWeight:'bold',
-                                            fontSize: 0.08 * height,
+                                            fontSize: 50,
                                             color:'#FFFFFF',
                                         }}>2</Text>
                                     
                                     <Text style={{
                                         fontWeight:'bold', 
-                                        fontSize: 0.025 * height,
+                                        fontSize: 16,
                                         color:'#FFFFFF',
                                     }}>Position</Text>
                                 </View>
                                 <Text style={{
                                     fontWeight: 'bold',
-                                    fontSize: 0.03 * height,
+                                    fontSize: 16,
                                     color:'#FFFFFF',
                                 }}> nd</Text>
                             </View>
@@ -60,20 +60,20 @@ const Card = () => {
                             justifyContent: 'center', 
                             alignItems: 'center',
                             // backgroundColor:'red',
-                            width: 0.53 * width,
+                            width: width-175,
                         }}>
-                            <Text style={{fontWeight:'bold', color:'#FFFFFF', fontSize:0.06 * height}}>North</Text>
+                            <Text style={{fontWeight:'bold', color:'#FFFFFF', fontSize:50}}>North</Text>
 
                             <View style={{flexDirection: 'row', alignItems:'center'}}>
-                                <Text style={{fontWeight:'bold', color:'#FFFFFF', fontSize:0.02 * height, textAlignVertical:'center'}}>South</Text>
-                                <View style={{paddingHorizontal: 0.01 * height}}>
-                                    <View style={{width:0.01 * height, height: 0.01 * height, borderRadius: height, backgroundColor: "#FFFFFF" }}/>
+                                <Text style={{fontWeight:'bold', color:'#FFFFFF', fontSize:16, textAlignVertical:'center'}}>South</Text>
+                                <View style={{paddingHorizontal: 10}}>
+                                    <View style={{width:5, height: 5, borderRadius: 5, backgroundColor: "#FFFFFF" }}/>
                                 </View>
-                                <Text style={{fontWeight:'bold', color:'#FFFFFF', fontSize:0.02 * height , textAlignVertical:'center'}}>East</Text>
-                                <View style={{paddingHorizontal: 0.01 * height}}>
-                                    <View style={{width:0.01 * height, height: 0.01 * height, borderRadius: height, backgroundColor: "#FFFFFF" }}/>
+                                <Text style={{fontWeight:'bold', color:'#FFFFFF', fontSize:16 , textAlignVertical:'center'}}>East</Text>
+                                <View style={{paddingHorizontal: 10}}>
+                                    <View style={{width:5, height: 5, borderRadius: 5, backgroundColor: "#FFFFFF" }}/>
                                 </View>
-                                <Text style={{fontWeight:'bold', color:'#FFFFFF', fontSize:0.02 * height , textAlignVertical:'center'}}>West</Text>
+                                <Text style={{fontWeight:'bold', color:'#FFFFFF', fontSize:16 , textAlignVertical:'center'}}>West</Text>
                             </View>
                             
                         </View>

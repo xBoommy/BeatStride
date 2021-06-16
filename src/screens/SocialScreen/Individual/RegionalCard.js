@@ -14,8 +14,8 @@ const Card = () => {
              <View style={{padding: 0.01 * width}}>
                     <View style={{
                         backgroundColor: "#E55B5B",
-                        width: 0.9 * width,
-                        height: 0.2 * height,
+                        width: width-40,
+                        height: 150,
                         borderRadius: 15,
                         justifyContent:'space-between',
                         alignItems:'center',
@@ -24,32 +24,32 @@ const Card = () => {
                     }}> 
 
                         {/* Position */}
-                        <View style={{paddingLeft: 0.015 * height}}>
+                        <View style={{paddingLeft: 15}}>
                             <View style={{
                                 flexDirection: 'row', 
                                 backgroundColor: '#F57171',
-                                width: 0.17 * height,
-                                height: 0.17 * height,
+                                width: 120,
+                                height: 120,
                                 borderRadius: 15,
                             }}>
-                                <View style={{alignItems:'center', justifyContent:'center', paddingLeft: 0.03 * height,}}>
+                                <View style={{alignItems:'center', justifyContent:'center', paddingLeft: 20,}}>
                                     
                                         <Text style={{
                                             textAlign:'center', 
                                             fontWeight:'bold',
-                                            fontSize: 0.08 * height,
+                                            fontSize: 55,
                                             color:'#FFFFFF',
                                         }}>27</Text>
                                     
                                     <Text style={{
                                         fontWeight:'bold', 
-                                        fontSize: 0.025 * height,
+                                        fontSize: 18,
                                         color:'#FFFFFF',
                                     }}>Position</Text>
                                 </View>
                                 <Text style={{
                                     fontWeight: 'bold',
-                                    fontSize: 0.03 * height,
+                                    fontSize: 18,
                                     color:'#FFFFFF',
                                 }}> th</Text>
                             </View>
@@ -61,25 +61,25 @@ const Card = () => {
                             alignItems: 'center',
                             // backgroundColor:'red',
                             flexDirection: 'row',
-                            width: 0.3 * width,
+                            width: width-200,
                         }}>
-                            <View style={{alignItems: 'flex-end'}}>
-                                <Text style={{fontSize: 0.04 * height, fontWeight:'bold', color: "#FFFFFF"}}>North</Text>
-                                <Text style={{fontSize: 0.02 * height, fontWeight:'bold', color: "#FFFFFF"}}>806</Text>
-                                <Text style={{fontSize: 0.02 * height, fontWeight:'bold', color: "#FFFFFF"}}>members</Text>
+                            <View style={{alignItems: 'flex-end', transform:[{translateX:40}],}}>
+                                <Text style={{fontSize: 28, fontWeight:'bold', color: "#FFFFFF"}}>North</Text>
+                                <Text style={{fontSize: 14, fontWeight:'bold', color: "#FFFFFF"}}>806</Text>
+                                <Text style={{fontSize: 14, fontWeight:'bold', color: "#FFFFFF"}}>members</Text>
                             </View>
 
                             {/* Label */}
                             <View style={{
-                                transform: [{rotate: '90deg'}, {translateY: 0.1 * width},],
-                                width:0.2 * height,
+                                transform: [{rotate: '90deg'}],
+                                width: 150,
                                 // backgroundColor:'pink',
                             }}>
                                 <Text style={{
                                     textAlign:'center', 
                                     fontWeight:'bold',
-                                    fontSize: 0.045 * height,
-                                    color: color.primary,
+                                    fontSize: 30,
+                                    color: '#E55B5B',
                                     backgroundColor: '#FFFFFF',
                                 }}>Regional</Text>
                             </View>

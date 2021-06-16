@@ -162,9 +162,7 @@ const styles = StyleSheet.create({
         width: width
     },
     headerText:{
-        fontSize: 0.04 * height,
-        fontWeight: 'bold',
-        padding: 5,
+        ...textStyle.header,
     },
     mainComponentContainer:{
         // backgroundColor: 'pink',

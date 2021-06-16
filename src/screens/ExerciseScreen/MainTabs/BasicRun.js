@@ -7,6 +7,7 @@ import { Button } from "react-native-paper";
 
 import ExerciseComponentStyles from './ExerciseComponentStyles';
 import color from '../../../constants/color';
+import textStyle from '../../../constants/textStyle';
 
 const {width, height} = Dimensions.get("window")
 
@@ -73,30 +74,30 @@ const BasicRun = () => {
                 {/* Section Content */}
                 <View style={ExerciseComponentStyles.contentContainer}>
                     <View style={{
-                            width: 0.7 * width,
-                            height: 0.3 * height,
+                            width: width-20-40,
+                            height: 250,
                             borderRadius: 15,
-                            backgroundColor: "#FFFFFF",
-                            justifyContent: 'center',
+                            backgroundColor: "white",
+                            justifyContent: 'flex-start',
                             alignItems: 'center',
                         }}>
 
                             {/* Total Distance Indicator */}
-                            <View style={{alignItems: 'center', }}>
-                                <View style={{flexDirection: 'row', alignItems: 'flex-end',}}>
-                                    <Text style={{fontWeight: 'bold', fontSize: 0.07* height}}>110.7</Text>
-                                    <Text style={{fontWeight: 'bold',}}> km</Text>
+                            <View style={{alignItems: 'center', paddingTop:20}}>
+                                <View style={{flexDirection: 'row', alignItems: 'flex-end', paddingBottom: 5}}>
+                                    <Text style={{fontWeight: 'bold', fontSize: 50}}>110.7</Text>
+                                    <Text style={{...textStyle.subHeader, fontWeight: 'bold',}}> km</Text>
                                 </View>
-                                <Text style={styles.label}>Total Distance</Text>
+                                <Text style={textStyle.subHeader}>Total Distance</Text>
                             </View>
 
                             {/* Total Runs Indicator */}
-                            <View style={{alignItems: 'center', }}>
-                                <View style={{flexDirection: 'row', alignItems: 'flex-end',}}>
-                                    <Text style={{fontWeight: 'bold', fontSize: 0.05* height}}>38</Text>
+                            <View style={{alignItems: 'center', paddingTop:20 }}>
+                                <View style={{flexDirection: 'row', alignItems: 'flex-end', paddingBottom: 5}}>
+                                    <Text style={{fontWeight: 'bold', ...textStyle.header}}>38</Text>
                                     <Text style={{fontWeight: 'bold',}}> runs</Text>
                                 </View>
-                                <Text style={styles.label}>Total Runs</Text>
+                                <Text style={textStyle.subHeader}>Total Runs</Text>
                             </View>
                     
                         </View>
