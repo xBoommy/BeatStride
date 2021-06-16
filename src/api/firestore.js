@@ -180,6 +180,44 @@ export const db_historyView = (onSuccess, onError) => {
     }
 }
 
+export const db_addUserPlaylists = ( playlist ) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users").doc(user_id).collection("playlists").doc(playlist.id).set(playlist);
+    } catch (error) {
+        console.log("Fail playlist record")
+    }
+}
+
+export const db_removeUserPlaylists = ( playlist ) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        console.log(playlist.id);
+        db.collection("users").doc(user_id).collection("playlists").doc(playlist.id).delete();
+    } catch (error) {
+        console.log("Fail to delete playlist record");
+    }
+}
+
+/**Obtain user's playlists from docs in 'playlists' collection under user doc - WORKS
+ * 
+ * @param {function} onSuccess 
+ * @param {function} onError 
+ * @returns {array} playlists => list of playlists
+ */
+ export const db_playlists = (onSuccess, onError) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users").doc(user_id)
+        .collection("playlists")
+        .onSnapshot((collection) => {
+            const playlists = collection.docs.map((doc) => doc.data());
+            return onSuccess(playlists);
+        })
+    } catch (error) {
+        return onError(error);
+    }
+}
 
 /**Obtain events doc from 'events' collection under firestore
  * 
