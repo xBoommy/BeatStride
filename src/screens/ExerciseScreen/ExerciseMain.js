@@ -9,7 +9,6 @@ import color from '../../constants/color';
 import TempoRun from './MainTabs/TempoRun';
 import BasicRun from './MainTabs/BasicRun';
 import RunHistory from './MainTabs/RunHistory';
-import PreRunSelection from './PreRunSelection';
 
 const {width, height} = Dimensions.get("window")
 
@@ -57,8 +56,6 @@ const ExerciseMain = ({navigation}) => {
     })}
 
     const [tab, setTab] = useState("Tempo")
-
-    const [selectionToggle, setSelectionToggle] = useState(true);
 
     return (
         <SafeAreaView style={styles.screenStyle}>
@@ -151,10 +148,6 @@ const ExerciseMain = ({navigation}) => {
             <TempoRun />
             {/* <BasicRun/> */}
             <RunHistory />
-            <PreRunSelection
-              selectionToggle={selectionToggle}
-              setSelectionToggle={setSelectionToggle}
-            />
           </View>
         </Animated.ScrollView>
       </SafeAreaView>

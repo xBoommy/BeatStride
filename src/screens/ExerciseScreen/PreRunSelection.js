@@ -16,6 +16,7 @@ const {width, height} = Dimensions.get("window");
 const PreRunSelection = props => {
 
     const navigation = useNavigation();
+    const [isLoading, setIsLoading] = useState(false);
     const [playlists, setPlaylists] = useState([]);
     const [inSelected, setInSelected] = useState([]);
     const dispatch = useDispatch();
@@ -29,16 +30,32 @@ const PreRunSelection = props => {
     const LOWERLIMIT = 100;
     const UPPERLIMIT = 120;
 
-    const getTracksForRun = async () => {
+    const getTracksForRun = async() => {
       if (inSelected.length === 0) {
         console.log('No playlists selected');
         return;
       }
-      const tracks = await FilterbyBPM(inSelected, 110, 10); //BPM and allowance
-      console.log('selected tracks by bpm:');
-      console.log(tracks);
-      dispatch(playlistActions.setTracksForRun(tracks));
+      setIsLoading(true);
+      await FilterbyBPM(inSelected, 110, 10 ,
+          (tracks) => {
+              console.log('selected tracks by bpm:');
+              console.log(tracks);
+              dispatch(playlistActions.setTracksForRun(tracks))
+          },
+          (error) => {
+              setIsLoading(false);
+              console.log(error);
+          }
+        ); //BPM and allowance
+      
     };
+
+    const confirmation = () => {
+        getTracksForRun().then(() => {
+            props.setSelectionToggle(false)
+            navigation.navigate("RunningMain")
+        })
+    }
     
     return (
       <Modal visible={props.selectionToggle} transparent={false}>
@@ -84,16 +101,23 @@ const PreRunSelection = props => {
                 }}
               />
             </TouchableOpacity>
-            <Button
-              style={styles.confirmButton}
-              mode="contained"
-              onPress={() => {
-                getTracksForRun().then(() => props.setSelectionToggle(false));
-                //navigation.navigate('RunningPlayer');
-              }}>
-              Confirm
-            </Button>
-            {/* Button to confirm ==> setSelectionToggle(false), absolute positioning*/}
+
+            {/* Confirm Button */}
+            <View style={{
+              position: 'absolute',
+              bottom: 0.02* height
+            }}>
+                <Button
+                  loading={isLoading}
+                  disabled={isLoading}
+                  mode="contained"
+                  onPress={confirmation}     
+                  theme={{ colors: { primary: color.primary}}}        
+                >
+                    <Text style={{color: '#FFFFFF'}}>Confirm</Text>
+                </Button>
+            </View>
+            
           </View>
         </View>
       </Modal>
@@ -128,18 +152,6 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
   },
-  confirmButton: {
-    position: 'absolute',
-      //width: 0.07 * height,
-      //height: 0.07 * height,
-      //borderRadius: height / 2,
-      width: 0.45 * width,
-      bottom: 0.01 * height,
-      backgroundColor: color.primary,
-      elevation: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-  }
 });
 
 export default PreRunSelection;

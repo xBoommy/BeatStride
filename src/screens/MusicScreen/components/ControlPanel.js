@@ -72,7 +72,7 @@ const ControlPanel = props => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        backgroundColor: '#ffffff',
+        // backgroundColor: '#ffffff',
         height: '100%',
         borderRadius: 15,
     },

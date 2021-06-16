@@ -24,7 +24,7 @@ const RunningSteps = (props) => {
 const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
-        padding: 5,
+        paddingTop: 5,
     },
     dataContainer:{
         flexDirection: 'row',
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     },
     dataText:{
         fontWeight: 'bold',
-        fontSize: 0.04 * height,
+        fontSize: 0.035 * height,
     },
     unitText:{
         fontWeight: 'bold',

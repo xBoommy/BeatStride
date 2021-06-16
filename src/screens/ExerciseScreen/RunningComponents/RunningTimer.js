@@ -65,7 +65,7 @@ const RunningTimer = (props) => {
 const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
-        padding: 5,
+        paddingTop: 5,
     },
     dataContainer:{
         flexDirection: 'row',
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     },
     dataText:{
         fontWeight: 'bold',
-        fontSize: 0.05 * height,
+        fontSize: 0.045 * height,
     },
     unitText:{
         fontWeight: 'bold',

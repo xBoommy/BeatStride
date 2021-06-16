@@ -5,6 +5,7 @@ import { useNavigation, CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
 
 import ExerciseComponentStyles from './ExerciseComponentStyles';
+import PreRunSelection from '../PreRunSelection';
 
 const TempoRun = () => {
     const navigation = useNavigation();
@@ -38,17 +39,25 @@ const TempoRun = () => {
     /* [Status Control] */
     useEffect(() => {
         if (status === 1) {
-            navigation.navigate("RunningMain")
+            setSelectionToggle(true);
         }
         if (status === 6) {
             console.log("Checking GPS Service")
             seviceCheck();
         }
     },[status])
+
+
+    const [selectionToggle, setSelectionToggle] = useState(false);
     
     return (
         <View style={ExerciseComponentStyles.containerBuffer}>
             <View style={ExerciseComponentStyles.componentContainer}>
+
+                <PreRunSelection
+                    selectionToggle={selectionToggle}
+                    setSelectionToggle={setSelectionToggle}
+                />
 
                 {/* Background Map */}
                 <View style={ExerciseComponentStyles.mapContainer}>

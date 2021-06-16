@@ -401,7 +401,9 @@ const RunningMain = ({navigation}) => {
                     )}
                 </View>
 
-                <RunningMusic/>
+                <RunningMusic
+                    runStatus={runStatus}
+                />
                 
             </View>
             {/* Data Container End */}
@@ -438,6 +440,7 @@ const styles = StyleSheet.create({
         backgroundColor: color.primary,
         alignItems: 'center',
         justifyContent: 'center',
+        elevation: 10,
     },
     buttonIconPlay:{
         width: 35,
