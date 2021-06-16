@@ -105,6 +105,46 @@ const RunningMain = ({navigation}) => {
         }, 5000);
     }
 
+    /* [GPS Subcription countdown] */
+    const resumeCountdown = () => {
+        /* 0 second */
+        console.log('Starting in 5');
+        setCountdownMsg(5);
+        setCountdown(true);
+        
+        /* 1 second */
+        setTimeout( () => {
+            console.log('Starting in 4');
+            setCountdownMsg(4);
+        }, 1000);
+    
+        /* 2 second */
+        setTimeout( () => {
+            console.log('Starting in 3');
+            setCountdownMsg(3);
+        }, 2000);
+
+        /* 3 second */
+        setTimeout( () => {
+            console.log('Starting in 2');
+            setCountdownMsg(2);
+        }, 3000);
+
+        /* 4 second */
+        setTimeout( () => {
+            console.log('Starting in 1');
+            setCountdownMsg(1);
+        }, 4000);
+    
+        /* 5 second */
+        setTimeout( () => {
+            console.log('Start');
+            subscribePosition();
+            setRunStatus(2);
+            setCountdown(false);
+        }, 5000);
+    }
+
     /* [ON GPS Subscription/Tracking] */
     const subscribePosition = async() => {
         const options = {accuracy: 6,  timeInterval: 1000, distanceInterval: 2};
@@ -206,6 +246,10 @@ const RunningMain = ({navigation}) => {
             subcriptionCountdown();
             getCurrentLocation();
         }
+        if (runStatus === 7) {
+            console.log("RunStatus - 7: Run-resume");
+            resumeCountdown();
+        }
         if (runStatus === 2) {
             console.log("RunStatus - 2: Running");
         }
@@ -250,7 +294,7 @@ const RunningMain = ({navigation}) => {
                         date:date,
                     });
                 },
-                () => {console.log(error)}    
+                (error) => {console.log(error)}    
             )
         }
     },[runStatus])
@@ -323,7 +367,7 @@ const RunningMain = ({navigation}) => {
                         </TouchableOpacity>
                         : ( (runStatus === 3) ? <TouchableOpacity
                             style={styles.button}
-                            onPress={() => {setRunStatus(1)}}
+                            onPress={() => {setRunStatus(7)}}
                         >   
                             <View>
                                 <Image 

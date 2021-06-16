@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native';
+import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableWithoutFeedback, Animated } from 'react-native';
 
 import * as LocationLib from '../../api/LocationPermissions';
 
@@ -9,6 +9,7 @@ import color from '../../constants/color';
 import TempoRun from './MainTabs/TempoRun';
 import BasicRun from './MainTabs/BasicRun';
 import RunHistory from './MainTabs/RunHistory';
+import PreRunSelection from './PreRunSelection';
 
 const {width, height} = Dimensions.get("window")
 
@@ -72,59 +73,65 @@ const ExerciseMain = ({navigation}) => {
                     paddingTop: 0.01 * height,
                 }}
                 >
-                    <TouchableOpacity 
+                    <TouchableWithoutFeedback 
                         onPress={() => {
                             scrollHandler(0)
                             setTab("Tempo")
                     }}>
-                        <Text style={{
-                            ...textStyle.subHeader,
-                            color: (tab == "Tempo") ? color.primary : color.secondary,
-                        }}>
-                            Tempo Run
-                        </Text>
-                        <View style={{
-                            height:0.005 * height,
-                            backgroundColor: (tab == "Tempo") ? color.primary : 'transparent',
-                            borderRadius: height,
-                        }}/>
-                    </TouchableOpacity>
+                        <View>
+                            <Text style={{
+                                ...textStyle.subHeader,
+                                color: (tab == "Tempo") ? color.primary : color.secondary,
+                            }}>
+                                Tempo Run
+                            </Text>
+                            <View style={{
+                                height:0.005 * height,
+                                backgroundColor: (tab == "Tempo") ? color.primary : 'transparent',
+                                borderRadius: height,
+                            }}/>
+                        </View>
+                    </TouchableWithoutFeedback>
 
-                    <TouchableOpacity 
+                    {/* <TouchableWithoutFeedback 
                         onPress={() => {
                             scrollHandler(1)
                             setTab("Basic")
                     }}>
-                        <Text style={{
-                            ...textStyle.subHeader,
-                            color: (tab == "Basic") ? color.primary : color.secondary,
-                        }}>
-                            Basic Run
-                        </Text>
-                        <View style={{
-                            height:0.005 * height,
-                            backgroundColor: (tab == "Basic") ? color.primary : 'transparent',
-                            borderRadius: height,
-                        }}/>
-                    </TouchableOpacity>
+                        <View>
+                            <Text style={{
+                                ...textStyle.subHeader,
+                                color: (tab == "Basic") ? color.primary : color.secondary,
+                            }}>
+                                Basic Run
+                            </Text>
+                            <View style={{
+                                height:0.005 * height,
+                                backgroundColor: (tab == "Basic") ? color.primary : 'transparent',
+                                borderRadius: height,
+                            }}/>
+                        </View>
+                    </TouchableWithoutFeedback> */}
 
-                    <TouchableOpacity 
+                    <TouchableWithoutFeedback 
                         onPress={() => {
                             scrollHandler(2)
                             setTab("History")
                     }}>
-                        <Text style={{
-                            ...textStyle.subHeader,
-                            color: (tab == "History") ? color.primary : color.secondary,
-                        }}>
-                            History
-                        </Text>
-                        <View style={{
-                            height:0.005 * height,
-                            backgroundColor: (tab == "History") ? color.primary : 'transparent',
-                            borderRadius: height,
-                        }}/>
-                    </TouchableOpacity>
+                        <View>
+                            <Text style={{
+                                ...textStyle.subHeader,
+                                color: (tab == "History") ? color.primary : color.secondary,
+                            }}>
+                                History
+                            </Text>
+                            <View style={{
+                                height:0.005 * height,
+                                backgroundColor: (tab == "History") ? color.primary : 'transparent',
+                                borderRadius: height,
+                            }}/>
+                        </View>
+                    </TouchableWithoutFeedback>
                 </View>
                 {/* Navigation Indicator */}
                 <View style={{
@@ -169,8 +176,9 @@ const ExerciseMain = ({navigation}) => {
                 {/* Run components */}
                 <View  style={styles.componentContainer}>
                     <TempoRun/>
-                    <BasicRun/>
+                    {/* <BasicRun/> */}
                     <RunHistory/>
+                    <PreRunSelection/>
                 </View>
                 
 

@@ -86,7 +86,10 @@ const SearchPage = props => {
             onChangeText={setSearchTitle}
             autoCapitalize="none"
             returnKeyType="default"
-            onSubmitEditing={() => Keyboard.dismiss()}
+            onSubmitEditing={() => 
+              {Keyboard.dismiss();
+              getPlaylists();
+              }}
             blurOnSubmit={false}
             right={<TextInput.Icon name="search-web" onPress={getPlaylists} />}
             theme={{

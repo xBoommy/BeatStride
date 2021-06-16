@@ -24,11 +24,11 @@ const RunHistoryEntry = (props) => {
     const runTime = moment.duration(duration)
 
     return(
-        <View style={{paddingBottom: 0.01 * height, alignItems:'center'}}>
+        <View style={{paddingVertical: 0.01 * height, alignItems:'center'}}>
             <View style={{
                 backgroundColor: '#FFFFFF',
                 width: 0.88 * width,
-                height: 0.15 * height,
+                height: 0.12 * height,
                 borderRadius: 15,
                 paddingVertical: 0.01 * height,
                 paddingHorizontal: 0.02 * height,
@@ -45,43 +45,50 @@ const RunHistoryEntry = (props) => {
                     flexDirection: 'row',
                     alignItems: 'flex-start'
                 }}>
-                    <View style={{flexDirection: 'row', alignItems:'center'}}>
-                        <Icon name="running" color= {color.primary} size={0.04 * height}/>
-                        <Text style={{fontSize: 0.04 * height, fontWeight: 'bold', paddingHorizontal: 0.01 * height,}}>{distance} km</Text>
+                    <View>
+                        <View style={{flexDirection: 'row', alignItems:'center'}}>
+                            <Icon name="running" color= {color.primary} size={0.04 * height}/>
+                            <Text style={{fontSize: 0.04 * height, paddingHorizontal: 0.01 * height,}}>
+                                {(distance > 1000) ? (distance/1000).toFixed(2) +" km" : distance.toFixed(2) + " m"}
+                                </Text>
+                        </View>
+                        <View style={{
+                            // backgroundColor: 'pink'
+                        }}>
+                            <View style={{
+                                flexDirection: 'row',
+                                // backgroundColor: 'pink',
+                            }}>
+                                <View style={{flexDirection: 'row', 
+                                    alignItems:'center', 
+                                    paddingHorizontal: 0.02 * height,
+                                }}>
+                                    <Icon name="stopwatch" color= {color.primary} size={0.03 * height}/>
+                                    <Text style={{fontSize: 0.02 * height, paddingLeft: 0.005 * height,}}>{runTime.hours()}:{runTime.minutes()}:{runTime.seconds()}</Text>
+                                </View>
+                                
+                                <View style={{
+                                    flexDirection: 'row', 
+                                    alignItems:'center',
+                                    paddingHorizontal: 0.02 * height,
+                                    }}>
+                                    <Icon name="paw" color= {color.primary} size={0.03 * height}/>
+                                    <Text style={{fontSize: 0.02 * height, paddingLeft: 0.005 * height,}}>{steps}</Text>
+                                </View>
+                            </View>
+                        </View>
                     </View>
+                    
                     <View style={{alignItems: 'flex-end'}}>
                         <Text style={{fontSize: 0.025 * height, fontWeight: 'bold', color: color.secondary}}>{date}</Text>
-                        <Text style={{fontSize: 0.02 * height, color: color.secondary}}>{day}</Text>
-                        <Text style={{fontSize: 0.02 * height, color: color.secondary}}>{time}</Text>
+                        <Text style={{fontSize: 0.015 * height, color: color.secondary}}>{day}</Text>
+                        <Text style={{fontSize: 0.015 * height, color: color.secondary}}>{time}</Text>
                     </View>
                 </View>
 
                 
 
-                <View style={{
-                    width: 0.85 * width,
-                }}>
-                    <View style={{
-                        flexDirection: 'row',
-                    }}>
-                        <View style={{flexDirection: 'row', 
-                        alignItems:'center', 
-                        paddingHorizontal: 0.03 * height,
-                    }}>
-                            <Icon name="stopwatch" color= {color.primary} size={0.03 * height}/>
-                            <Text style={{fontSize: 0.025 * height, paddingHorizontal: 0.01 * height,}}>{runTime.hours()}:{runTime.minutes()}:{runTime.seconds()}</Text>
-                        </View>
-                        
-                        <View style={{
-                            flexDirection: 'row', 
-                            alignItems:'center',
-                            paddingHorizontal: 0.03 * height,
-                            }}>
-                            <Icon name="paw" color= {color.primary} size={0.03 * height}/>
-                            <Text style={{fontSize: 0.025 * height, paddingHorizontal: 0.01 * height,}}>{steps}</Text>
-                        </View>
-                    </View>
-                </View>
+
                 
                 
 
