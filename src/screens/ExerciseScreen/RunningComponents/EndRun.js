@@ -14,7 +14,7 @@ const RunEnd = ({navigation, route}) => {
     const time = route.params.time;             //Start Time of Run
     const day = route.params.day;               //Start Time of Run
     const date = route.params.date;             //Start Time of Run
-
+ 
     return (
         <SafeAreaView style={styles.overallContainer}>
             <EndRun

@@ -115,7 +115,7 @@ const ExerciseMain = ({navigation}) => {
 
                     <TouchableWithoutFeedback 
                         onPress={() => {
-                            scrollHandler(2)
+                            scrollHandler(1)
                             setTab("History")
                     }}>
                         <View>

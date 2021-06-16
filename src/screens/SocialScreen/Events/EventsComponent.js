@@ -57,7 +57,7 @@ const EventsComponent = ({navigation}) => {
             (events) => {setEventList(events)},
             (error) => {console.log("Events list error")}
         )
-    })
+    },[])
     
     return(
         <Screen>
@@ -75,6 +75,7 @@ const EventsComponent = ({navigation}) => {
                             target={item.target}
                             url={item.uri}
                             id={item.id}
+                            participants={item.participants}
                         />}
                     style={{width:0.9 *  width}}
                 />

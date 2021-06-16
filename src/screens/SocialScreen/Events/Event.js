@@ -18,6 +18,7 @@ const Event = (props) => {
     const target = props.target;                //targeted value
     const url = props.url;                      //Event url for info
     const id = props.id;                        //event id
+    const participants = props.participants     //event participant count
 
     const [join, setJoin] = useState();
     const [popToggle, setPopToggle] = useState(false);
@@ -132,7 +133,14 @@ const Event = (props) => {
                     <View style={{position:'absolute', bottom: 0.02 * height,}}>
 
                         {/* Numerical Progress */}
-                        <Text style={{fontWeight: 'bold', fontSize: 0.015 * height,}}>Progress: {completed}/{target} km</Text>
+                        <View style={{flexDirection: 'row', width: 0.78 *  width, justifyContent: 'space-between'}}>
+                            <Text style={{fontWeight: 'bold', fontSize: 0.015 * height,}}>
+                                Progress: {(completed/1000).toFixed(2)}/{(target/1000).toFixed(2)} km
+                            </Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 0.015 * height,}}>
+                                {participants} Participating
+                            </Text>
+                        </View>
 
                         {/* Progress Bar */}
                         <View 

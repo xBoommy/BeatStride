@@ -237,9 +237,9 @@ export const db_events = (onSuccess, onError) => {
 /**increase event particpation count */
 const db_joinEvent1 = (event_id) => {
     try {
-        console.log(event_id)
+        // console.log(event_id)
         db.collection('events').doc(event_id).update({participants: firebase.firestore.FieldValue.increment(1)})
-        console.log("increased")
+        // console.log("increased")
     } catch (error) {
         console.log(error)
     }
@@ -304,7 +304,7 @@ export const db_userEventStatus = (onSuccess, onError) => {
         .onSnapshot((doc) => {
             const user = doc.data();
             const eventList = user.events;
-            console.log(eventList)
+            // console.log(eventList)
             return onSuccess(eventList);
         })
     } catch (error) {
