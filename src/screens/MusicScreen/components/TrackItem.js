@@ -1,10 +1,10 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Image, Text, Dimensions} from 'react-native';
+import {SafeAreaView, StyleSheet, Image, Text} from 'react-native';
 import { Card } from 'react-native-elements';
 
 import color from '../../../constants/color';
+import textStyle from '../../../constants/textStyle';
 
-const {width, height} = Dimensions.get('window');
 
 const TrackItem = props => {
   return (
@@ -12,8 +12,8 @@ const TrackItem = props => {
       <SafeAreaView style={styles.innerContainer}>
         <Image style={styles.trackImage} source={{uri: props.item.imageUri}} />
         <SafeAreaView style={styles.textView}>
-          <Text numberOfLines={1} style={styles.trackTitle}>{props.item.title}</Text>
-          {props.item.artist !== 'undefined' && <Text style={{color: color.secondary, fontSize: 0.018 * height}}>{props.item.artist}</Text>}
+          <Text numberOfLines={1} style={textStyle.title}>{props.item.title}</Text>
+          {props.item.artist !== 'undefined' && <Text style={{color: color.secondary, ...textStyle.subtitle}}>{props.item.artist}</Text>}
         </SafeAreaView>
       </SafeAreaView>
     </Card>
@@ -23,7 +23,7 @@ const TrackItem = props => {
 const styles = StyleSheet.create({
   container:{
     borderRadius: 15,
-    width: 0.9 * width,
+    width: 325,
   },
   innerContainer: {
     flexDirection: 'row',
@@ -31,16 +31,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   trackImage: {
-    height: 0.1 * height,
-    width: 0.1 * height,
-    borderRadius: 0.01 * height,
-  },
-  trackTitle: {
-    fontSize: 0.025 * height,
-    fontWeight: 'bold',
+    height: 70,
+    width: 70,
+    borderRadius: 7,
   },
   textView: {
-    width: 0.5 * width,
+    width: 175,
     marginLeft: 10,
 
   },

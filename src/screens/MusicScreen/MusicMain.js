@@ -79,12 +79,12 @@ const MusicMain = ({navigation}) => {
               height: 0.62 * height,
               borderRadius: 15,
               elevation: 5,
-              top: 0.01 * height,
+              top: 7,
             }}>
             <FlatList
               numColumns={2}
-              style={{width: 0.9 * width}}
-              //contentContainerStyle={{alignItems: 'flex-start'}}
+              style={{width: width - 20}}
+              contentContainerStyle={{alignItems: 'center'}}
               data={playlists}
               keyExtractor={item => item.id}
               renderItem={({item}) => {
@@ -124,11 +124,11 @@ const MusicMain = ({navigation}) => {
           <View
             style={{
               backgroundColor: '#CCC',
-              width: 0.95 * width,
+              width: width - 20,
               height: 0.1 * height,
               borderRadius: 15,
               elevation: 5,
-              top: 0.05 * height,
+              top: 30,
             }}>
             <MusicPlayer
               isPlaying={isPlaying}
@@ -143,7 +143,7 @@ const MusicMain = ({navigation}) => {
           <TouchableOpacity
             style={styles.addButton}
             onPress={() => setPopToggle(true)}>
-              <Image source={require('../../assets/icons/add.png')} style={{resizeMode: 'contain', width: 0.06 * height, height: 0.06 * height, tintColor: color.primary }} />
+              <Image source={require('../../assets/icons/add.png')} style={{resizeMode: 'contain', width: 45, height: 45, tintColor: color.primary }} />
           </TouchableOpacity>
 
           {/* PopUp upon selecting "Add" */}
@@ -159,11 +159,11 @@ const MusicMain = ({navigation}) => {
 const styles = StyleSheet.create({
   addButton:{
       position: 'absolute',
-      width: 0.1 * height,
-      height: 0.1 * height,
+      width: 65,
+      height: 65,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 0.1 * height / 2,
+      borderRadius: 32.5,
       backgroundColor: 'white',
       bottom: 0.13 * height,
       right: 0.01 * height,

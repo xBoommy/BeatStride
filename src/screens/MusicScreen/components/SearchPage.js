@@ -6,7 +6,6 @@ import {
   StyleSheet,
   FlatList,
   Alert,
-  Dimensions,
   Keyboard,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
@@ -19,8 +18,6 @@ import PlaylistItem from './PlaylistItem';
 //TBC later
 import Spotify_Search from '../../../api/spotify/spotify_search';
 import * as Firestore from '../../../api/firestore';
-
-const {width, height} = Dimensions.get('window');
 
 const SearchPage = props => {
 
@@ -79,7 +76,7 @@ const SearchPage = props => {
             mode="outlined"
             label="Search Playlists..."
             keyboardType="default"
-            style={{marginTop: 10, width: 0.7 * width}}
+            style={{marginTop: 10, width: 255}}
             placeholder="Name of playlist..."
             value={searchTitle}
             onChangeText={setSearchTitle}
@@ -145,7 +142,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'flex-end',
       //backgroundColor: 'blue',
-      width: 0.8 * width,
+      width: 290,
       alignItems: 'center',
   },
 });

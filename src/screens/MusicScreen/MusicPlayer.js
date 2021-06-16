@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, Image, Animated } from 'react-native';
+import {StyleSheet, Text, View, Image, Animated } from 'react-native';
 
 import Controller from './components/ControlPanel';
 import * as Spotify from './components/spotify_player_controls';
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     container:{
         position: 'absolute',
         width: '100%',
-        height: 0.12 * Dimensions.get('window').height,
+        height: 80,
         borderRadius: 15,
         backgroundColor: '#FFFFFF',
         justifyContent: 'center',

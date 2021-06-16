@@ -1,9 +1,7 @@
 import React from 'react';
-import {SafeAreaView, View, TouchableOpacity, StyleSheet, Text, Image, Dimensions} from 'react-native';
+import {SafeAreaView, View, TouchableOpacity, StyleSheet, Text, Image} from 'react-native';
 
 import color from '../../../constants/color';
-
-const {width, height} = Dimensions.get('window');
 
 const ControlPanel = props => {
 
@@ -52,7 +50,7 @@ const ControlPanel = props => {
               onPress={playHandler}>
                 <View style={styles.pausePlayContainer}>
               <Image
-                style={{...styles.pausePlayButton, transform: [{translateX: 0.003 * height}]}}
+                style={{...styles.pausePlayButton, transform: [{translateX: 3}]}}
                 source={require('../../../assets/icons/play.png')}
               />
               </View>
@@ -99,9 +97,9 @@ const styles = StyleSheet.create({
     },
     pausePlayContainer: {
       backgroundColor: color.primary,
-      width: 0.08 * height,
-      height: 0.08 * height,
-      borderRadius: 0.04 * height,
+      width: 55,
+      height: 55,
+      borderRadius: 27.5,
       justifyContent: 'center',
       alignItems: 'center',
     },

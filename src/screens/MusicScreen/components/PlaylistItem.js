@@ -1,9 +1,8 @@
 import React from 'react';
-import {View, SafeAreaView, StyleSheet, Image, Text, Dimensions} from 'react-native';
+import {View, SafeAreaView, StyleSheet, Image, Text} from 'react-native';
 
 import color from '../../../constants/color';
 import textStyle from '../../../constants/textStyle';
-const {width, height} = Dimensions.get('window');
 
 const PlaylistItem = props => {
   const noOfSongs = (props.item.totalSongs || "0");
@@ -14,7 +13,7 @@ const PlaylistItem = props => {
         <Image style={styles.image} source={{uri: props.item.imageUri}} />
         <SafeAreaView style={styles.text}>
           <Text numberOfLines={1} style={styles.title}>{props.item.title}</Text>
-          <Text style={{color: color.secondary, fontSize: 0.018 * height}}>{num} Songs</Text>
+          <Text style={{color: color.secondary, ...textStyle.subtitle }}>{num} Songs</Text>
         </SafeAreaView>
       </SafeAreaView>
     </View>
@@ -25,21 +24,19 @@ const styles = StyleSheet.create({
   container:{
     //backgroundColor: 'orange',
     //borderRadius: 15,
-    width: 0.45 * width,
+    width: 160,
     alignItems: 'center',
-    padding: 0.01 * height,
+    padding: 8,
   },
   innerContainer: {
     //backgroundColor: 'blue',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 0.42 * width,
+    width: 150,
   },
   image: {
-    height: 0.42 * width,
-    width: 0.42 * width,
-
-    
+    height: 150,
+    width: 150,    
   },
   title: {
     ...textStyle.title

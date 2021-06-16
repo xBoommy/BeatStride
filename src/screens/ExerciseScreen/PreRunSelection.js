@@ -4,6 +4,7 @@ import { Button } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
+import textStyle from '../../constants/textStyle';
 import color from '../../constants/color';
 
 import SelectablePlaylistItem from './SelectablePlaylistItem';
@@ -66,12 +67,12 @@ const PreRunSelection = props => {
                 height: 0.07 * height,
                 justifyContent: 'center',
                 alignItems: 'center',
-                paddingTop: 0.02 * height,
+                paddingTop: 10,
               }}>
-              <Text style={{fontSize: 0.02 * height, fontWeight: 'bold', color: color.secondary}}>
+              <Text style={{...textStyle.subHeader, fontWeight: 'bold', color: color.secondary}}>
                 Recommended BPM:
               </Text>
-              <Text style={{fontSize: 0.02 * height, fontWeight: 'bold', color: color.secondary}}>
+              <Text style={{...textStyle.subHeader, fontWeight: 'bold', color: color.secondary}}>
                 {LOWERLIMIT} - {UPPERLIMIT}
               </Text>
             </View>
@@ -79,7 +80,7 @@ const PreRunSelection = props => {
               showsVerticalScrollIndicator={false}
               numColumns={2}
               data={playlists}
-              contentContainerStyle={{paddingBottom: 0.05 * height}}
+              contentContainerStyle={{paddingBottom: 25}}
               keyExtractor={item => item.id}
               renderItem={({item}) => (
                 <SelectablePlaylistItem
@@ -95,8 +96,8 @@ const PreRunSelection = props => {
               <Image
                 source={require('../../assets/icons/close.png')}
                 style={{
-                  height: 0.04 * height,
-                  width: 0.04 * height,
+                  height: 27.5,
+                  width: 27.5,
                   tintColor: color.primary,
                 }}
               />
@@ -105,7 +106,7 @@ const PreRunSelection = props => {
             {/* Confirm Button */}
             <View style={{
               position: 'absolute',
-              bottom: 0.02* height
+              bottom: 10,
             }}>
                 <Button
                   loading={isLoading}
@@ -142,9 +143,9 @@ const styles = StyleSheet.create({
   },
   closeButton:{
       position: 'absolute',
-      width: 0.07 * height,
-      height: 0.07 * height,
-      borderRadius: height / 2,
+      width: 47.5,
+      height: 47.5,
+      borderRadius: 24,
       backgroundColor: '#fdfdfd',
       top: 0.01 * height,
       left: 0.01 * height,

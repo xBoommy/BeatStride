@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import {  SafeAreaView, StyleSheet, Text, View, Dimensions, Pressable, Keyboard } from 'react-native';
+import {  SafeAreaView, StyleSheet, Text, View, Pressable, Keyboard } from 'react-native';
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 import DropDown from "react-native-paper-dropdown";
@@ -8,8 +8,8 @@ import * as Firestore from '../../../api/firestore';
 
 import Screen from '../../../constants/screen';
 import color from '../../../constants/color';
+import textStyles from '../../../constants/textStyle';
 
-const {width, height} = Dimensions.get("window")
 
 const RegisterTwo = ({navigation, route}) => {
     const uid = route.params.uid;
@@ -76,16 +76,18 @@ const RegisterTwo = ({navigation, route}) => {
             <Text style={styles.subtitle}>Set up your Profile!</Text>
 
             {/* Imagepicker to take/upload profile picture */}
-            <View style={{width: 0.9 * width, alignItems:'center', paddingVertical: 0.01 * height}}> 
+            <View style={{width: '100%', alignItems:'center', paddingVertical: 5}}> 
                 <View style={{
                   backgroundColor: color.primary,
-                  width: 0.15 * height,
-                  height: 0.15 * height,
-                  borderRadius: height,
+                  width: 90,
+                  height: 90,
+                  borderRadius: 45,
                 }}>
 
                 </View>
-                <Text style={{color: color.secondary, paddingTop: 0.01 * height}}>Profile Picture</Text>
+                <View style={{padding: 10}}>
+                    <Text style={{color: color.secondary, ...textStyles.subtitle}}>Profile Picture</Text>
+                </View>
             </View>
             
             {/* Age input */}
@@ -120,7 +122,7 @@ const RegisterTwo = ({navigation, route}) => {
                         Keyboard.dismiss();
                     }}
                     onDismiss={() => setShowGenderDropDown(false)}
-                    dropDownStyle={{marginTop: 0.05 * height}}
+                    dropDownStyle={{marginTop: 25}}
                     blurOnSubmit={false}
                     inputProps={{
                       left: <TextInput.Icon name="gender-male-female" color={gender ? color.primary : color.secondary} />,
@@ -145,7 +147,7 @@ const RegisterTwo = ({navigation, route}) => {
                         Keyboard.dismiss();
                     }}
                     onDismiss={() => setShowRegionDropDown(false)}
-                    dropDownStyle={{marginTop: 0.05 * height}}
+                    dropDownStyle={{marginTop: 25}}
                     inputProps={{
                       left:<TextInput.Icon name="map" color={region ? color.primary : color.secondary} />,
                       right: <TextInput.Icon name={"menu-down"} />
