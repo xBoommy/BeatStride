@@ -19,6 +19,7 @@ import PlaylistItem from './PlaylistItem';
 //TBC later
 import Spotify_Search from '../../../api/spotify/spotify_search';
 import * as playlistActions from '../../../../SpotifyStore/playlist-actions';
+import * as Firestore from '../../../api/firestore';
 
 const {width, height} = Dimensions.get('window');
 
@@ -60,7 +61,8 @@ const SearchPage = props => {
           text: 'Ok',
           onPress: () => {
             //console.log(playlist);
-            dispatch(playlistActions.addPlaylist(playlist));
+            //dispatch(playlistActions.addPlaylist(playlist));
+            Firestore.db_addUserPlaylists(playlist);
           },
           style: 'default', //ignored on android
         },

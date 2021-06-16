@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {  Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, Image, Button, TouchableWithoutFeedback, FlatList, TouchableOpacity } from 'react-native';
+import {  Dimensions, Alert, ScrollView, StyleSheet, Text, View, Image, Button, TouchableWithoutFeedback, FlatList, TouchableOpacity } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import * as playlistActions from '../../../SpotifyStore/playlist-actions';
@@ -8,6 +8,7 @@ import MusicPlayer from './MusicPlayer';
 import MusicPlaylistSearch from './MusicPlaylistSearch';
 import Tracks_Getter from '../../api/spotify/spotify_tracks_getter';
 import * as Spotify from './components/spotify_player_controls';
+import * as Firestore from '../../api/firestore';
 
 import Screen from '../../constants/screen';
 import textStyle from '../../constants/textStyle';
@@ -19,11 +20,18 @@ const MusicMain = ({navigation}) => {
 
     const [popToggle, setPopToggle] = useState(false);
 
-    const dispatch = useDispatch();
-    const playlists = useSelector(state => state.playlists.playlists);
+    //const dispatch = useDispatch();
+    // const playlists = useSelector(state => state.playlists.playlists);
+    // useEffect(() => {
+    //     dispatch(playlistActions.loadPlaylists());
+    // }, [dispatch]);
+    const [playlists, setPlaylists] = useState([]);
     useEffect(() => {
-        dispatch(playlistActions.loadPlaylists());
-    }, [dispatch]);
+      Firestore.db_playlists(
+          (playlists) => { setPlaylists(playlists)},
+          (error) => {console.log('Failed to initiate playlist in music main')}
+      )
+    })
 
     const [selectedPlaylistUri, setSelectedPlaylistUri] = useState('');
     const getPlaylistDetails = async (playlistUri) => {
@@ -83,7 +91,29 @@ const MusicMain = ({navigation}) => {
               renderItem={({item}) => {
                 return (
                   <TouchableWithoutFeedback
-                    onPress={() => getPlaylistDetails(item.playlistUri)}>
+                    onPress={() => getPlaylistDetails(item.playlistUri)} 
+                    onLongPress={() => 
+                      Alert.alert(
+                      'Delete Playlist',
+                      'Are you sure that you want to remove this playlist?',
+                      [
+                        {
+                          text: 'Cancel',
+                          onPress: () => {},
+                          style: 'default', //ignored on android...
+                        },
+                        {
+                          text: 'Ok',
+                          onPress: () => {
+                            Firestore.db_removeUserPlaylists(item);
+                          },
+                          style: 'default', //ignored on android
+                        },
+                      ],
+                      {
+                        cancelable: true,
+                      }
+                    )}>
                     <View>
                       <PlaylistItem item={item} />
                     </View>
