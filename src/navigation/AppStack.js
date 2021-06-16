@@ -32,6 +32,7 @@ const AppStack = () => {
                 key="MusicPlaylistSongs"
                 name="MusicPlaylistSongs"
                 component={MusicPlaylistSongs}
+                options={{title: 'Playlist Songs'}}
             />
             <Stack.Screen
                 key="EventInfo"

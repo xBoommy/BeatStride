@@ -10,15 +10,15 @@ import * as Paper from "react-native-paper";
 import AppStack from './src/navigation/AppStack'
 import AppTab from './src/navigation/AppTab'
 import playlistReducer from './SpotifyStore/playlist-reducer';
-import { init } from './SpotifyStore/db';
+// import { init } from './SpotifyStore/db';
 
 
-init().then(() => {
-  console.log('Initialised playlists');
-}).catch(e => {
-  console.log('Initalising playlists failed');
-  console.log(e);
-});
+// init().then(() => {
+//   console.log('Initialised playlists');
+// }).catch(e => {
+//   console.log('Initalising playlists failed');
+//   console.log(e);
+// });
 
 const rootReducer = combineReducers({
   playlists: playlistReducer,

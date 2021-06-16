@@ -15,7 +15,7 @@ const RunHistory = () => {
             (historyList) => { setHistory(historyList)},
             (error) => {console.log('history view fail')}
         )
-    })
+    },[])
 
     return (
         <View style={ExerciseComponentStyles.containerBuffer}>

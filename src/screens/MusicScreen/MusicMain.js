@@ -12,6 +12,7 @@ import * as Firestore from '../../api/firestore';
 
 import Screen from '../../constants/screen';
 import textStyle from '../../constants/textStyle';
+import color from '../../constants/color';
 
 
 const {width, height} = Dimensions.get("window")
@@ -30,8 +31,8 @@ const MusicMain = ({navigation}) => {
       Firestore.db_playlists(
           (playlists) => { setPlaylists(playlists)},
           (error) => {console.log('Failed to initiate playlist in music main')}
-      )
-    })
+      );
+    }, [])
 
     const [selectedPlaylistUri, setSelectedPlaylistUri] = useState('');
     const getPlaylistDetails = async (playlistUri) => {
@@ -67,7 +68,7 @@ const MusicMain = ({navigation}) => {
 
     return (
       <Screen>
-        <Text style={textStyle.header}>MusicMain</Text>
+        <Text style={textStyle.header}>Music</Text>
         <View
           style={{
             alignItems: 'center',
@@ -143,7 +144,9 @@ const MusicMain = ({navigation}) => {
           {/* Add Playlist Button */}
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => setPopToggle(true)}></TouchableOpacity>
+            onPress={() => setPopToggle(true)}>
+              <Image source={require('../../assets/icons/add.png')} style={{resizeMode: 'contain', width: 0.06 * height, height: 0.06 * height, tintColor: color.primary }} />
+          </TouchableOpacity>
 
           {/* PopUp upon selecting "Add" */}
           <MusicPlaylistSearch
@@ -158,12 +161,14 @@ const MusicMain = ({navigation}) => {
 const styles = StyleSheet.create({
   addButton:{
       position: 'absolute',
-      width: 0.1 * Dimensions.get('window').height,
-      height: 0.1 * Dimensions.get('window').height,
-      borderRadius: 0.1 * Dimensions.get('window').height / 2,
-      backgroundColor: 'black',
-      bottom: 0.13 * Dimensions.get('window').height,
-      right: 0.01 * Dimensions.get('window').height,
+      width: 0.1 * height,
+      height: 0.1 * height,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 0.1 * height / 2,
+      backgroundColor: 'white',
+      bottom: 0.13 * height,
+      right: 0.01 * height,
       elevation: 10,
   },
 });

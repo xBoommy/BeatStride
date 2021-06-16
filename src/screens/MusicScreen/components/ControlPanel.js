@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
         margin: 5,
         width: 25,
         height: 25,
+        tintColor: color.primary,
     },
     pausePlayButton: {
       width: 25,

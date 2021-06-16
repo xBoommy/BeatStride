@@ -30,7 +30,7 @@ export default async ({offset, limit, q}) => {
       return [];
   }
 
-  console.log(items[0].tracks.total);
+  //console.log(items[0].tracks.total);
   // console.log(items[0]);
   // console.log(items[0].id);
   // console.log(items[0].uri);

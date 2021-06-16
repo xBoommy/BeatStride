@@ -63,7 +63,6 @@ const MusicPlaylistSongs = props => {
             style={{margin: 0}}
           />
         </SafeAreaView>
-        <Text>Songs</Text>
 
         {/* Spotify Player */}
         <MusicPlayer
