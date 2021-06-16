@@ -18,12 +18,79 @@ const RunningMusic = (props) => {
 
   const tracks = useSelector(state => state.playlists.tracksForRun);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentlyPlaying, setCurrentlyPlaying] = useState(tracks[0]);//initialise with the first
-  //used Once
-  const [firstTime, setFirstTime] = useState(true);
-  //testing
-  const [indexPlaying, setIndexPlaying] = useState(0);
+  const [index, setIndex] = useState(0);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState(tracks[0]);
+  const [duration, setDuration] = useState(tracks[0].duration);
+  
+    //Timer
+    const [time, setTime] = useState(0);
+    const [tick, setTick] = useState();
 
+    /* [Tick every 1000ms increase time by 1 second] */
+    const ticking = () => {
+        setTime( (prevTime) => prevTime + 1000 )
+    }
+
+    const startTimer = () => {
+      setTick( setInterval(ticking, 1000) );
+    };
+
+    const stopTimer = () => {
+      clearInterval(tick);
+    };
+
+    useEffect(()=>{
+      if (time > duration) {
+        setIsPlaying(false);
+        nextSong();
+      }
+    },[time]);
+
+    /* [Start timing] */
+    const playSong = async (id) => {
+        console.log("Timer Start")
+        if (tracks.length === 0) {
+          return;
+        }
+        await Spotify.playDirect(tracks[id].trackUri);
+        startTimer();
+        setIsPlaying(true);
+    }
+    const pause = async () => {
+        await Spotify.pause();
+        stopTimer();
+        setIsPlaying(false);
+    };
+    const resume = async () => {
+      await Spotify.play(tracks[index].trackUri);
+      startTimer();
+      setIsPlaying(true);
+    }
+    const nextSong = async () => {
+        stopTimer();
+        setTime(0);
+        setDuration(tracks[index + 1].duration);
+        if (index === tracks.length - 1) {
+          setIndex(0);
+          playSong(0);
+        } else {
+          setIndex(prevIndex => prevIndex + 1);
+          playSong(index + 1);
+        }
+    };
+    const prevSong = async () => {
+      stopTimer();
+      setTime(0);
+      if (index === 0) {
+        setDuration(tracks[tracks.length - 1].duration);
+        setIndex(tracks.length - 1);
+        playSong(tracks.length - 1);
+      } else {
+        setDuration(tracks[index - 1].duration);
+        setIndex(prevIndex => prevIndex - 1);
+        playSong(index - 1);
+      }
+    };
 
   const updatePlaying = async () => {
     //need to call this method on changing songs...
@@ -47,52 +114,52 @@ const RunningMusic = (props) => {
     Spotify.pause();
   });
 
-  //Player methods... different from Full Playlist side...
-  const playHandler = async () => {
-    if (tracks.length === 0) {
-      return;
-    }
-    if (firstTime) {
-      await Spotify.queueTracks(tracks);
-      await Spotify.next();
-      setFirstTime(false); //Very crucial, need to be before setting isPlaying to true
-      setIsPlaying(true);
-    } else {
-      await Spotify.play(tracks[indexPlaying].trackUri);
-      setIsPlaying(true);
-      //setCurrentlyPlaying(tracks[indexPlaying]);
-    }
-  };
-  const pauseHandler = async () => {
-    if (tracks.length === 0) {
-      return;
-    }
-    setIsPlaying(false);
-    await Spotify.pause();
-  };
+  // //Player methods... different from Full Playlist side...
+  // const playHandler = async () => {
+  //   if (tracks.length === 0) {
+  //     return;
+  //   }
+  //   await Spotify.play(tracks[indexPlaying].trackUri);
+  //   setIsPlaying(true);
+  //   //setCurrentlyPlaying(tracks[indexPlaying]);
+  // };
+  // const pauseHandler = async () => {
+  //   if (tracks.length === 0) {
+  //     return;
+  //   }
+  //   setIsPlaying(false);
+  //   await Spotify.pause();
+  // };
 
-  const previousHandler = async () => {
-  };
+  // const previousHandler = async () => {
+  // };
 
-  const nextHandler = async () => {
-    if (tracks.length === 0) {
-      return;
-    }
-    await Spotify.next();
-    setIsPlaying(true);
-  };
+  // const nextHandler = async () => {
+  //   if (tracks.length === 0) {
+  //     return;
+  //   }
+  //   await Spotify.next();
+  //   setIsPlaying(true);
+  // };
 
   /* [RUN STATUS RENDER] */
+  const [first, setFirst] = useState(true);
   useEffect(() => {
-    if (runStatus == 2){
-      playHandler();
+    if (runStatus == 2) {
+      if (first) {
+        setFirst(false);
+        playSong(0);
+      } else {
+        resume();
+      }
     }
-    if (runStatus == 3){
-      pauseHandler();
+    if (runStatus == 3) {
+      pause();
     }
-    if (runStatus == 4 ){
-      pauseHandler();
+    if (runStatus == 4 ) {
+      pause();
     }
+
   }, [runStatus])
 
 
@@ -111,10 +178,10 @@ const RunningMusic = (props) => {
           <Controller
             isPlaying={isPlaying}
             currentlyPlaying={currentlyPlaying}
-            play={playHandler}
-            pause={pauseHandler}
-            next={nextHandler}
-            previous={previousHandler}
+            play={resume}
+            pause={pause}
+            next={nextSong}
+            previous={prevSong}
           />
         </View>
     </View>

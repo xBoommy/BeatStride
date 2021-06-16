@@ -127,3 +127,24 @@ export async function queueTracks(arrOfTracks) {
     console.error('Error with queueTracks: ', e);
   }
 }
+
+/*
+playSong(index) {
+
+  playDirect(track[index])
+  setTimeout(() => nextSong, track[index].duration)
+
+
+}
+
+nextSong() {
+  clearTimeout();
+  playSong(index + 1)
+}
+
+prevSong() {
+  clearTimeout();
+  playSong(index - 1);
+}
+
+*/
