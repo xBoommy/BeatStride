@@ -106,8 +106,6 @@ export async function currentPlayingTrack() {
       return trackObj;
     }
   } catch (e) {
-    //Hide error message
-    console.log('Error with currentPlayingTrack: ', e);
   }
 }
 
@@ -127,24 +125,3 @@ export async function queueTracks(arrOfTracks) {
     console.error('Error with queueTracks: ', e);
   }
 }
-
-/*
-playSong(index) {
-
-  playDirect(track[index])
-  setTimeout(() => nextSong, track[index].duration)
-
-
-}
-
-nextSong() {
-  clearTimeout();
-  playSong(index + 1)
-}
-
-prevSong() {
-  clearTimeout();
-  playSong(index - 1);
-}
-
-*/

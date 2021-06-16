@@ -60,7 +60,6 @@ const MusicPlaylistSongs = props => {
                 <TrackItem item={item} />
               </TouchableOpacity>
             )}
-            style={{margin: 0}}
           />
         </SafeAreaView>
 

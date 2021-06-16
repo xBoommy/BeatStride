@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text ,TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
 
+import textStyle from '../../../constants/textStyle';
+
 const {width, height} = Dimensions.get('window');
 
 export default () => {
@@ -18,7 +20,7 @@ export default () => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#FFFFFF',
-        width: 0.9 * width,
+        width: width - 60,
         height: 0.15 * height,
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
@@ -29,6 +31,6 @@ const styles = StyleSheet.create({
         paddingTop: 0.01 * height,
     },
     bestRankText: {
-        fontSize: 0.04 * height,
+        ...textStyle.title
     }
 })

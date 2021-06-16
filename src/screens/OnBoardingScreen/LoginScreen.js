@@ -53,8 +53,8 @@ const LoginScreen = ({navigation}) => {
             </View>
 
             <View style={{alignItems:'center',}}>
-                <View style={{height: 0.265 * height, width: 0.7 * width, alignItems: 'center'}}>
-                  <Image source={require('../../assets/icons/Logo.png')} style={{height: 0.3 * height, width: 0.75 * width}}/>
+                <View style={{height: 170, width: 250, alignItems: 'center'}}>
+                  <Image source={require('../../assets/icons/Logo.png')} style={{height: 200, width: 250}}/>
                 </View>
             </View>
 

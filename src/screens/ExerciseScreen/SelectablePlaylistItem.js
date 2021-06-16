@@ -3,8 +3,10 @@ import {View, SafeAreaView, StyleSheet, Image, Text, Dimensions, TouchableWithou
 import { useNavigation } from '@react-navigation/native';
 
 import color from '../../constants/color';
+import textStyle from '../../constants/textStyle';
+
 import Tracks_Getter from '../../api/spotify/spotify_tracks_getter';
-const {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const SelectablePlaylistItem = props => {
   const navigation = useNavigation();
@@ -45,10 +47,10 @@ const SelectablePlaylistItem = props => {
           }}>
           <Image style={styles.image} source={{uri: props.item.imageUri}} />
           <SafeAreaView style={styles.text}>
-            <Text numberOfLines={1} style={styles.title}>
+            <Text numberOfLines={1} style={textStyle.title}>
               {props.item.title}
             </Text>
-            <Text style={{color: color.secondary, fontSize: 0.018 * height}}>
+            <Text style={{color: color.secondary, ...textStyle.subtitle}}>
               {num} Songs
             </Text>
           </SafeAreaView>
@@ -62,29 +64,23 @@ const styles = StyleSheet.create({
   container:{
     //backgroundColor: 'pink',
     //borderRadius: 15,
-    width: 0.45 * width,
+    width: 0.5 * width - 15,
     alignItems: 'center',
-    padding: 0.01 * height,
+    padding: 10,
   },
   innerContainer: {
     //backgroundColor: 'blue',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 0.43 * width,
-    height: 0.3 * height,
+    width: 160,
+    height: 200,
   },
   image: {
-    height: 0.4 * width,
-    width: 0.4 * width,
-
-    
-  },
-  title: {
-    fontSize: 0.03 * height,
-    fontWeight: 'bold',
+    height: 145,
+    width: 145,
   },
   text:{
-    width: 0.36 * width,
+    width: 135,
     alignItems: 'center',
     justifyContent: 'flex-start',
   }

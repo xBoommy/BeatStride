@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet, Dimensions, View} from 'react-native';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 import Controller from '../../MusicScreen/components/ControlPanel';
 import { useNavigation } from '@react-navigation/native'; 
 
@@ -7,20 +7,18 @@ import * as Spotify from '../../MusicScreen/components/spotify_player_controls';
 import { useSelector } from 'react-redux';
 
 import color from '../../../constants/color';
-import { opacity } from 'jimp';
-
-const {width, height} = Dimensions.get("window")
+import textStyle from '../../../constants/textStyle';
 
 const RunningMusic = (props) => {
-  const navigation = useNavigation();
+    const navigation = useNavigation();
 
-  const runStatus = props.runStatus;
+    const runStatus = props.runStatus;
 
-  const tracks = useSelector(state => state.playlists.tracksForRun);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [currentlyPlaying, setCurrentlyPlaying] = useState(tracks[0]);
-  const [duration, setDuration] = useState(tracks[0].duration);
+    const tracks = useSelector(state => state.playlists.tracksForRun);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [index, setIndex] = useState(0);
+    const [currentlyPlaying, setCurrentlyPlaying] = useState(tracks[0]);
+    const [duration, setDuration] = useState(tracks[0].duration);
   
     //Timer
     const [time, setTime] = useState(0);
@@ -32,7 +30,9 @@ const RunningMusic = (props) => {
     }
 
     const startTimer = () => {
-      setTick( setInterval(ticking, 1000) );
+        if (!isPlaying){
+            setTick( setInterval(ticking, 1000) );
+        }
     };
 
     const stopTimer = () => {
@@ -69,11 +69,12 @@ const RunningMusic = (props) => {
     const nextSong = async () => {
         stopTimer();
         setTime(0);
-        setDuration(tracks[index + 1].duration);
         if (index === tracks.length - 1) {
+          setDuration(tracks[0].duration);
           setIndex(0);
           playSong(0);
         } else {
+          setDuration(tracks[index + 1].duration);
           setIndex(prevIndex => prevIndex + 1);
           playSong(index + 1);
         }
@@ -111,36 +112,9 @@ const RunningMusic = (props) => {
   //Needs to shift to the page that contains the player... in some exercise page (gps tracking page)
   navigation.addListener('beforeRemove', () => {
     setIsPlaying(false);
+    stopTimer();
     Spotify.pause();
   });
-
-  // //Player methods... different from Full Playlist side...
-  // const playHandler = async () => {
-  //   if (tracks.length === 0) {
-  //     return;
-  //   }
-  //   await Spotify.play(tracks[indexPlaying].trackUri);
-  //   setIsPlaying(true);
-  //   //setCurrentlyPlaying(tracks[indexPlaying]);
-  // };
-  // const pauseHandler = async () => {
-  //   if (tracks.length === 0) {
-  //     return;
-  //   }
-  //   setIsPlaying(false);
-  //   await Spotify.pause();
-  // };
-
-  // const previousHandler = async () => {
-  // };
-
-  // const nextHandler = async () => {
-  //   if (tracks.length === 0) {
-  //     return;
-  //   }
-  //   await Spotify.next();
-  //   setIsPlaying(true);
-  // };
 
   /* [RUN STATUS RENDER] */
   const [first, setFirst] = useState(true);
@@ -166,12 +140,12 @@ const RunningMusic = (props) => {
   return (
     <View style={{
       position: 'absolute',
-      height: 0.125 * height,
-      width: width,
+      height: 80,
+      width: '100%',
       // backgroundColor: 'blue',
       justifyContent: 'center',
       alignItems:'center',
-      bottom: 0.03 * height,
+      bottom: 20,
 
     }}>
         <View style={styles.container}>

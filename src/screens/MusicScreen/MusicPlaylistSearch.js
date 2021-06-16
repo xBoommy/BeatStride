@@ -22,8 +22,8 @@ const MusicPlaylistSearch = (props) => {
               <Image
                 source={require('../../assets/icons/close.png')}
                 style={{
-                  height: 0.04 * height,
-                  width: 0.04 * height,
+                  height: 27.5,
+                  width: 27.5,
                   tintColor: color.primary,
                 }}
               />
@@ -50,9 +50,9 @@ const styles = StyleSheet.create({
     },
     closeButton:{
         position: 'absolute',
-        width: 0.07 * height,
-        height: 0.07 * height,
-        borderRadius: height / 2,
+        width: 47.5,
+        height: 47.5,
+        borderRadius: 24,
         backgroundColor: '#fdfdfd',
         top: 0.03 * height,
         left: 0.01 * height,
