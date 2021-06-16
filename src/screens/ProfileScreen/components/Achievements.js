@@ -6,15 +6,17 @@ const {width, height} = Dimensions.get('window');
 export default () => {
     return (
         <View style={styles.container}>
-            <Text>Achievements</Text>
+            <Text style={{fontSize: 0.025 * height}}>Achievements</Text>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'cyan',
-        width: 0.45 * width,
-        height: 0.1 * height,
+        backgroundColor: '#FFFFFF',
+        width: 0.9 * width,
+        height: 0.15 * height,
+        elevation: 5,
+        alignItems: 'center'
     },
 })

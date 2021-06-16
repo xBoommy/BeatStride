@@ -15,8 +15,8 @@ export default ({image}) => {
 
 const styles = StyleSheet.create({
     image: {
-        height: 0.2 * height,
-        width: 0.2 * height,
+        height: 0.15 * height,
+        width: 0.15 * height,
         borderColor: '#505050',
         borderWidth: 8,
         borderRadius: 0.1 * height,
