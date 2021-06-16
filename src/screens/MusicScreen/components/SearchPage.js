@@ -18,7 +18,6 @@ import PlaylistItem from './PlaylistItem';
 
 //TBC later
 import Spotify_Search from '../../../api/spotify/spotify_search';
-import * as playlistActions from '../../../../SpotifyStore/playlist-actions';
 import * as Firestore from '../../../api/firestore';
 
 const {width, height} = Dimensions.get('window');
