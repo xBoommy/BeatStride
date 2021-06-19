@@ -2,6 +2,7 @@ import React from 'react';
 import {SafeAreaView, View, TouchableOpacity, StyleSheet, Text, Image} from 'react-native';
 
 import color from '../../../constants/color';
+import textStyle from '../../../constants/textStyle';
 
 const ControlPanel = props => {
 
@@ -22,7 +23,7 @@ const ControlPanel = props => {
                 <Image style={{width: 50, height: 50, borderRadius: 5, marginHorizontal: 5}} source={{uri: currentlyPlaying.imageUri}} />
                 <SafeAreaView style={{width: '60%'}}>
                     <Text numberOfLines={1}>{currentlyPlaying.title}</Text>
-                    {currentlyPlaying.artist !== 'undefined' && <Text>{currentlyPlaying.artist}</Text>}
+                    {currentlyPlaying.artist !== 'undefined' && <Text style={{...textStyle.subtitle, color: color.secondary }}>{currentlyPlaying.artist}</Text>}
                 </SafeAreaView>
             </SafeAreaView>
           )}
