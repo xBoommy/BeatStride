@@ -4,6 +4,7 @@ import { CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import * as geolib from 'geolib';
 import moment from 'moment';
+import TTS from 'react-native-tts';
 import * as Firestore from '../../../api/firestore';
 
 import color from '../../../constants/color';
@@ -35,6 +36,8 @@ const RunningMain = ({navigation}) => {
     const [currCoord, setCurrCoord] = useState(startCoord);     //Current coordinate
     const [positions, setPositions] = useState([startCoord]);   //Array of "valid" positons 
     const [distance, setDistance] = useState(0);
+    //Additonal (For Speaker)
+    const [km, setKm] = useState(0);
 
     const [duration, setDuration] = useState(0);    //Total Run Duration
     const [steps, setSteps] = useState(0);          //Total Run Steps
@@ -67,6 +70,7 @@ const RunningMain = ({navigation}) => {
     const subcriptionCountdown = () => {
         /* 0 second */
         console.log('Starting in 5');
+        TTS.getInitStatus().then(()=> TTS.speak('5'));
         getCurrentLocation();
         setCountdownMsg(5);
         setCountdown(true);
@@ -74,6 +78,7 @@ const RunningMain = ({navigation}) => {
         /* 1 second */
         setTimeout( () => {
             console.log('Starting in 4');
+            TTS.speak('4');
             setCountdownMsg(4);
             getCurrentLocation();
         }, 1000);
@@ -81,24 +86,28 @@ const RunningMain = ({navigation}) => {
         /* 2 second */
         setTimeout( () => {
             console.log('Starting in 3');
+            TTS.speak('3');
             setCountdownMsg(3);
         }, 2000);
 
         /* 3 second */
         setTimeout( () => {
             console.log('Starting in 2');
+            TTS.speak('2');
             setCountdownMsg(2);
         }, 3000);
 
         /* 4 second */
         setTimeout( () => {
             console.log('Starting in 1');
+            TTS.speak('1');
             setCountdownMsg(1);
         }, 4000);
     
         /* 5 second */
         setTimeout( () => {
             console.log('Start');
+            TTS.speak('Run start');
             subscribePosition();
             setRunStatus(2);
             setCountdown(false);
@@ -109,36 +118,42 @@ const RunningMain = ({navigation}) => {
     const resumeCountdown = () => {
         /* 0 second */
         console.log('Starting in 5');
+        TTS.getInitStatus().then(()=> TTS.speak('5'));
         setCountdownMsg(5);
         setCountdown(true);
         
         /* 1 second */
         setTimeout( () => {
             console.log('Starting in 4');
+            TTS.speak('4');
             setCountdownMsg(4);
         }, 1000);
     
         /* 2 second */
         setTimeout( () => {
             console.log('Starting in 3');
+            TTS.speak('3');
             setCountdownMsg(3);
         }, 2000);
 
         /* 3 second */
         setTimeout( () => {
             console.log('Starting in 2');
+            TTS.speak('2');
             setCountdownMsg(2);
         }, 3000);
 
         /* 4 second */
         setTimeout( () => {
             console.log('Starting in 1');
+            TTS.speak('1');
             setCountdownMsg(1);
         }, 4000);
     
         /* 5 second */
         setTimeout( () => {
             console.log('Start');
+            TTS.speak('Run resume');
             subscribePosition();
             setRunStatus(2);
             setCountdown(false);
@@ -280,6 +295,43 @@ const RunningMain = ({navigation}) => {
                 date:date,
                 id:moment().format(),
             }
+            //Announce Data
+            const km = Math.floor(distance/1000);
+            const m = Math.floor(distance % 1000);
+            const hour = Math.floor(duration / 3600000);
+            const min = Math.floor((duration % 3600000)/ 60000);
+            const sec = Math.floor((duration % 60000)/1000);
+            const avgTime = duration / (distance/1000);
+            const paceHour = Math.floor(avgTime / 3600000);
+            const paceMin = Math.floor((avgTime % 3600000) / 60000);
+            const paceSec = Math.floor((avgTime % 60000)/1000);
+            let msg = `Total distance, `;
+            if (km !== 0) {
+                msg += km + (km === 1 ? " kilometer" :  " kilometers") + " and";
+            }
+            if (m !== 0) {
+                msg += m + (m === 1 ? " meter" :  " meters") + " ";
+            }
+            msg += "Total time, ";
+            if (hour !== 0) {
+                msg += hour + (hour === 1 ? " hour" :  " hours") + " ";
+            }
+            if (min !== 0) {
+                msg += min + (min === 1 ? " minute" : " minutes") + " and";
+            }
+            if (sec !== 0) {
+                msg += sec + (sec === 1 ? " second" : " seconds") + ". Average pace, ";
+            }
+            if (paceHour !== 0) {
+                msg += paceHour + (paceHour === 1 ? " hour " : " hours ")
+            }
+            if (paceMin !== 0) {
+                msg += paceMin + (paceMin === 1 ? " minute" : " minutes") + " and ";
+            }
+            if (paceSec !== 0) {
+                msg += paceSec + (paceSec === 1 ? " second" : " seconds") + " per kilometer";
+            }
+            TTS.getInitStatus().then(() => TTS.speak(msg));
             //Add to history + update personal stats
             Firestore.db_recordRun(record,
                 () => {
@@ -343,6 +395,9 @@ const RunningMain = ({navigation}) => {
                 <RunningTimer
                     runStatus={runStatus}
                     setDuration={setDuration}
+                    distance={distance}
+                    km={km}
+                    setKm={setKm}
                 />
                 <RunningSteps
                     runStatus={runStatus}

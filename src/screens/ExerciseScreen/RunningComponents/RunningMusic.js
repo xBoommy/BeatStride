@@ -17,8 +17,8 @@ const RunningMusic = (props) => {
     const tracks = useSelector(state => state.playlists.tracksForRun);
     const [isPlaying, setIsPlaying] = useState(false);
     const [index, setIndex] = useState(0);
-    const [currentlyPlaying, setCurrentlyPlaying] = useState(tracks[0]);
-    const [duration, setDuration] = useState(tracks[0].duration);
+    const [currentlyPlaying, setCurrentlyPlaying] = useState(tracks.length > 0 ? tracks[0] : undefined);
+    const [duration, setDuration] = useState(tracks.length > 0 ? tracks[0].duration : 0);
   
     //Timer
     const [time, setTime] = useState(0);
@@ -30,7 +30,8 @@ const RunningMusic = (props) => {
     }
 
     const startTimer = () => {
-        if (!isPlaying){
+        if (!isPlaying) { 
+            //Might have a bug here? Is this taking the "previous" snapshot or "current"
             setTick( setInterval(ticking, 1000) );
         }
     };
@@ -53,6 +54,7 @@ const RunningMusic = (props) => {
           return;
         }
         await Spotify.playDirect(tracks[id].trackUri);
+        setCurrentlyPlaying(tracks[id]);
         startTimer();
         setIsPlaying(true);
     }
@@ -93,23 +95,22 @@ const RunningMusic = (props) => {
       }
     };
 
-  const updatePlaying = async () => {
-    //need to call this method on changing songs...
-    const track = await Spotify.currentPlayingTrack();
-    if (track === undefined) {
-      updatePlaying();
-    } else if (track !== currentlyPlaying) {
-      setCurrentlyPlaying(track);
-    }
-  };
+  // const updatePlaying = async () => {
+  //   //need to call this method on changing songs...
+  //   const track = await Spotify.currentPlayingTrack();
+  //   if (track === undefined) {
+  //     updatePlaying();
+  //   } else if (track !== currentlyPlaying) {
+  //     setCurrentlyPlaying(track);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (isPlaying) {
-      updatePlaying();
-    }
-  });
+  // useEffect(() => {
+  //   if (isPlaying) {
+  //     updatePlaying();
+  //   }
+  // });
 
-  //Needs to shift to the page that contains the player... in some exercise page (gps tracking page)
   navigation.addListener('beforeRemove', () => {
     setIsPlaying(false);
     stopTimer();
