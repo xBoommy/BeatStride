@@ -65,6 +65,7 @@ const TempoRun = () => {
             <View style={ExerciseComponentStyles.componentContainer}>
 
                 <PreRunSelection
+                    isTempo={true}
                     selectionToggle={selectionToggle}
                     setSelectionToggle={setSelectionToggle}
                 />

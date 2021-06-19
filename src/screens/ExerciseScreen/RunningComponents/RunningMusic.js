@@ -95,22 +95,6 @@ const RunningMusic = (props) => {
       }
     };
 
-  // const updatePlaying = async () => {
-  //   //need to call this method on changing songs...
-  //   const track = await Spotify.currentPlayingTrack();
-  //   if (track === undefined) {
-  //     updatePlaying();
-  //   } else if (track !== currentlyPlaying) {
-  //     setCurrentlyPlaying(track);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (isPlaying) {
-  //     updatePlaying();
-  //   }
-  // });
-
   navigation.addListener('beforeRemove', () => {
     setIsPlaying(false);
     stopTimer();

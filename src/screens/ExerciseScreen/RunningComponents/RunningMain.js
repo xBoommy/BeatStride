@@ -305,7 +305,10 @@ const RunningMain = ({navigation}) => {
             const paceHour = Math.floor(avgTime / 3600000);
             const paceMin = Math.floor((avgTime % 3600000) / 60000);
             const paceSec = Math.floor((avgTime % 60000)/1000);
-            let msg = `Total distance, `;
+            let msg = "";
+            if (distance !== 0) {
+                msg += "Total distance, ";
+            }
             if (km !== 0) {
                 msg += km + (km === 1 ? " kilometer" :  " kilometers") + " and";
             }
@@ -320,16 +323,19 @@ const RunningMain = ({navigation}) => {
                 msg += min + (min === 1 ? " minute" : " minutes") + " and";
             }
             if (sec !== 0) {
-                msg += sec + (sec === 1 ? " second" : " seconds") + ". Average pace, ";
+                msg += sec + (sec === 1 ? " second" : " seconds") + ". ";
             }
-            if (paceHour !== 0) {
-                msg += paceHour + (paceHour === 1 ? " hour " : " hours ")
-            }
-            if (paceMin !== 0) {
-                msg += paceMin + (paceMin === 1 ? " minute" : " minutes") + " and ";
-            }
-            if (paceSec !== 0) {
-                msg += paceSec + (paceSec === 1 ? " second" : " seconds") + " per kilometer";
+            if (distance !== 0) { //avgPace not infinity
+                msg += "Average Time, "
+                if (paceHour !== 0) {
+                    msg += paceHour + (paceHour === 1 ? " hour " : " hours ")
+                }
+                if (paceMin !== 0) {
+                    msg += paceMin + (paceMin === 1 ? " minute" : " minutes") + " and ";
+                }
+                if (paceSec !== 0) {
+                    msg += paceSec + (paceSec === 1 ? " second" : " seconds") + " per kilometer";
+                }
             }
             TTS.getInitStatus().then(() => TTS.speak(msg));
             //Add to history + update personal stats

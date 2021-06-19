@@ -10,6 +10,7 @@ import color from '../../constants/color';
 import SelectablePlaylistItem from './SelectablePlaylistItem';
 import * as Firestore from '../../api/firestore';
 import FilterbyBPM from '../../api/spotify/FilterbyBPM';
+import TracksNoFilter from '../../api/spotify/TracksNoFilter';
 import * as playlistActions from '../../../store/playlist-actions';
 
 const {width, height} = Dimensions.get("window");
@@ -37,24 +38,36 @@ const PreRunSelection = props => {
         return;
       }
       setIsLoading(true);
-      await FilterbyBPM(inSelected, 110, 10 ,
-          (tracks) => {
-              console.log('selected tracks by bpm:');
-              console.log(tracks);
-              dispatch(playlistActions.setTracksForRun(tracks))
-          },
-          (error) => {
-              setIsLoading(false);
-              console.log(error);
-          }
-        ); //BPM and allowance
+      if (props.isTempo) {
+          await FilterbyBPM(inSelected, 110, 10 ,
+            (tracks) => {
+                // console.log('selected tracks by bpm:');
+                // console.log(tracks);
+                dispatch(playlistActions.setTracksForRun(tracks))
+            },
+            (error) => {
+                setIsLoading(false);
+                console.log(error);
+            }
+          );
+      } else {
+          await TracksNoFilter(inSelected,
+            (tracks) => {
+                dispatch(playlistActions.setTracksForRun(tracks))
+            },
+            (error) => {
+                setIsLoading(false);
+                console.log(error);
+            }
+          );
+      }
       
     };
 
     const confirmation = () => {
         getTracksForRun().then(() => {
-            props.setSelectionToggle(false)
-            navigation.navigate("RunningMain")
+            props.setSelectionToggle(false);
+            navigation.navigate("RunningMain");
         })
     }
     
