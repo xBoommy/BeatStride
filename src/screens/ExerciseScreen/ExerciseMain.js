@@ -85,7 +85,6 @@ const ExerciseMain = ({navigation}) => {
                     }}>
                         Tempo Run
                     </Text>
-                    <TabIndicator scrollX={scrollX} id={"Tempo"}/>
                 </View>
             </TouchableWithoutFeedback>
 
@@ -101,7 +100,6 @@ const ExerciseMain = ({navigation}) => {
                       }}>
                           Basic Run
                       </Text>
-                      <TabIndicator scrollX={scrollX} id={"Basic"}/>
                   </View>
             </TouchableWithoutFeedback>
 
@@ -117,11 +115,15 @@ const ExerciseMain = ({navigation}) => {
                     }}>
                         History
                     </Text>
-                    <TabIndicator scrollX={scrollX} id={"History"}/>
                 </View>
             </TouchableWithoutFeedback>
-
+            
         </View>
+
+    
+        <TabIndicator scrollX={scrollX}/>
+    
+        
         
 
         <Animated.ScrollView

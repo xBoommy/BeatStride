@@ -5,29 +5,27 @@ import color from '../../constants/color'
 
 const {width, height} = Dimensions.get("window")
 
-export default TabIndicator = (props) => {
-    const scrollX = props.scrollX;
-    const id = props.id;
+export default TabIndicator = ({scrollX}) => {
+     const IndicatorWidth = scrollX.interpolate({
+        inputRange: [ 0 , width, 2* width],
+        outputRange: [73, 63 , 50],
+    });
 
-    const TempoWidth = scrollX.interpolate({
-        inputRange: [-width, 0 , width],
-        outputRange: [0, 0.112*height, 0],
-        extrapolate: 'clamp', //Can try comment out this line
-    });
-    const BasicWidth = scrollX.interpolate({
-        inputRange: [0, width , 2*width],
-        outputRange: [0, 0.1*height, 0],
-        extrapolate: 'clamp', //Can try comment out this line
-    });
-    const HistoryWidth = scrollX.interpolate({
-        inputRange: [width, 2*width, 3*width],
-        outputRange: [0, 0.07*height, 0],
-        extrapolate: 'clamp', //Can try comment out this line
-    });
+    const translateX = scrollX.interpolate({
+        inputRange: [ 0 , width, 2* width],
+        outputRange: [0.185 * width, 0.45 * width , 0.685 * width ],
+    })
+
 
     return (
         <Animated.View 
-            style={[styles.dot, { width: (id == "Tempo") ?  TempoWidth : ((id == "Basic") ? BasicWidth : HistoryWidth)}]}/>
+            style={{
+                ...styles.dot, 
+                width: IndicatorWidth,
+                position:'absolute',
+                transform: [{translateX: translateX}],
+                left: 0,
+        }}/>
     )
 };
 
@@ -36,6 +34,6 @@ const styles = StyleSheet.create({
         height: 5,
         borderRadius: 5,
         backgroundColor: color.primary,
-        marginHorizontal: 8,
+        // marginHorizontal: 8,
     },
 });

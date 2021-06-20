@@ -78,7 +78,7 @@ const Card = () => {
                                 <Text style={{
                                     textAlign:'center', 
                                     fontWeight:'bold',
-                                    fontSize: 30,
+                                    fontSize: 25,
                                     color: '#FA841B',
                                     backgroundColor: '#FFFFFF',
                                 }}>National</Text>

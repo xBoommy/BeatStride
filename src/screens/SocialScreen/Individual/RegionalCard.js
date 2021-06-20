@@ -78,7 +78,7 @@ const Card = () => {
                                 <Text style={{
                                     textAlign:'center', 
                                     fontWeight:'bold',
-                                    fontSize: 30,
+                                    fontSize: 25,
                                     color: '#E55B5B',
                                     backgroundColor: '#FFFFFF',
                                 }}>Regional</Text>
