@@ -2,6 +2,7 @@
 import Spotify_token from './spotify_token';
 const apiPrefix = 'https://api.spotify.com/v1/tracks';
 
+//Used in Spotify player controls, currentPlayingTracks
 export default async (trackID) => {
   const uri = `${apiPrefix}/${trackID}`;
   const spotify_token = await Spotify_token();

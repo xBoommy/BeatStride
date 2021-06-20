@@ -15,7 +15,7 @@ const Card = () => {
                     <View style={{
                         backgroundColor: '#FA841B',
                         width: width-40,
-                        height: 150,
+                        height: 130,
                         borderRadius: 15,
                         justifyContent:'space-between',
                         alignItems:'center',
@@ -28,8 +28,8 @@ const Card = () => {
                             <View style={{
                                 flexDirection: 'row', 
                                 backgroundColor: '#F7A65D',
-                                width: 120,
-                                height: 120,
+                                width: 110,
+                                height: 110,
                                 borderRadius: 15,
                             }}>
                                 <View style={{alignItems:'center', justifyContent:'center', paddingLeft: 20,}}>
@@ -37,9 +37,9 @@ const Card = () => {
                                         <Text style={{
                                             textAlign:'center', 
                                             fontWeight:'bold',
-                                            fontSize: 55,
+                                            fontSize: 25,
                                             color:'#FFFFFF',
-                                        }}>41</Text>
+                                        }}>5178</Text>
                                     
                                     <Text style={{
                                         fontWeight:'bold', 
@@ -51,7 +51,7 @@ const Card = () => {
                                     fontWeight: 'bold',
                                     fontSize: 18,
                                     color:'#FFFFFF',
-                                }}> st</Text>
+                                }}> th</Text>
                             </View>
                         </View>
 
@@ -65,7 +65,7 @@ const Card = () => {
                         }}>
                             <View style={{alignItems: 'flex-end', transform:[{translateX:40}],}}>
                                 <Text style={{fontSize: 28, fontWeight:'bold', color: "#FFFFFF"}}>Total</Text>
-                                <Text style={{fontSize: 14, fontWeight:'bold', color: "#FFFFFF"}}>2238</Text>
+                                <Text style={{fontSize: 14, fontWeight:'bold', color: "#FFFFFF"}}>5238</Text>
                                 <Text style={{fontSize: 14, fontWeight:'bold', color: "#FFFFFF"}}>members</Text>
                             </View>
 

@@ -41,6 +41,34 @@ export const db_createAccount = (credentials, onSuccess, onError) => {
     db_createAccount3(credentials.uid, credentials.region);
 }
 
+//Upload profile picture: ***** This uses Firebase.storage, not firestore *****
+export const storage_uploadProfilePic = async (uri) => {
+    const user_id = Authentication.getCurrentUserId();
+    //name can be user_id too, to avoid storing too many pictures
+    const path = `profilephotos/${user_id}/${user_id}.jpg`;
+    try {
+        const response = await fetch(uri);
+        const file = await response.blob();
+        console.log(file);
+        firebase.storage().ref(path).put(file);
+    } catch (e) {
+        console.error('Upload profile picture failed: ', e);
+    }
+}
+
+export const storage_retrieveProfilePic = async (onSuccess, onError) => {
+    const user_id = Authentication.getCurrentUserId();
+    const path = `profilephotos/${user_id}/${user_id}.jpg`;
+    try {
+        //console.log('trying to get file....');
+        const file = await firebase.storage().ref(path).getDownloadURL();
+        //console.log('reached here, file is:');
+        const profilePicture = {uri: file};
+        onSuccess(profilePicture);
+    } catch (e) {
+        onError(e);
+    }
+}
 
 
 

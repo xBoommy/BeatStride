@@ -6,15 +6,17 @@ import * as Location from 'expo-location';
 import { Button } from "react-native-paper";
 
 import ExerciseComponentStyles from './ExerciseComponentStyles';
+import PreRunSelection from '../PreRunSelection';
 import color from '../../../constants/color';
 import textStyle from '../../../constants/textStyle';
 
-const {width, height} = Dimensions.get("window")
+const {width} = Dimensions.get("window")
 
 const BasicRun = () => {
     const navigation = useNavigation();
 
     const [status, setStatus] = useState(0);
+    const [selectionToggle, setSelectionToggle] = useState(false);
 
     /* [Check GPS Service Enabled? + Prompt] */
     const seviceCheck = async() => {
@@ -43,7 +45,7 @@ const BasicRun = () => {
     /* [Status Control] */
     useEffect(() => {
         if (status === 1) {
-            navigation.navigate("RunningMain")
+            setSelectionToggle(true);
         }
         if (status === 6) {
             console.log("Checking GPS Service")
@@ -54,7 +56,11 @@ const BasicRun = () => {
     return (
         <View style={ExerciseComponentStyles.containerBuffer}>
             <View style={ExerciseComponentStyles.componentContainer}>
-
+                <PreRunSelection
+                    isTempo={false}
+                    selectionToggle={selectionToggle}
+                    setSelectionToggle={setSelectionToggle}
+                />
                 {/* Background Map */}
                 <View style={ExerciseComponentStyles.mapContainer}>
                     <MapView
@@ -85,8 +91,8 @@ const BasicRun = () => {
                             {/* Total Distance Indicator */}
                             <View style={{alignItems: 'center', paddingTop:20}}>
                                 <View style={{flexDirection: 'row', alignItems: 'flex-end', paddingBottom: 5}}>
-                                    <Text style={{fontWeight: 'bold', fontSize: 50}}>110.7</Text>
-                                    <Text style={{...textStyle.subHeader, fontWeight: 'bold',}}> km</Text>
+                                    <Text style={{fontWeight: 'bold', fontSize: 50}}>45.2</Text>
+                                    <Text style={{...textStyle.subHeader, fontWeight: 'bold',}}> m</Text>
                                 </View>
                                 <Text style={textStyle.subHeader}>Total Distance</Text>
                             </View>
@@ -94,7 +100,7 @@ const BasicRun = () => {
                             {/* Total Runs Indicator */}
                             <View style={{alignItems: 'center', paddingTop:20 }}>
                                 <View style={{flexDirection: 'row', alignItems: 'flex-end', paddingBottom: 5}}>
-                                    <Text style={{fontWeight: 'bold', ...textStyle.header}}>38</Text>
+                                    <Text style={{fontWeight: 'bold', ...textStyle.header}}>3</Text>
                                     <Text style={{fontWeight: 'bold',}}> runs</Text>
                                 </View>
                                 <Text style={textStyle.subHeader}>Total Runs</Text>

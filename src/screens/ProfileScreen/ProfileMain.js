@@ -69,9 +69,7 @@ const ProfileMain = ({navigation}) => {
             <View>
               {/* Profile Picture */}
               <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <ProfilePicture
-                  image={require('../../assets/icons/defaultprofile.png')}
-                />
+                <ProfilePicture/>
               </View>
               {/* Age, Name, Gender Block */}
 

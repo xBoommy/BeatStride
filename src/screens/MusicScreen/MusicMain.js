@@ -19,11 +19,6 @@ const MusicMain = ({navigation}) => {
 
     const [popToggle, setPopToggle] = useState(false);
 
-    //const dispatch = useDispatch();
-    // const playlists = useSelector(state => state.playlists.playlists);
-    // useEffect(() => {
-    //     dispatch(playlistActions.loadPlaylists());
-    // }, [dispatch]);
     const [playlists, setPlaylists] = useState([]);
     useEffect(() => {
       Firestore.db_playlists(
