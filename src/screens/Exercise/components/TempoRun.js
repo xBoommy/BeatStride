@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet,  Text,  View, Dimensions, ScrollView, Animated, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions, ScrollView, Alert, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native'; 
 import * as Location from 'expo-location';
+import * as Firestore from '../../../api/firestore';
 
 import PlaylistSelectionTempo from '../PlaylistSelectionTempo';
 import GoalSetting from '../GoalSetting';
+import SelectLoading from './SelectLoading';
 
 const {width, height} = Dimensions.get("window")
 
@@ -13,8 +15,13 @@ const TempoRun = () => {
 
     const [selectToggle, setSelectToggle] = useState(false)
     const [settingToggle, setSettingToggle] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
 
     const [status, setStatus] = useState(0);
+    const [goalDistance, setGoalDistance] = useState(0);
+    const [goalTime, setGoalTime] = useState(0);
+    const [strideDistance, setStrideDistance] = useState(0);
+    const [BPM, setBPM] = useState(0);
 
     /* [Check GPS Service Enabled? + Prompt] */
     const seviceCheck = async() => {
@@ -44,13 +51,54 @@ const TempoRun = () => {
     useEffect(() => {
         if (status === 1) {
             console.log("GPS Enabled")
-            setSelectToggle(true);
+            if (strideDistance > 0) {
+                setSelectToggle(true);
+            } else {
+                Alert.alert(
+                    "Unable to Calculate BPM",
+                    "Tempo Run requires calibration prior to usage. Please complete a calibration run at least once and try again.",
+                    [ { text:"Understood", onPress: () => {console.log("Alert closed")} } ]
+                )
+            }
+            
         }
         if (status === 6) {
             console.log("Checking GPS Service")
             seviceCheck();
         }
     },[status])
+
+    useEffect(() => {
+        Firestore.db_getUserDataSnapshot(
+            (userData) => {
+                setGoalDistance(userData.goalDistance);
+                setGoalTime(userData.goalTime);
+                setStrideDistance(userData.strideDistance);
+            },
+            (error) => {console.log(error)},
+        )
+    }, [])
+
+    const recommendedBPM = () => {
+        if (strideDistance > 0 && goalTime > 0){
+            const numOfSteps = (goalDistance / strideDistance)
+            const BPM = numOfSteps / goalTime
+            const rounded_BPM = round5(BPM)
+
+            setBPM(rounded_BPM);
+            // console.log(rounded_BPM)
+        }
+    }
+
+    const round5 = (num) => {
+        return (num % 5) >= 2.5 ? parseInt(num/5)*5 + 5 : parseInt(num / 5) * 5
+    }
+
+    useEffect(() => {
+        recommendedBPM();
+    }, [strideDistance, goalDistance])
+    
+
 
     return (
         <View style={styles.componentContainer}>
@@ -80,11 +128,13 @@ const TempoRun = () => {
                 <View style={styles.goalTextContainer}>
                     <View style={styles.goalValue}>
                         <Text style={styles.goalText}>Distance</Text>
-                        <Text style={styles.goalText}>42.24 km</Text>
+                        <Text style={styles.goalText}>{(goalDistance / 1000).toFixed(2)} km</Text>
                     </View>
                     <View style={styles.goalValue}>
                         <Text style={styles.goalText}>Time</Text>
-                        <Text style={styles.goalText}>24 hr 56 min</Text>
+                        <Text style={styles.goalText}>
+                            {((Math.floor(goalTime / 60)) != 0) ? (Math.floor(goalTime / 60)) + " hr" : ""} {goalTime - (Math.floor(goalTime / 60)) * 60} min
+                        </Text>
                     </View>
                     
                 </View>
@@ -104,12 +154,19 @@ const TempoRun = () => {
                 selectToggle={selectToggle}
                 setSelectToggle={setSelectToggle}
                 mode={"Tempo"}
+                setIsLoading={setIsLoading}
+                BPM={BPM}
             />
 
             {/* Goal Setting Popup */}
             <GoalSetting
                 settingToggle={settingToggle}
                 setSettingToggle={setSettingToggle}
+            />
+
+            {/* Loading Modal */}
+            <SelectLoading
+                isLoading={isLoading}
             />
 
         </View>

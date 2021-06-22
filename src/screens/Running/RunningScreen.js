@@ -56,7 +56,7 @@ const RunningScreen = ({navigation, route}) => {
     const getCurrentLocation = async() => {
         try {
             const { coords: {latitude, longitude} } = await Location.getCurrentPositionAsync()
-            console.log('Getting current Location')
+            // console.log('Getting current Location')
 
             setStartCoord( {latitude: latitude, longitude: longitude} )
             setPrevCoord( {latitude: latitude, longitude: longitude} );
@@ -321,6 +321,12 @@ const RunningScreen = ({navigation, route}) => {
                 },
                 (error) => {console.log(error)}    
             )
+            
+            //Update Stride Distance, only if user in Calibration mode
+            if (mode=="Calibration") {
+                const strideDistance = (distance / steps)
+                Firestore.db_calibrateStride(strideDistance);
+            }
         }
     },[runStatus])
 

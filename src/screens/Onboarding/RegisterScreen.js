@@ -3,7 +3,8 @@ import {  SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable, Keyboard 
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 
-import * as Authentication from "../../api/auth";
+import * as Authentication from '../../api/auth';
+import * as Firestore from '../../api/firestore';
 
 const RegisterOne = ({navigation}) => {
     const [username, setUsername] = useState("");
@@ -19,12 +20,31 @@ const RegisterOne = ({navigation}) => {
         setIsRegisterLoading(true);
     
         Authentication.createAccount(
-          { name: username, email, password },
-          (user) => {
-            navigation.dispatch(CommonActions.reset({ 
-                index: 0, 
-                routes: [{ name: "RegisterTwo", params: {uid : user.uid, displayName: user.displayName} }]
-            }))
+            { name: username, email, password },
+            (user) => {
+
+                const credentials = {
+                    displayName: user.displayName,
+                    uid: user.uid,
+                    totalDistance: 0,
+                    runCount: 0,
+                    goalDistance: 0,
+                    goalTime: 0,
+                    strideDistance: 0,
+                }
+
+                Firestore.db_createAccount(Credentials, 
+                    () => {
+                        navigation.dispatch(CommonActions.reset({ 
+                            index: 0, 
+                            routes: [{ name: "AppTab" }]
+                        }))
+                    },
+                    () => {
+                        console.log('registration failed')
+                        setIsRegisterLoading(false);
+                    },
+                )
           },
           (error) => {
             setIsRegisterLoading(false);

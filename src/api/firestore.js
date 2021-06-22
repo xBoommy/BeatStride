@@ -187,6 +187,40 @@ export const db_removeUserPlaylists = ( playlist ) => {
     }
 }
 
+export const db_calibrateStride = async( strideDistance) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users").doc(user_id).update({strideDistance: strideDistance})
+        console.log("Stride Distance Updated")
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const db_getUserDataSnapshot = async( onSuccess, onError) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users").doc(user_id)
+        .onSnapshot((documentSnapshot) => {
+            const userData = documentSnapshot.data()
+            return onSuccess(userData);
+        })
+    } catch (error) {
+        return onError(error);
+    }
+}
+
+export const db_editGoals = async( distance, time, onSuccess) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users").doc(user_id).update({goalDistance: distance, goalTime: time})
+        console.log("Goals Updated")
+        return onSuccess();
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 //SAMPLE DB FUNCTION
 export const functionName = async( params, onSuccess, onError) => {

@@ -41,8 +41,8 @@ const RunTimer = (props) => {
         }
         if (runStatus == 3){
             stopTimer()
-            console.log("time====================")
-            console.log(time)
+            // console.log("time====================")
+            // console.log(time)
         }
         if (runStatus == 4 || runStatus == 5){
             stopTimer()

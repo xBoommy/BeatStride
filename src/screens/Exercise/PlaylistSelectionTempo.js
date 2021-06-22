@@ -15,6 +15,7 @@ const PlaylistSelectionTempo = (props) => {
     const setSelectToggle = props.setSelectToggle;
     const mode = props.mode;
     const setIsLoading = props.setIsLoading;
+    const BPM = props.BPM;
 
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -29,8 +30,8 @@ const PlaylistSelectionTempo = (props) => {
         );
     }, []);
 
-    const LOWERLIMIT = 100; //suppose to pass in props, target, allowance
-    const UPPERLIMIT = 120; //lower = target - allowance, upper - target + allowance
+    const LOWERLIMIT = BPM - 10; //suppose to pass in props, target, allowance
+    const UPPERLIMIT = BPM + 10; //lower = target - allowance, upper - target + allowance
 
     const getTracksForRun = async () => {
         if (inSelected.length === 0) {
@@ -40,7 +41,7 @@ const PlaylistSelectionTempo = (props) => {
         setIsLoading(true);
         await FilterbyBPM(
             inSelected,
-            110, //should be target
+            BPM, //should be target
             10, //should be allowance
             tracks => {
                 // console.log('selected tracks by bpm:');
@@ -89,11 +90,12 @@ const PlaylistSelectionTempo = (props) => {
                         numColumns={2}
                         data={playlists}
                         keyExtractor={item => item.id}
-                        renderItem={({item}) => <PlaylistSelectionItem 
-                                                    item={item}
-                                                    inserted={inSelected}
-                                                    insert={setInSelected}
-                                                />}
+                        renderItem={({item}) => 
+                            <PlaylistSelectionItem 
+                                item={item}
+                                inserted={inSelected}
+                                insert={setInSelected}
+                            />}
                     />
 
                     {/* Button Container */}
