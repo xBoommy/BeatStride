@@ -4,13 +4,15 @@ import { useNavigation, CommonActions } from '@react-navigation/native';
 import * as Location from 'expo-location';
 
 import PlaylistSelectionBasic from '../PlaylistSelectionBasic';
+import SelectLoading from './SelectLoading';
 
 const {width, height} = Dimensions.get("window")
 
 const BasicRun = () => {
     const navigation = useNavigation();
 
-    const [selectToggle, setSelectToggle] = useState(false)
+    const [selectToggle, setSelectToggle] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [status, setStatus] = useState(0);
 
@@ -78,7 +80,13 @@ const BasicRun = () => {
                 selectToggle={selectToggle}
                 setSelectToggle={setSelectToggle}
                 mode={"Basic"}
-            />            
+                setIsLoading={setIsLoading}
+            />
+
+            {/* Loading Modal */}
+            <SelectLoading
+                isLoading={isLoading}
+            />     
 
         </View>
     );

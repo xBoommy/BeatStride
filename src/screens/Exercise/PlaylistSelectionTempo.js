@@ -14,12 +14,11 @@ const PlaylistSelectionTempo = (props) => {
     const selectToggle = props.selectToggle;
     const setSelectToggle = props.setSelectToggle;
     const mode = props.mode;
+    const setIsLoading = props.setIsLoading;
 
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
-    const [isLoading, setIsLoading] = useState(false);
-    //^For loading page if doing
     const [playlists, setPlaylists] = useState([]);
     const [inSelected, setInSelected] = useState([]);
     
@@ -57,6 +56,7 @@ const PlaylistSelectionTempo = (props) => {
 
     const confirmation = () => {
         getTracksForRun().then(() => {
+            setIsLoading(false);
             setSelectToggle(false);
             navigation.navigate("RunningScreen", {mode: mode});
         })
