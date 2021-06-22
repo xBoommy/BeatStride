@@ -1,24 +1,65 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 import PlaylistSelectionItem from './components/PlaylistSelectionItem';
+import * as Firestore from '../../api/firestore';
+import FilterbyBPM from '../../api/spotify/FilterbyBPM';
+import * as playlistActions from '../../../store/playlist-actions';
 
 const {width, height} = Dimensions.get("window")
-
-// For Testing Purpose - Remove before use
-const playlists = [
-    {id: 1, name : 1},
-    {id: 2, name : 2},
-    {id: 3, name : 3},
-    {id: 4, name : 4},
-    {id: 5, name : 5},
-    {id: 6, name : 6},
-    {id: 7, name : 7},
-]
 
 const PlaylistSelectionTempo = (props) => {
     const selectToggle = props.selectToggle;
     const setSelectToggle = props.setSelectToggle;
+
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
+
+    const [isLoading, setIsLoading] = useState(false);
+    //^For loading page if doing
+    const [playlists, setPlaylists] = useState([]);
+    const [inSelected, setInSelected] = useState([]);
+    
+    useEffect(() => {
+        Firestore.db_playlists(
+            (playlists) => { setPlaylists(playlists)},
+            (error) => {console.log('Failed to initiate playlist in music main')}
+        );
+    }, []);
+
+    const LOWERLIMIT = 100; //suppose to pass in props, target, allowance
+    const UPPERLIMIT = 120; //lower = target - allowance, upper - target + allowance
+
+    const getTracksForRun = async () => {
+        if (inSelected.length === 0) {
+            console.log('No playlists selected');
+            return;
+        }
+        setIsLoading(true);
+        await FilterbyBPM(
+            inSelected,
+            110, //should be target
+            10, //should be allowance
+            tracks => {
+                // console.log('selected tracks by bpm:');
+                // console.log(tracks);
+                dispatch(playlistActions.setTracksForRun(tracks));
+            },
+            error => {
+                setIsLoading(false);
+                console.log(error);
+            },
+        );
+    };
+
+    const confirmation = () => {
+        getTracksForRun().then(() => {
+            setSelectToggle(false);
+            navigation.navigate("RunningScreen");
+        })
+    }
 
     return (
         <Modal visible={selectToggle} transparent={true} animationType={'slide'}>
@@ -31,7 +72,7 @@ const PlaylistSelectionTempo = (props) => {
                     <View style={styles.textContainer}>
                         <View style={styles.recommendContainer}>
                             <Text style={styles.recommedText}>Recommended BPM</Text>
-                            <Text style={styles.recommendValue}>100 ~ 120</Text>
+                            <Text style={styles.recommendValue}>{LOWERLIMIT} ~ {UPPERLIMIT}</Text>
                         </View>
                         
                         <View style={styles.messageContainer}>
@@ -47,7 +88,11 @@ const PlaylistSelectionTempo = (props) => {
                         numColumns={2}
                         data={playlists}
                         keyExtractor={item => item.id}
-                        renderItem={({item}) => <PlaylistSelectionItem/>}
+                        renderItem={({item}) => <PlaylistSelectionItem 
+                                                    item={item}
+                                                    inserted={inSelected}
+                                                    insert={setInSelected}
+                                                />}
                     />
 
                     {/* Button Container */}
@@ -60,7 +105,7 @@ const PlaylistSelectionTempo = (props) => {
                         </TouchableOpacity>
 
                         {/* Confirm Button */}
-                        <TouchableOpacity onPress={() => {}}>
+                        <TouchableOpacity onPress={confirmation}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>Confirm</Text>
                             </View>
