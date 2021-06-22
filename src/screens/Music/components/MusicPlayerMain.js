@@ -55,15 +55,10 @@ const MusicPlayer = props => {
                 {/* Skip Previous Button */}
                 <TouchableOpacity onPress={previousHandler}>
                     <View style={styles.skipButton}>
-                        {/* Icon Here 
-                            resizeMode: 'contain'
-                            style={styles.icon}
-                        */}
                         <Image
                             source={require('../../../assets/icons/previous.png')}
                             resizeMode='contain'
                             style={styles.icon}
-                            //style={{...styles.icon, height: 30, width: 30}}
                         />
                     </View>
                 </TouchableOpacity>
@@ -73,30 +68,20 @@ const MusicPlayer = props => {
                 {isPlaying ? (
                     <TouchableOpacity onPress={pauseHandler}>
                         <View style={styles.playButton}>
-                            {/* Icon Here 
-                                resizeMode: 'contain'
-                                style={styles.icon}
-                            */}
                             <Image
                                 source={require('../../../assets/icons/pause.png')}
                                 resizeMode='contain'
                                 style={styles.icon}
-                                //style={{...styles.icon, height: 30, width: 30}}
                             />
                         </View>
                     </TouchableOpacity>
                 ) : (
                     <TouchableOpacity onPress={playHandler}>
                         <View style={styles.playButton}>
-                            {/* Icon Here 
-                                resizeMode: 'contain'
-                                style={styles.icon}
-                            */}
                             <Image
                                 source={require('../../../assets/icons/play.png')}
                                 resizeMode='contain'
-                                style={styles.icon}
-                                //style={{...styles.icon, height: 30, width: 30}}
+                                style={styles.playIcon}
                             />
                         </View>
                     </TouchableOpacity>
@@ -105,15 +90,10 @@ const MusicPlayer = props => {
                 {/* Skip Next Button */}
                 <TouchableOpacity onPress={nextHandler}>
                     <View style={styles.skipButton}>
-                        {/* Icon Here 
-                            resizeMode: 'contain'
-                            style={styles.icon}
-                        */}
                         <Image
                             source={require('../../../assets/icons/next.png')}
                             resizeMode='contain'
                             style={styles.icon}
-                            //style={{...styles.icon, height: 30, width: 30}}
                         />
                     </View>
                 </TouchableOpacity>
@@ -139,7 +119,7 @@ const styles = StyleSheet.create({
     imageContainer:{
         height: height * 0.12 * 0.8,
         aspectRatio: 1,
-        backgroundColor: 'purple',
+        // backgroundColor: 'purple',
     },
     textContainer:{
         alignSelf: 'center',
@@ -169,7 +149,9 @@ const styles = StyleSheet.create({
     skipButton:{
         width: (width * 0.55 - (height * 0.12 * 0.8) - (height * 0.12 * 0.1)) * 0.325,
         aspectRatio: 1,
-        backgroundColor: 'green',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'green',
     },
     playButton:{
         width: (width * 0.55 - (height * 0.12 * 0.8) - (height * 0.12 * 0.1)) * 0.35, 
@@ -177,11 +159,21 @@ const styles = StyleSheet.create({
         borderRadius: height,
         borderWidth: 3,
         borderColor: '#BABBBF',
+        justifyContent: 'center',
+        alignItems: 'center',
         // backgroundColor: 'pink'
     },
     icon:{
+        height: (width * 0.55 - (height * 0.12 * 0.8) - (height * 0.12 * 0.1)) * 0.325 * 0.6,
+        aspectRatio: 1,
         tintColor: '#BABBBF',
     },
+    playIcon:{
+        height: (width * 0.55 - (height * 0.12 * 0.8) - (height * 0.12 * 0.1)) * 0.325 * 0.6,
+        aspectRatio: 1,
+        transform: [{translateX: width * 0.008}],
+        tintColor: '#BABBBF',
+    }
 })
 
 export default MusicPlayer

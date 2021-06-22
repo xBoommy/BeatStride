@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import React, { } from 'react';
-import { } from 'react-native';
+import React, {} from 'react';
+import { Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import AppTab from './AppTab';
@@ -11,6 +11,8 @@ import GuideScreen from '../screens/Onboarding/GuideScreen';
 import SongScreen from '../screens/Music/SongsScreen';
 import RunningScreen from '../screens/Running/RunningScreen';
 import EndScreen from '../screens/RunEnd/EndScreen';
+
+const {width, height} = Dimensions.get("window")
 
 const Stack = createStackNavigator();
 
@@ -57,6 +59,7 @@ const AppStack = () => {
                     title: "Playlist Song",
                     headerStyle: {
                         backgroundColor: '#1E2124',
+                        height: height * 0.08
                     },
                     headerTintColor: '#FFFFFF',
                     headerTitleStyle: {

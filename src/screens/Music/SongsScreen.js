@@ -179,14 +179,14 @@ const SongsScreen = props => {
 const styles = StyleSheet.create({
     screen:{
         width: width,
-        height: height,
+        height: height * 0.92,
         backgroundColor: '#282b30',
     },
     headerContainer:{
         width: width,
         height: height * 0.15,
         paddingVertical: height * 0.1 * 0.1,
-        backgroundColor: 'blue',
+        // backgroundColor: 'blue',
     },
     headerTitle:{
         fontWeight: 'bold',
