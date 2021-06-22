@@ -22,8 +22,15 @@ const EndMap = (props) => {
         setCenter(centerCoord);
         const boundary = geolib.getBounds(positions);
         const LongBound = geolib.getDistance({latitude: 0 , longitude: boundary.maxLng}, {latitude: 0 , longitude: boundary.minLng}, 1)
-        setLatDelta((0.00001 * LongBound)+ 0.00050)
-        // console.log((0.00001 * LongBound)+ 0.00050)
+        const LatBound = geolib.getDistance({latitude: boundary.maxLat , longitude: 0}, {latitude: boundary.minLat , longitude: 0}, 1)
+        
+        if (LongBound > LatBound) {
+            setLatDelta((0.00001 * LongBound)+ 0.00050)
+            // console.log((0.00001 * LongBound)+ 0.00050)
+        } else {
+            setLatDelta((0.00001 *LatBound)+ 0.00050)
+            // console.log((0.00001 *LatBound)+ 0.00050)
+        }
     }
 
     useEffect(()=> {

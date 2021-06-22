@@ -144,13 +144,13 @@ const RunningScreen = ({navigation, route}) => {
         /* 3 second */
         setTimeout( () => {
             console.log('Starting in 2');
-            getResumeLocation();
             setCountdownMsg(2);
         }, 3000);
 
         /* 4 second */
         setTimeout( () => {
             console.log('Starting in 1');
+            getResumeLocation();
             setCountdownMsg(1);
         }, 4000);
     
