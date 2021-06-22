@@ -3,10 +3,12 @@ import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions} from
 
 const {width, height} = Dimensions.get("window")
 
-const RunSteps = () => {
+const RunSteps = (props) => {
+    const steps = props.steps;
+
     return (
         <View style={styles.componentContainer}>
-            <Text numberOfLines={1} style={styles.text}>100000</Text>
+            <Text numberOfLines={1} style={styles.text}>{steps}</Text>
             <Text style={styles.subtext}>Steps</Text>
         </View>
     );

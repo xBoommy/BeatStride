@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity} from 'react-native';
+import {  CommonActions } from '@react-navigation/native'; 
+import moment from 'moment';
 
 import EndMap from './components/EndMap';
 
 const {width, height} = Dimensions.get("window")
 
-const EndScreen = () => {
+const EndScreen = ({navigation, route}) => {
+    const message = route.params.message        //message
+    const distance = route.params.distance;     //Total Distance Ran
+    const steps = route.params.steps;           //Total Steps
+    const positions = route.params.positions;   //Array of Positions Travelled
+    const duration = route.params.duration;     //Total Run Duration
+    const time = route.params.time;             //Start Time of Run
+    const day = route.params.day;               //Start Time of Run
+    const date = route.params.date;             //Start Time of Run
+
+    /* [Convert miliseconds to time breakdown] */
+    const displayDuration = moment.duration(duration)
+
     return (
         <SafeAreaView style={styles.screen}>
 
@@ -14,18 +28,18 @@ const EndScreen = () => {
                 {/* Run Info */}
                 <View style={styles.infoContainer}>
                     <View style={styles.header}>
-                        <Text style={styles.headerText}>Run Concluded</Text>
+                        <Text style={styles.headerText}>{message}</Text>
                     </View>
 
                     <View style={styles.infoContainer2}>
                         {/* Date */}
                         <View style={styles.dateContainer}>
                             <View style={styles.dateTopContainer}>
-                                <Text style={styles.dayText}>Thursday</Text>
-                                <Text style={styles.dateText}>, 12:59 PM</Text>
+                                <Text style={styles.dayText}>{day}</Text>
+                                <Text style={styles.dateText}>, {time}</Text>
                             </View>
                             
-                            <Text style={styles.dateText}>30/12/2999</Text>
+                            <Text style={styles.dateText}>{date}</Text>
                         </View>
 
                         {/* Mode */}
@@ -37,19 +51,19 @@ const EndScreen = () => {
 
                 {/* Distance */}
                 <View style={styles.distanceContainer}>
-                    <Text numberOfLines={1} style={styles.text}>100000</Text>
+                    <Text numberOfLines={1} style={styles.text}>{(distance/1000).toFixed(2)}</Text>
                     <Text style={styles.subtext}>Total Distance (km)</Text>
                 </View>
 
                 <View style={styles.secondaryDataContainer}>
                     {/* Time */}
                     <View style={styles.timeContainer}>
-                        <Text numberOfLines={1} style={styles.text}>23:59:59</Text>
+                        <Text numberOfLines={1} style={styles.text}>{displayDuration.hours()}:{displayDuration.minutes()}:{displayDuration.seconds()}</Text>
                         <Text style={styles.subtext}>Duration</Text>
                     </View>
                     {/* Steps */}
                     <View style={styles.stepsContainer}>
-                        <Text numberOfLines={1} style={styles.text}>100000</Text>
+                        <Text numberOfLines={1} style={styles.text}>{steps}</Text>
                         <Text style={styles.subtext}>Steps</Text>
                     </View>
                 </View>
@@ -59,8 +73,9 @@ const EndScreen = () => {
 
             {/* Map */}
             <View style={styles.mapContainer}>
-                {/* <View style={{width: width * 0.05, aspectRatio: 1, backgroundColor: 'red'}}/> */}
-                <EndMap/>
+                <EndMap
+                    positions={positions}
+                />
                 
             </View>
 

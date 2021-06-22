@@ -3,10 +3,12 @@ import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions} from
 
 const {width, height} = Dimensions.get("window")
 
-const RunDistance = () => {
+const RunDistance = (props) => {
+    const distance = props.distance
+
     return (
         <View style={styles.componentContainer}>
-            <Text numberOfLines={1} style={styles.text}>100000</Text>
+            <Text numberOfLines={1} style={styles.text}>{(distance / 1000).toFixed(2)}</Text>
             <Text style={styles.subtext}>Total Distance (km)</Text>
         </View>
     );

@@ -97,22 +97,11 @@ const styles = StyleSheet.create({
     tabNavigationContainer:{
         // Container
         position: 'absolute',
-        bottom: 0.03 * height,
-        left: 0.05 * width,
-        right: 0.05 * width,
-        elevation: 0,
-        backgroundColor: '#ffffff',
-        borderRadius: 15,
-        height: 0.12 * height,
-        // Shadow
-        shadowColor: '#7F5DF0',
-        shadowOffset: {
-            width: 0,
-            height: 10,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
-        elevation: 5,
+        bottom: 0,
+        height: height * 0.1,
+        width: width,
+        borderTopWidth: 0,
+        backgroundColor: '#18191D',
     },
     tabIconContainer:{
         alignItems: 'center', 
