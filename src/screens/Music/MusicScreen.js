@@ -45,7 +45,7 @@ const MusicScreen = () => {
     const getPlaylistDetails = async (playlistUri, title) => {
         setSelectedPlaylistUri(playlistUri);
         const tracks = await Tracks_Getter(playlistUri);
-        navigation.navigate('SongScreen', { tracks: tracks, title: title});
+        navigation.navigate('SongScreen', { tracks: tracks, title: title, currentlyPlaying: currentlyPlaying, isPlaying: isPlaying});
     };
 
     const updatePlaying = async () => {

@@ -12,6 +12,8 @@ const SongsScreen = props => {
 
     const tracks = props.route.params?.tracks ?? [];
     const title = props.route.params?.title ?? '';
+    const currPlaying = props.route.params?.currentlyPlaying ?? null; //passed from main screen
+    const playerState = props.route.params?.isPlaying ?? false; //facilitate smooth transition
     const mapper = new Map();
     for (let i = 0; i < tracks.length; i++) {
         //map id to their index
@@ -20,8 +22,8 @@ const SongsScreen = props => {
     }
 
 
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [currentlyPlaying, setCurrentlyPlaying] = useState();
+    const [isPlaying, setIsPlaying] = useState(playerState);
+    const [currentlyPlaying, setCurrentlyPlaying] = useState(currPlaying);
     const [index, setIndex] = useState(0);
     const [duration, setDuration] = useState(tracks[0].duration);
     //Timer

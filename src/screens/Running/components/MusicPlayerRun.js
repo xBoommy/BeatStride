@@ -1,63 +1,186 @@
-import React from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+
+import * as Spotify from '../../Music/components/spotify_player_controls';
 
 const {width, height} = Dimensions.get("window")
 
-const MusicPlayer = () => {
+const MusicPlayer = props => {
+
+    const navigation = useNavigation();
+    const runStatus = props.runStatus;
+
+    const tracks = useSelector(state => state.playlists.tracksForRun);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [index, setIndex] = useState(0);
+    const [currentlyPlaying, setCurrentlyPlaying] = useState(tracks.length > 0 ? tracks[0] : undefined);
+    const [duration, setDuration] = useState(tracks.length > 0 ? tracks[0].duration : 0);
+    //Timer
+    const [time, setTime] = useState(0);
+    const [tick, setTick] = useState();
+    /* [Tick every 1000ms increase time by 1 second] */
+    const ticking = () => {
+        setTime( (prevTime) => prevTime + 1000 )
+    }
+    const startTimer = () => {
+        if (!isPlaying) { 
+            //Taking previous snapshot of isPlaying...
+            setTick( setInterval(ticking, 1000) );
+        }
+    };
+
+    const stopTimer = () => {
+        clearInterval(tick);
+    };
+  
+    useEffect(()=>{
+        if (time > duration) {
+            setIsPlaying(false);
+            nextSong();
+        }
+    },[time]);
+
+    /* [Start timing] */
+    const playSong = async (id) => {
+        console.log("Timer Start")
+        if (tracks.length === 0) {
+          return;
+        }
+        await Spotify.playDirect(tracks[id].trackUri);
+        setCurrentlyPlaying(tracks[id]);
+        startTimer();
+        setIsPlaying(true);
+    }
+    const pause = async () => {
+        await Spotify.pause();
+        stopTimer();
+        setIsPlaying(false);
+    };
+    const resume = async () => {
+        await Spotify.play(tracks[index].trackUri);
+        startTimer();
+        setIsPlaying(true);
+    }
+    const nextSong = async () => {
+        stopTimer();
+        setTime(0);
+        if (index === tracks.length - 1) {
+            setDuration(tracks[0].duration);
+            setIndex(0);
+            playSong(0);
+        } else {
+            setDuration(tracks[index + 1].duration);
+            setIndex(prevIndex => prevIndex + 1);
+            playSong(index + 1);
+        }
+    };
+    const prevSong = async () => {
+        stopTimer();
+        setTime(0);
+        if (index === 0) {
+            setDuration(tracks[tracks.length - 1].duration);
+            setIndex(tracks.length - 1);
+            playSong(tracks.length - 1);
+        } else {
+            setDuration(tracks[index - 1].duration);
+            setIndex(prevIndex => prevIndex - 1);
+            playSong(index - 1);
+        }
+    };
+
+    /* [RUN STATUS RENDER] */
+    const [first, setFirst] = useState(true);
+    useEffect(() => {
+        if (runStatus == 2) {
+            if (first) {
+                setFirst(false);
+                playSong(0);
+            } else {
+                resume();
+            }
+        }
+        if (runStatus == 3) {
+            pause();
+        }
+        if (runStatus == 4 ) {
+            pause();
+        }
+
+    }, [runStatus])
+
+
     return (
         <View style={styles.playerContainer}>
 
             {/* Image Container */}
             <View style={styles.imageContainer}>
                 {/* Image Here */}
+                {currentlyPlaying && <Image style={styles.imageContainer} source={{uri: currentlyPlaying.imageUri}}/>}
             </View>
 
             {/* Text Container */}
             <View style={styles.textContainer}>
                 <Text numberOfLines={1} style={styles.title}>
                     {/* Title Here*/}
-                    Title
+                    {currentlyPlaying && currentlyPlaying.title}
                 </Text>
 
                 <Text numberOfLines={1} style={styles.artist}>
                     {/* Artist Here*/}
-                    Artist
+                    {currentlyPlaying && currentlyPlaying.artist}
                 </Text>
             </View>
 
             {/* Button Container */}
             <View style={styles.buttonContainer}>
                 {/* Skip Previous Button */}
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={prevSong}>
                     <View style={styles.skipButton}>
-                        {/* Icon Here 
-                            resizeMode: 'contain'
+                        <Image
+                            source={require('../../../assets/icons/previous.png')}
+                            resizeMode='contain'
                             style={styles.icon}
-                        */}
+                        />
                     </View>
                 </TouchableOpacity>
 
+                
                 {/* Play/Pause Button */}
-                <TouchableOpacity onPress={() => {}}>
-                    <View style={styles.playButton}>
-                        {/* Icon Here 
-                            resizeMode: 'contain'
-                            style={styles.icon}
-                        */}
-                    </View>
-                </TouchableOpacity>
+                {isPlaying ? (
+                    <TouchableOpacity onPress={pause}>
+                        <View style={styles.playButton}>
+                            <Image
+                                source={require('../../../assets/icons/pause.png')}
+                                resizeMode='contain'
+                                style={styles.icon}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity onPress={resume}>
+                        <View style={styles.playButton}>
+                            <Image
+                                source={require('../../../assets/icons/play.png')}
+                                resizeMode='contain'
+                                style={styles.playIcon}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                )}
 
                 {/* Skip Next Button */}
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={nextSong}>
                     <View style={styles.skipButton}>
-                        {/* Icon Here 
-                            resizeMode: 'contain'
+                        <Image
+                            source={require('../../../assets/icons/next.png')}
+                            resizeMode='contain'
                             style={styles.icon}
-                        */}
+                        />
                     </View>
                 </TouchableOpacity>
             </View>
-
 
         </View>
     );
@@ -78,7 +201,7 @@ const styles = StyleSheet.create({
     imageContainer:{
         height: height * 0.12 * 0.8,
         aspectRatio: 1,
-        backgroundColor: 'purple',
+        // backgroundColor: 'yellow',
     },
     textContainer:{
         alignSelf: 'center',
@@ -108,19 +231,31 @@ const styles = StyleSheet.create({
     skipButton:{
         width: (width * 0.55 - (height * 0.12 * 0.8) - (height * 0.12 * 0.1)) * 0.325,
         aspectRatio: 1,
-        backgroundColor: 'green',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'green',
     },
     playButton:{
         width: (width * 0.55 - (height * 0.12 * 0.8) - (height * 0.12 * 0.1)) * 0.35, 
         aspectRatio: 1,
         borderRadius: height,
         borderWidth: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
         borderColor: '#BABBBF',
         // backgroundColor: 'pink'
     },
     icon:{
+        height: (width * 0.55 - (height * 0.12 * 0.8) - (height * 0.12 * 0.1)) * 0.325 * 0.6,
+        aspectRatio: 1,
         tintColor: '#BABBBF',
     },
+    playIcon:{
+        height: (width * 0.55 - (height * 0.12 * 0.8) - (height * 0.12 * 0.1)) * 0.325 * 0.6,
+        aspectRatio: 1,
+        transform: [{translateX: width * 0.008}],
+        tintColor: '#BABBBF',
+    }
 })
 
 export default MusicPlayer

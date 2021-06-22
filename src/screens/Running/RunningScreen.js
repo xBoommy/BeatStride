@@ -73,7 +73,7 @@ const RunningScreen = ({navigation, route}) => {
             const { coords: {latitude, longitude} } = await Location.getCurrentPositionAsync()
             console.log('Getting current Location')
 
-            setPositions( (prevState) => [...prevState, currCoord, currCoord] );
+            setPositions( (prevState) => [...prevState, {latitude: latitude, longitude: longitude},  {latitude: latitude, longitude: longitude}] );
         } catch (error) {
             console.log(error)
         }
@@ -419,7 +419,7 @@ const RunningScreen = ({navigation, route}) => {
 
             {/* Music Player */}
             <View style={styles.musicPlayer}>
-                <MusicPlayerRun/>
+                <MusicPlayerRun runStatus={runStatus}/>
             </View>
 
             {/* Countdown */}
