@@ -96,9 +96,10 @@ const MusicScreen = () => {
             {/* Playlist Search Button */}
             <TouchableOpacity style={styles.searchButton} onPress={() => {setSearchToggle(true)}}>
                 <View>
-                    {/* Insert Plus Icon Here */}
-                    {/* Styling by XJ for this image */}
-                    <Image style={{height: 0.06 * height, width: 0.06 * height}} source={require('../../assets/icons/add.png')}/>
+                    <Image 
+                        style={styles.searchIcon} 
+                        source={require('../../assets/icons/add.png')}
+                    />
                 </View>
             </TouchableOpacity>
             
@@ -137,10 +138,17 @@ const styles = StyleSheet.create({
     searchButton:{
         height: height * 0.1 * 0.6,
         aspectRatio: 1,
-        backgroundColor: 'green',
         position: 'absolute',
         top: height * 0.1 * 0.2,
         right: width * 0.05,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'green',
+    },
+    searchIcon:{
+        height: height * 0.1 * 0.6 * 0.6, 
+        aspectRatio: 1,
+        tintColor: '#BABBBF'
     }
 })
 

@@ -37,19 +37,19 @@ const PlaylistSearchItem = props => {
 const styles = StyleSheet.create({
     itemContainer:{
         width: width * 0.95 * 0.5, //
-        height: height * 0.9 * 0.35,
+        height: height * 0.9 * 0.37,
         paddingHorizontal: width * 0.95 * 0.5 * 0.05,
-        paddingVertical: height * 0.9 * 0.35 * 0.05,
+        paddingVertical: height * 0.9 * 0.37 * 0.05,
         alignItems: 'center',
         backgroundColor: '#36393E',
    },
     imageContainer:{
         width: (width * 0.95 * 0.5) - (width * 0.95 * 0.5 * 0.1), //
         aspectRatio: 1,
-        backgroundColor: 'red',
+        // backgroundColor: 'red',
    },
     textContainer:{
-        height: height * 0.9* 0.35 - (height * 0.9 * 0.35 * 0.1) - ((width * 0.5) - (width * 0.5 * 0.1)),
+        height: height * 0.9* 0.37 - (height * 0.9 * 0.37 * 0.1) - ((width * 0.5) - (width * 0.5 * 0.1)),
         width: (width * 0.95 * 0.5) - (width * 0.95 * 0.5 * 0.1), //
         alignItems: 'center',
         // backgroundColor: 'yellow',
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         color: '#BABBBF',
         textAlignVertical: 'center',
-        height: ( (height * 0.9 * 0.35) - (height * 0.9 * 0.35 * 0.1) - ((width * 0.5) - (width * 0.5 * 0.1)) ) * 0.65,
+        height: ( (height * 0.9 * 0.37) - (height * 0.9 * 0.37 * 0.1) - ((width * 0.5) - (width * 0.5 * 0.1)) ) * 0.65,
         // backgroundColor: 'blue',
    },
    songs:{
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         color: '#72767D',
         includeFontPadding: false,
         textAlignVertical: 'center',
-        height: ( (height * 0.9 * 0.35) - (height * 0.9 * 0.35 * 0.1) - ((width * 0.5) - (width * 0.5 * 0.1)) ) * 0.35,
+        height: ( (height * 0.9 * 0.37) - (height * 0.9 * 0.37 * 0.1) - ((width * 0.5) - (width * 0.5 * 0.1)) ) * 0.35,
         // backgroundColor: 'purple',
         // borderWidth: 1,
         // borderColor: 'purple',

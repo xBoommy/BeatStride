@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert, Keyboard } from 'react-native';
-import { Button, TextInput, IconButton } from "react-native-paper";
+import { TextInput } from "react-native-paper";
 import { useDispatch } from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 import SearchItem from './components/SearchItem';
 import Spotify_Search from '../../api/spotify/spotify_search';
@@ -61,12 +62,13 @@ const PlaylistSearch = (props) => {
 
                     {/* Search Bar */}
                     <View style={styles.searchBar}>
+
                         {/* Need to remove green back ground...? */}
                         <TextInput
                             mode="outlined"
                             label="Search Playlists..."
                             keyboardType="default"
-                            style={{width: 0.9 * width}}
+                            style={{width: 0.9 * width,}}
                             placeholder="Name of playlist..."
                             value={searchTitle}
                             onChangeText={setSearchTitle}
@@ -77,10 +79,14 @@ const PlaylistSearch = (props) => {
                                             getPlaylists();
                                         }}
                             blurOnSubmit={false}
-                            right={<TextInput.Icon name="search-web" onPress={getPlaylists} />}
-                            theme={{
-                                colors: {primary: "#FB5555", underlineColor: 'transparent'},
-                            }}
+                            right={<TextInput.Icon
+                                name={() => <Icon name="search" size={height * 0.03} color="#7289DA"/>}
+                                onPress={ () => {
+                                    Keyboard.dismiss();
+                                    getPlaylists();
+                                }}
+                            />}
+                            theme={{colors: {primary: "#7289DA", placeholder : '#72767D', text: '#BABBBF', underlineColor: 'transparent', background: '#4F535C'},}}
                         />
                     </View>
 
@@ -128,9 +134,9 @@ const styles = StyleSheet.create({
     searchBar: {
         width: width * 0.9,
         height: height * 0.08,
-        backgroundColor: 'green',
         alignSelf: 'center',
         marginTop: height * 0.01,
+        // backgroundColor: 'green',
     },
     list:{
     //    backgroundColor: 'pink',

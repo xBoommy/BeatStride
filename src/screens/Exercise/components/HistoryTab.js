@@ -8,12 +8,24 @@ const {width, height} = Dimensions.get("window")
 
 const HistoryTab = () => {
     const [history, setHistory] = useState([])
+    const [totalDistance, setTotalDistance] = useState(0)
+    const [totalRuns, setTotalRuns] = useState(0)
 
-    useEffect(() => {
+
+    useEffect(async() => {
         Firestore.db_historyView(
             (historyList) => { setHistory(historyList)},
             (error) => {console.log('history view fail')}
         )
+        
+        try {
+            const user = await Firestore.db_getUserData()
+            setTotalDistance(user.totalDistance)
+            setTotalRuns(user.runCount)
+        } catch (error) {
+            console.log(error)
+        }
+        
     },[])
 
     return (
@@ -22,13 +34,13 @@ const HistoryTab = () => {
             {/* Stats */}
             <View style={styles.statsContainer}>
                 <View style={styles.statsComponent}>
-                    <Text numberOfLines={1} style={styles.statsValue}>151515.24</Text>
+                    <Text numberOfLines={1} style={styles.statsValue}>{(totalDistance / 1000).toFixed(2)}</Text>
                     {/* Distance might go over? */}
                     <Text style={styles.statsText}>Total Distance (km)</Text>
                 </View>
 
                 <View style={styles.statsComponent}>
-                    <Text numberOfLines={1} style={styles.statsValue}>5824</Text>
+                    <Text numberOfLines={1} style={styles.statsValue}>{totalRuns}</Text>
                     <Text style={styles.statsText}>Total Runs</Text>
                 </View>
             </View>
