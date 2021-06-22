@@ -24,6 +24,7 @@
     "moment": "^2.29.1",
     "react": "17.0.1",
     "react-native": "0.64.2",
+    "react-native-accurate-step-counter": "^2.0.0",
     "react-native-base64": "^0.2.1",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^1.10.3",

@@ -28,7 +28,7 @@ const RunningScreen = ({navigation, route}) => {
     const [countdown, setCountdown] = useState(true);           //Countdown popup
     const [countdownMsg, setCountdownMsg] = useState("5");      //Countdown message
 
-    const [runStatus, setRunStatus] = useState(0.00);           //Status of activity
+    const [runStatus, setRunStatus] = useState(0);              //Status of activity
     const [promise, setPromise] = useState({});                 //For GPS Subscription Promise
 
     const [startCoord, setStartCoord] = useState( {latitude: 1.377621, longitude: 103.805178,} );   //Initial coordinate
