@@ -27,11 +27,18 @@ const MusicScreen = () => {
             (playlists) => { setPlaylists(playlists) },
             (error) => {console.log('Failed to initiate playlist in music main')}
         );
+        updatePlaying(); //To initialise the first thing loaded on Spotify
     }, []);
 
     useEffect(() => {
         if (isPlaying) {
             updatePlaying();
+        }
+    });
+    navigation.addListener('beforeRemove', () => {
+        if (isPlaying) {
+          setIsPlaying(false);
+          Spotify.pause();
         }
     });
 
