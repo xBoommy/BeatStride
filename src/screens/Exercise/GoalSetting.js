@@ -19,16 +19,16 @@ const PlaylistSelectionBasic = (props) => {
         const distance = parseFloat(metre) + (parseFloat(kilometre) * 1000)
         const time = parseFloat(minute) + (parseFloat(hour) * 60)
 
-        console.log(parseFloat(kilometre) * 1000)
+        // console.log(parseFloat(kilometre) * 1000)
         // console.log(typeof distance)
         // console.log(time)
         // console.log(typeof time)
-        console.log(kilometre)
-        console.log(metre)
-        console.log(hour)
-        console.log(minute)
+        // console.log(kilometre)
+        // console.log(metre)
+        // console.log(hour)
+        // console.log(minute)
 
-        if ((typeof distance === 'number') && (typeof time === 'number') && (distance >= 10) && (time >= 0)) {
+        if ((typeof distance === 'number') && (typeof time === 'number') && (distance >= 10) && (time > 0)) {
             Firestore.db_editGoals(distance, time, 
                 () => {
                     setSettingToggle(false);
@@ -37,7 +37,7 @@ const PlaylistSelectionBasic = (props) => {
         } else {
             Alert.alert(
                 "Invalid Input",
-                "Please input valid numbers only.\nPlease check: \nNegative values are not accepted. \nMinimum distance 10m.",
+                "Please input valid numbers only.\n \nPlease check: \nNegative or zero values are not accepted.",
                 [ { text:"Understood", onPress: () => {console.log("Alert closed")} } ]
             )
         }
@@ -65,7 +65,7 @@ const PlaylistSelectionBasic = (props) => {
                     <View style={styles.contentContainer}>
 
                         <View style={styles.subHeaderContainer}>
-                            <Text style={styles.subHeaderText}>Set Goal Distance</Text>
+                            <Text style={styles.subHeaderText}>Set Goal Distance (Min. 10m)</Text>
                         </View>
 
                         <View style={styles.inputContainer}>

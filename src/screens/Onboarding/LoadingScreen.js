@@ -18,7 +18,7 @@ export default ({ navigation }) => {
     <SafeAreaView style={styles.screen}>
 
         {/* Loading Screen to customise */}
-        <ActivityIndicator animating size="large" color="black" />
+        <ActivityIndicator animating size="large" color="#BABBBF" />
         
     </SafeAreaView>
   );
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
       paddingBottom: 0.01 * height,
       paddingHorizontal: 0.05 * width,
       justifyContent: "center",
-      flex: 1
+      flex: 1,
+      backgroundColor: '#282B30',
     }
   });

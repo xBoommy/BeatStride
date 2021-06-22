@@ -1,12 +1,14 @@
 import React, { useState, useRef, useContext } from 'react';
-import {  SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable, Keyboard } from 'react-native';
+import {  SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable, Keyboard, Dimensions } from 'react-native';
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 
 import * as Authentication from '../../api/auth';
 import * as Firestore from '../../api/firestore';
 
-const RegisterOne = ({navigation}) => {
+const {width, height} = Dimensions.get('window');
+
+const RegisterScreen = ({navigation}) => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -23,7 +25,7 @@ const RegisterOne = ({navigation}) => {
             { name: username, email, password },
             (user) => {
 
-                const credentials = {
+                const Credentials = {
                     displayName: user.displayName,
                     uid: user.uid,
                     totalDistance: 0,
@@ -61,7 +63,9 @@ const RegisterOne = ({navigation}) => {
     return (
         <SafeAreaView style={styles.screen}>
             <ScrollView contentContainerStyle={styles.screenScroll} keyboardShouldPersistTaps="always">
-                <Text style={styles.subtitle}>Create your account!</Text>
+
+                <Text style={styles.title}>Run to the beat of your drums!</Text>
+                <Text style={styles.subtitle}>Create your account</Text>
 
                 <TextInput
                     mode="outlined"
@@ -75,7 +79,7 @@ const RegisterOne = ({navigation}) => {
                     onSubmitEditing={() => emailTextInput.current.focus()}
                     blurOnSubmit={false}
                     left={<TextInput.Icon name="account" color={username ? '#7289DA' : '#BABBBF'} />}
-                    theme={{ colors: { primary: '#7289DA', underlineColor:'transparent',}}}
+                    theme={{colors: {primary: "#7289DA", placeholder : '#72767D', text: '#FFFFFF', underlineColor: 'transparent', background: '#4F535C'},}}
                 />
 
                 <TextInput
@@ -92,7 +96,7 @@ const RegisterOne = ({navigation}) => {
                     onSubmitEditing={() => passwordTextInput.current.focus()}
                     blurOnSubmit={false}
                     left={<TextInput.Icon name="at" color={email ? '#7289DA' : '#BABBBF'} />}
-                    theme={{ colors: { primary: '#7289DA', underlineColor:'transparent',}}}
+                    theme={{colors: {primary: "#7289DA", placeholder : '#72767D', text: '#FFFFFF', underlineColor: 'transparent', background: '#4F535C'},}}
                 />
 
                 <TextInput
@@ -106,8 +110,8 @@ const RegisterOne = ({navigation}) => {
                     left={<TextInput.Icon name="form-textbox-password" color={password ? '#7289DA' : '#BABBBF'} />}
                     secureTextEntry={!isPasswordVisible}
                     autoCapitalize="none"
-                    right={<TextInput.Icon name={isPasswordVisible ? "eye-off" : "eye"} onPress={() => setIsPasswordVisible((state) => !state)} />}
-                    theme={{ colors: { primary: '#7289DA', underlineColor:'transparent',}}}
+                    right={<TextInput.Icon name={isPasswordVisible ? "eye-off" : "eye"} color="#7289DA" onPress={() => setIsPasswordVisible((state) => !state)} />}
+                    theme={{colors: {primary: "#7289DA", placeholder : '#72767D', text: '#FFFFFF', underlineColor: 'transparent', background: '#4F535C'},}}
                 />
 
                 <Button
@@ -117,13 +121,13 @@ const RegisterOne = ({navigation}) => {
                     onPress={handleRegister}
                     loading={isRegisterLoading}
                     disabled={isRegisterLoading}
-                    theme={{ colors: { primary: '#7289DA', underlineColor:'transparent',}}}
+                    theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}
                 >
                     <Text style={{color: '#FFFFFF'}}>Create Account</Text>
                 </Button>
 
-                <Text style={{ color: color.secondary, paddingHorizontal: 10, paddingTop: 10 }}>
-                    By proceeding and tapping on Create Account, you agree to Simplist's Terms of Service and Privacy Policy.
+                <Text style={{ color: '#BABBBF', paddingHorizontal: 10, paddingTop: 10 }}>
+                    By proceeding and tapping on Create Account, you agree to BeatStride's Terms of Service and Privacy Policy.
                 </Text>
 
                 <Pressable onPress={() => {
@@ -140,29 +144,42 @@ const RegisterOne = ({navigation}) => {
 
                 <Button
                     mode="outlined"
-                    style={{ marginTop: 20, borderRadius: 10 }}
+                    style={{ marginTop: 20, borderRadius: 10, backgroundColor: '#424549', }}
                     contentStyle={{ paddingVertical: 5 }}
                     onPress={() => navigation.goBack()}
                     icon="arrow-left"
-                    theme={{ colors: { primary: '#7289DA', underlineColor:'transparent',}}}
+                    theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}
                 >Log in instead</Button>
             </ScrollView>
         </SafeAreaView>
     )
 }
-export default RegisterOne;
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
+  screen:{
+    paddingTop: 0.01 * height,
+    paddingBottom: 0.01 * height,
+    paddingHorizontal: 0.05 * width,
+    flex: 1,
+    backgroundColor: '#282B30',
+    },
+  screenScroll:{
+    paddingBottom: 20, 
+    paddingHorizontal: 20,
+    },
   title: {
-    fontSize: 34,
+    fontSize: 30,
     fontWeight: 'bold',
     paddingTop: 30,
+    color: '#FFFFFF',
   },
 
   subtitle: {
     fontSize: 20,
-    paddingTop: 30,
+    paddingTop: 20,
     paddingBottom: 10,
+    color: '#FFFFFF',
   },
 
   link: {
@@ -170,6 +187,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     textDecorationLine: 'underline',
-    color: '#748c94',
+    color: '#7289DA',
   },
 });

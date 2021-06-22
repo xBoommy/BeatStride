@@ -52,7 +52,16 @@ const TempoRun = () => {
         if (status === 1) {
             console.log("GPS Enabled")
             if (strideDistance > 0) {
-                setSelectToggle(true);
+                if (goalDistance != 0 && goalTime != 0) {
+                    setSelectToggle(true);
+                } else {
+                    Alert.alert(
+                        "Set a Goal",
+                        "Tempo Run requires a goal for calibration. Please set your goal and try again",
+                        [ { text:"Understood", onPress: () => {console.log("Alert closed")} } ]
+                    )
+                }
+                
             } else {
                 Alert.alert(
                     "Unable to Calculate BPM",
@@ -96,7 +105,7 @@ const TempoRun = () => {
 
     useEffect(() => {
         recommendedBPM();
-    }, [strideDistance, goalDistance])
+    }, [strideDistance, goalDistance, goalTime])
     
 
 

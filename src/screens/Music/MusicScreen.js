@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
     },
     list:{
-    //    backgroundColor: 'pink',
+        height: height,
+        // backgroundColor: 'pink',
     },
     listContent:{
         paddingBottom: height * 0.33

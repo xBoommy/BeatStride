@@ -23,13 +23,13 @@ const RunTimer = (props) => {
 
     /* [Start timing] */
     const startTimer = () => {
-        console.log("Timer Start")
+        // console.log("Timer Start")
         setTick( setInterval( ticking, 1000) )
     }
 
     /* [Stop timing] */
     const stopTimer = () => {
-        console.log("Timer Stop")
+        // console.log("Timer Stop")
         clearInterval(tick)
     }
     

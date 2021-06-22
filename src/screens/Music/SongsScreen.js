@@ -217,6 +217,7 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
     },
     list:{
+        height : height * 0.77,
         // backgroundColor: 'pink',
     },
     listContent:{

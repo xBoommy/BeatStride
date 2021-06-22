@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import ExerciseScreen from '../screens/Exercise/ExerciseScreen';
 import MusicScreen from '../screens/Music/MusicScreen';
+import ProfileScreen from '../screens/Profile/ProfileScreen';
 
 
 const {width, height} = Dimensions.get("window")
@@ -66,9 +67,9 @@ const AppTab = () => {
                 }}
             />
 
-            {/* <Tab.Screen 
-                name="ProfileMain" 
-                component={ProfileMain}
+            <Tab.Screen 
+                name="ProfileScreen" 
+                component={ProfileScreen}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <View style={styles.tabIconContainer}>
@@ -87,7 +88,7 @@ const AppTab = () => {
                         </View>
                     )
                 }}
-            /> */}
+            />
             
         </Tab.Navigator>
     )

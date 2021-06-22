@@ -48,7 +48,7 @@ const LoginScreen = ({navigation}) => {
 
               <View style={styles.brand}>
                   <IconButton icon="run" style={{ margin: 0 }} color={'#BABBBF'} />
-                  <Text style={{ fontSize: 16, color: '#BABBBF' }}>Maple_EXP</Text>
+                  <Text style={{ fontSize: 16, color: '#BABBBF' }}>Beat Stride</Text>
               </View>
 
               <View style={{alignItems:'center',}}>
@@ -72,7 +72,7 @@ const LoginScreen = ({navigation}) => {
                   onSubmitEditing={() => passwordTextInput.current.focus()}
                   blurOnSubmit={false}
                   left={<TextInput.Icon name="at" color={email ? '#7289DA' : '#BABBBF'} />}
-                  theme={{ colors: { primary: '#7289DA', underlineColor:'transparent',}}}
+                  theme={{colors: {primary: "#7289DA", placeholder : '#72767D', text: '#FFFFFF', underlineColor: 'transparent', background: '#4F535C'},}}
               />
 
               <TextInput
@@ -86,8 +86,8 @@ const LoginScreen = ({navigation}) => {
                   left={<TextInput.Icon name="form-textbox-password" color={password ? '#7289DA' : '#BABBBF'} />}
                   secureTextEntry={!isPasswordVisible}
                   autoCapitalize="none"
-                  right={<TextInput.Icon name={isPasswordVisible ? "eye-off" : "eye"} onPress={() => setIsPasswordVisible((state) => !state)} />}
-                  theme={{ colors: { primary: '#7289DA', underlineColor:'transparent',}}}
+                  right={<TextInput.Icon name={isPasswordVisible ? "eye-off" : "eye"} color="#7289DA" onPress={() => setIsPasswordVisible((state) => !state)} />}
+                  theme={{colors: {primary: "#7289DA", placeholder : '#72767D', text: '#FFFFFF', underlineColor: 'transparent', background: '#4F535C'},}}
               />
               <Button
                   mode="contained"
@@ -96,17 +96,17 @@ const LoginScreen = ({navigation}) => {
                   onPress={ handleLogin }
                   loading={isLoginLoading}
                   disabled={isLoginLoading}
-                  theme={{ colors: { primary: '#7289DA', underlineColor:'transparent',}}}
+                  theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}
               >
                 <Text style={{color: '#FFFFFF'}}>Log in</Text>
               </Button>
 
               <Button
                   mode="outlined"
-                  style={{ marginTop: 20, borderRadius: 10 }}
+                  style={{ marginTop: 20, borderRadius: 10, backgroundColor: '#424549', }}
                   contentStyle={{ paddingVertical: 5 }}
                   onPress={() => navigation.navigate("RegisterScreen")}
-                  theme={{ colors: { primary: '#7289DA', underlineColor:'transparent',}}}
+                  theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}
               >Create an account</Button>
 
           </ScrollView>
@@ -120,6 +120,8 @@ const styles = StyleSheet.create({
     paddingTop: 0.01 * height,
     paddingBottom: 0.01 * height,
     paddingHorizontal: 0.05 * width,
+    flex: 1,
+    backgroundColor: '#282B30',
   },
   screenScroll:{
     paddingBottom: 20, 
@@ -141,6 +143,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingTop: 20,
     paddingBottom: 10,
+    color: '#FFFFFF'
   },
 
   forgotPasswordLink: {
