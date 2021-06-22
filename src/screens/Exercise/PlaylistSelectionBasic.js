@@ -1,24 +1,59 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity } from 'react-native';
 
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+
 import PlaylistSelectionItem from './components/PlaylistSelectionItem';
+import * as Firestore from '../../api/firestore';
+import TracksNoFilter from '../../api/spotify/TracksNoFilter';
+import * as playlistActions from '../../../store/playlist-actions';
 
 const {width, height} = Dimensions.get("window")
 
-// For Testing Purpose - Remove before use
-const playlists = [
-    {id: 1, name : 1},
-    {id: 2, name : 2},
-    {id: 3, name : 3},
-    {id: 4, name : 4},
-    {id: 5, name : 5},
-    {id: 6, name : 6},
-    {id: 7, name : 7},
-]
 
 const PlaylistSelectionBasic = (props) => {
     const selectToggle = props.selectToggle;
     const setSelectToggle = props.setSelectToggle;
+
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
+
+    const [isLoading, setIsLoading] = useState(false);
+    //^For loading page if doing
+    const [playlists, setPlaylists] = useState([]);
+    const [inSelected, setInSelected] = useState([]);
+    
+    useEffect(() => {
+        Firestore.db_playlists(
+            (playlists) => { setPlaylists(playlists)},
+            (error) => {console.log('Failed to initiate playlist in music main')}
+        );
+    }, []);
+
+    const getTracksForRun = async () => {
+        if (inSelected.length === 0) {
+            console.log('No playlists selected');
+            return;
+        }
+        setIsLoading(true);
+        await TracksNoFilter(inSelected,
+            (tracks) => {
+                dispatch(playlistActions.setTracksForRun(tracks))
+            },
+            (error) => {
+                setIsLoading(false);
+                console.log(error);
+            }
+        );
+    };
+
+    const confirmation = () => {
+        getTracksForRun().then(() => {
+            setSelectToggle(false);
+            navigation.navigate("RunningScreen");
+        })
+    }
 
     return (
         <Modal visible={selectToggle} transparent={true} animationType={'slide'}>
@@ -39,7 +74,11 @@ const PlaylistSelectionBasic = (props) => {
                         numColumns={2}
                         data={playlists}
                         keyExtractor={item => item.id}
-                        renderItem={({item}) => <PlaylistSelectionItem/>}
+                        renderItem={({item}) => <PlaylistSelectionItem 
+                                                    item={item}
+                                                    inserted={inSelected}
+                                                    insert={setInSelected}
+                                                />}
                     />
 
                     {/* Button Container */}
@@ -52,7 +91,7 @@ const PlaylistSelectionBasic = (props) => {
                         </TouchableOpacity>
 
                         {/* Confirm Button */}
-                        <TouchableOpacity onPress={() => {}}>
+                        <TouchableOpacity onPress={confirmation}>
                             <View style={styles.button}>
                                 <Text style={styles.buttonText}>Confirm</Text>
                             </View>

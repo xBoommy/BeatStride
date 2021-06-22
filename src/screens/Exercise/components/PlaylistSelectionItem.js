@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import {  TouchableOpacity,  StyleSheet,  Text,  View, Dimensions } from 'react-native';
+import {  TouchableOpacity,  StyleSheet,  Text,  View, Dimensions, Image } from 'react-native';
+import { set } from 'react-native-reanimated';
 
 const {width, height} = Dimensions.get("window")
 
-const MusicItem = () => {
+const MusicItem = props => {
 
+    const {inserted, insert, item} = props;
     const [highlight, setHighlight] = useState(false)
 
     return (
@@ -14,25 +16,28 @@ const MusicItem = () => {
                 if (highlight) {
                     setHighlight(false)
                     // Remove from tracks
+                    insert(inserted.filter(content => content.id !== item.id));
                 } else {
                     setHighlight(true)
                     // Add to tracks
+                    insert([...inserted, item]);
                 } 
             }}>
                 
 
                 {/* Image */}
-                <View style={styles.imageContainer}/>
-                
-
+                <View style={styles.imageContainer}> 
+                    {/* The style in the view redundant, shifted over to Image, else cant see */}
+                    <Image style={styles.imageContainer} source={{uri: item.imageUri}} />
+                </View>
                 <View style={styles.textContainer}>
                     <Text numberOfLines={1} style={styles.title}>
                         {/* Title */}
-                        Title
+                        {item.title}
                     </Text>
                     <Text numberOfLines={1} style={styles.songs}>
                         {/* No. of songs */}
-                        xx Songs
+                        {item.totalSongs} Songs
                     </Text>
                 </View>
 
