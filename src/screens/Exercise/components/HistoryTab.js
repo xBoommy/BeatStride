@@ -1,25 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet,  Text,  View, Dimensions, ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import * as Firestore from '../../../api/firestore';
 
 import HistoryItem from './HistoryItem';
 
 const {width, height} = Dimensions.get("window")
 
-// For Testing Purpose - Remove before use
-const playlists = [
-    {id: 1, name : 1},
-    {id: 2, name : 2},
-    {id: 3, name : 3},
-    {id: 4, name : 4},
-    {id: 5, name : 5},
-    {id: 6, name : 6},
-    {id: 7, name : 7},
-    {id: 8, name : 8},
-    {id: 9, name : 9},
-    {id: 10, name : 10},
-]
-
 const HistoryTab = () => {
+    const [history, setHistory] = useState([])
+
+    useEffect(() => {
+        Firestore.db_historyView(
+            (historyList) => { setHistory(historyList)},
+            (error) => {console.log('history view fail')}
+        )
+    },[])
+
     return (
         <View style={styles.componentContainer}>
 
@@ -41,9 +37,21 @@ const HistoryTab = () => {
                 style={styles.list}
                 contentContainerStyle={styles.listContent}
                 numColumns={1}
-                data={playlists}
+                data={history}
                 keyExtractor={item => item.id}
-                renderItem={({item}) => <HistoryItem/>}
+                renderItem={({item}) => 
+                    <HistoryItem
+                        distance={item.distance} 
+                        positions={item.positions}
+                        steps={item.steps}
+                        duration={item.duration}
+                        time={item.time}
+                        day={item.day}
+                        date={item.date}
+                        mode={item.mode}
+                        id={item.id}
+                    />
+            }
             />
 
         </View>

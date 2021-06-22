@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity} from 'react-native';
+import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image} from 'react-native';
 import { CommonActions } from '@react-navigation/native'; 
 import * as Location from 'expo-location';
 import * as geolib from 'geolib';
@@ -16,12 +16,14 @@ import RunCountdown from './RunCountdown';
 
 const {width, height} = Dimensions.get("window")
 
-const RunningScreen = ({navigation}) => {
+const RunningScreen = ({navigation, route}) => {
     /* [Page Navigation Render] - Triggered upon screen focused  */
     const PageTrigger = navigation.addListener( 'focus', () => {
         getCurrentLocation();
         setRunStatus(1);
     } )
+
+    const mode = route.params.mode;
 
     const [countdown, setCountdown] = useState(true);           //Countdown popup
     const [countdownMsg, setCountdownMsg] = useState("5");      //Countdown message
@@ -299,6 +301,7 @@ const RunningScreen = ({navigation}) => {
                 time:timeStart,
                 day:day,
                 date:date,
+                mode: mode,
                 id:moment().format(),
             }
             //Add to history + update personal stats
@@ -313,6 +316,7 @@ const RunningScreen = ({navigation}) => {
                         time:timeStart,
                         day:day,
                         date:date,
+                        mode: mode,
                     });
                 },
                 (error) => {console.log(error)}    
@@ -368,16 +372,29 @@ const RunningScreen = ({navigation}) => {
 
                     {/* Pause button */}
                     {(runStatus === 2) ?  <TouchableOpacity style={styles.button} onPress={() => setRunStatus(3)}>
-
+                        <Image 
+                            source={require('../../assets/icons/ExercisePause.png')}
+                            resizeMode= 'contain'
+                            style={styles.buttonIcon}
+                        />
                     </TouchableOpacity> : <></>}
 
                     {/* Play button */}
                     {(runStatus === 3) ? <TouchableOpacity style={styles.button} onPress={() => setRunStatus(7)}>
-
+                        <Image 
+                            source={require('../../assets/icons/ExercisePlay.png')}
+                            resizeMode= 'contain'
+                            style={styles.startIcon}
+                        />
                     </TouchableOpacity> : <></>}
                     
                     {/* Stop button */}
                     {(runStatus === 3) ? <TouchableOpacity style={styles.button} onPress={() => setRunStatus(5)}>
+                        <Image 
+                            source={require('../../assets/icons/ExerciseStop.png')}
+                            resizeMode= 'contain'
+                            style={styles.buttonIcon}
+                        />
                     </TouchableOpacity> : <></>}
                     
 
@@ -466,6 +483,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#7289DA',
+    },
+    buttonIcon:{
+        height: height * 0.05,
+        aspectRatio: 1,
+        tintColor: '#BABBBF',
+    },
+    startIcon:{
+        height: height * 0.05,
+        aspectRatio: 1,
+        transform: [{translateX: width * 0.01}],
+        tintColor: '#BABBBF',
     },
     mapContainer:{
         width: width,

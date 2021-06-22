@@ -112,42 +112,6 @@ export const db_getUserData = async() => {
         console.log(error)
     }
 }
-/**update all events that user is participating in  REQUIRES: db_contributeEachEvent - NOT WORKING */
-const db_updateAllUserEvents = (events, distance) => {
-    try {
-        for (let i = 0; i < events.length; i++){
-            const event_id = events[i]
-            db_contributeEachEvent(event_id, distance)
-        }
-    } catch (error) {
-        console.log(error)
-    }
-}
-/**update current event with user contribution - NOT WORKING */
-const db_contributeEachEvent = (event_id, distance) =>{
-    try {
-        db.collection('events').doc(event_id).update({progress: firebase.firestore.FieldValue.increment(distance)});
-    } catch (error) {
-        console.log(error);
-    }
-}
-/**update region total distance - NOT WORKING*/
-const db_updateAllUserRegionTotalDistance = (region, distance) => {
-    try {
-        db.collection('region').doc(region).update({totalDisprogresstance: firebase.firestore.FieldValue.increment(distance)})
-    } catch (error) {
-        console.log(error)
-    }
-}
-/**update region user distance - NOT WORKING*/
-const db_updateAllUserRegionUserDistance = (region, distance) => {
-    const user_id = Authentication.getCurrentUserId()
-    try {
-        db.collection('region').doc(region).collection('users').doc(user_id).update({distance: firebase.firestore.FieldValue.increment(distance)})
-    } catch (error) {
-        console.log(error)
-    }
-}
 
 export const db_recordRun = async(record, onSuccess, onError) => {
     try {
@@ -155,25 +119,8 @@ export const db_recordRun = async(record, onSuccess, onError) => {
         db_updateUserHistory(record);
         db_updateUserTotalDistance(record);
         db_updateUserRunCount();
-
-        //update event info
-        const distance = record.distance
-        try{
-            const user = await db_getUserData();
         
-        const events = user.events;
-        db_updateAllUserEvents(events, distance);
-
-        //update region info
-        const region = user.region;
-        db_updateAllUserRegionTotalDistance(region, distance);
-        db_updateAllUserRegionUserDistance(region, distance);
         return onSuccess();
-
-        } catch (error) {
-            console.log(error)
-        }
-        
     } catch (error) {
         return onError(error)
     }
@@ -240,113 +187,6 @@ export const db_removeUserPlaylists = ( playlist ) => {
     }
 }
 
-/**Obtain events doc from 'events' collection under firestore
- * 
- * @param {function} onSuccess 
- * @param {function} onError 
- * @returns {array} events => list of event in events
- */
-export const db_events = (onSuccess, onError) => {
-    try {
-        db.collection("events")
-        .onSnapshot((collection) => {
-            const events = collection.docs.map((doc) => doc.data());
-            return onSuccess(events);
-        })
-    } catch (error) {
-        return onError(error);
-    }
-}
-
-
-/**increase event particpation count */
-const db_joinEvent1 = (event_id) => {
-    try {
-        // console.log(event_id)
-        db.collection('events').doc(event_id).update({participants: firebase.firestore.FieldValue.increment(1)})
-        // console.log("increased")
-    } catch (error) {
-        console.log(error)
-    }
-}
-/**add event id to user info */
-const db_joinEvent2 = (event_id) => {
-    const user_id = Authentication.getCurrentUserId()
-    try {
-        db.collection('users').doc(user_id).update({events: firebase.firestore.FieldValue.arrayUnion(event_id)})
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-/**Increase event participant count & add event_id to user field
- * 
- * @param {string} event_id 
- * @param {function} onSuccess 
- * @param {function} onError 
- * @returns 
- */
-export const db_joinEvent = (event_id) => {
-    try {
-        db_joinEvent1(event_id);
-        db_joinEvent2(event_id);
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-/**decrease event particpation count */
-const db_leaveEvent1 = (event_id) => {
-    try {
-        db.collection('events').doc(event_id).update({participants: firebase.firestore.FieldValue.increment(-1)});
-    } catch (error) {
-        console.log(error)
-    }
-}
-/**remove event_id fom user field */
- const db_leaveEvent2 = (event_id) => {
-    const user_id = Authentication.getCurrentUserId()
-    try {
-        db.collection('users').doc(user_id).update({events: firebase.firestore.FieldValue.arrayRemove(event_id)})
-    } catch (error) {
-        console.log(error)
-    }
-}
-/** Decrease event participant count & remove event_id to user field*/
-export const db_leaveEvent = (event_id) => {
-    try{
-        db_leaveEvent1(event_id);
-        db_leaveEvent2(event_id);
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-export const db_userEventStatus = (onSuccess, onError) => {
-    const user_id = Authentication.getCurrentUserId()
-    try {
-        db.collection("users").doc(user_id)
-        .onSnapshot((doc) => {
-            const user = doc.data();
-            const eventList = user.events;
-            // console.log(eventList)
-            return onSuccess(eventList);
-        })
-    } catch (error) {
-        return onError(error);
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
 
 //SAMPLE DB FUNCTION
 export const functionName = async( params, onSuccess, onError) => {
@@ -357,13 +197,3 @@ export const functionName = async( params, onSuccess, onError) => {
         return onError(error);
     }
 }
-
-
-/*After run
-- db_recordRun
-- db_contributeEvent
-- db_contributeRegion
-- db_updateUserTotalDistance
-- db_updateUserRunCount
-
-*/

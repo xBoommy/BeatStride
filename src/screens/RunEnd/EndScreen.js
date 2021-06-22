@@ -16,6 +16,7 @@ const EndScreen = ({navigation, route}) => {
     const time = route.params.time;             //Start Time of Run
     const day = route.params.day;               //Start Time of Run
     const date = route.params.date;             //Start Time of Run
+    const mode = route.params.mode;             //Run mode
 
     /* [Convert miliseconds to time breakdown] */
     const displayDuration = moment.duration(duration)
@@ -44,7 +45,7 @@ const EndScreen = ({navigation, route}) => {
 
                         {/* Mode */}
                         <View style={styles.modeContainer}>
-                            <Text style={styles.modeText}>Calibration</Text>
+                            <Text style={styles.modeText}>{mode}</Text>
                         </View>
                     </View>
                 </View>
@@ -80,14 +81,14 @@ const EndScreen = ({navigation, route}) => {
             </View>
 
             {/* Cross Button */}
-            <TouchableOpacity style={styles.crossContainer}>
+            <TouchableOpacity style={styles.crossContainer} onPress={() => {navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);}}>
 
             </TouchableOpacity>
 
             {/* Button Container */}
             <View style={styles.buttonContainer}>
                         {/* Close Button */}
-                        <TouchableOpacity onPress={() => {}}>
+                        <TouchableOpacity onPress={() => {navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);}}>
                             <View style={styles.closeButton}>
                                 <Text style={styles.buttonText}>Close</Text>
                             </View>

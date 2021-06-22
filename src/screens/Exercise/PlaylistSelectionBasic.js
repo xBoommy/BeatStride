@@ -15,6 +15,7 @@ const {width, height} = Dimensions.get("window")
 const PlaylistSelectionBasic = (props) => {
     const selectToggle = props.selectToggle;
     const setSelectToggle = props.setSelectToggle;
+    const mode = props.mode;
 
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const PlaylistSelectionBasic = (props) => {
     const confirmation = () => {
         getTracksForRun().then(() => {
             setSelectToggle(false);
-            navigation.navigate("RunningScreen");
+            navigation.navigate("RunningScreen", {mode: mode});
         })
     }
 
