@@ -1,28 +1,29 @@
 import React from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity, Image } from 'react-native';
 
 const {width, height} = Dimensions.get("window")
 
-const SongItem = () => {
+const SongItem = props => {
     return (
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={props.playThis}>
             <View style={styles.itemContainer}>
             
                 {/* Image Container */}
                 <View style={styles.imageContainer}>
-
+                    {/* Image style added, else cannot see */}
+                    <Image style={styles.imageContainer} source={{uri: props.item.imageUri}} />
                 </View>
 
                 {/* Text Container */}
                 <View style={styles.textContainer}>
                     <Text numberOfLines={1} style={styles.title}>
                         {/* Title Here*/}
-                        Title
+                        {props.item.title}
                     </Text>
 
                     <Text numberOfLines={1} style={styles.artist}>
                         {/* Artist Here*/}
-                        Artist
+                        {props.item.artist}
                     </Text>
                 </View>
             

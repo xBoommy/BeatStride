@@ -1,59 +1,118 @@
 import React from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity } from 'react-native';
+import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native';
+import * as Spotify from '../components/spotify_player_controls';
 
 const {width, height} = Dimensions.get("window")
 
-const MusicPlayer = () => {
+const MusicPlayer = props => {
+    const {
+        tracks,
+        index,
+        isPlaying,
+        setIsPlaying,
+        currentlyPlaying,
+        startTimer,
+        stopTimer,
+        nextSong,
+        prevSong,
+    } = props;
+  
+    const pause = async () => {
+          setIsPlaying(false);
+          await Spotify.pause();
+          stopTimer();
+    };
+    const resume = async () => {
+        await Spotify.play(tracks[index].trackUri);
+        startTimer();
+        setIsPlaying(true);
+    };
+
     return (
         <View style={styles.playerContainer}>
 
             {/* Image Container */}
             <View style={styles.imageContainer}>
-                {/* Image Here */}
+                {currentlyPlaying && <Image style={styles.imageContainer} source={{uri: currentlyPlaying.imageUri}}/>}
             </View>
 
             {/* Text Container */}
             <View style={styles.textContainer}>
                 <Text numberOfLines={1} style={styles.title}>
                     {/* Title Here*/}
-                    Title
+                    {currentlyPlaying && currentlyPlaying.title}
                 </Text>
 
                 <Text numberOfLines={1} style={styles.artist}>
                     {/* Artist Here*/}
-                    Artist
+                    {currentlyPlaying && currentlyPlaying.artist}
                 </Text>
             </View>
 
             {/* Button Container */}
             <View style={styles.buttonContainer}>
                 {/* Skip Previous Button */}
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={prevSong}>
                     <View style={styles.skipButton}>
                         {/* Icon Here 
                             resizeMode: 'contain'
                             style={styles.icon}
                         */}
+                        <Image
+                            source={require('../../../assets/icons/previous.png')}
+                            resizeMode='contain'
+                            style={styles.icon}
+                            //style={{...styles.icon, height: 30, width: 30}}
+                        />
                     </View>
                 </TouchableOpacity>
 
                 {/* Play/Pause Button */}
-                <TouchableOpacity onPress={() => {}}>
-                    <View style={styles.playButton}>
-                        {/* Icon Here 
-                            resizeMode: 'contain'
-                            style={styles.icon}
-                        */}
-                    </View>
-                </TouchableOpacity>
+                {isPlaying ? (
+                    <TouchableOpacity onPress={pause}>
+                        <View style={styles.playButton}>
+                            {/* Icon Here 
+                                resizeMode: 'contain'
+                                style={styles.icon}
+                            */}
+                            <Image
+                                source={require('../../../assets/icons/pause.png')}
+                                resizeMode='contain'
+                                style={styles.icon}
+                                //style={{...styles.icon, height: 30, width: 30}}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity onPress={resume}>
+                        <View style={styles.playButton}>
+                            {/* Icon Here 
+                                resizeMode: 'contain'
+                                style={styles.icon}
+                            */}
+                            <Image
+                                source={require('../../../assets/icons/play.png')}
+                                resizeMode='contain'
+                                style={styles.icon}
+                                //style={{...styles.icon, height: 30, width: 30}}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                )}
 
                 {/* Skip Next Button */}
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={nextSong}>
                     <View style={styles.skipButton}>
                         {/* Icon Here 
                             resizeMode: 'contain'
                             style={styles.icon}
                         */}
+                        <Image
+                            source={require('../../../assets/icons/next.png')}
+                            resizeMode='contain'
+                            style={styles.icon}
+                            //style={{...styles.icon, height: 30, width: 30}}
+                        />
                     </View>
                 </TouchableOpacity>
             </View>

@@ -1,31 +1,31 @@
 import React, {useState} from 'react';
-import {  TouchableOpacity,  StyleSheet,  Text,  View, Dimensions } from 'react-native';
+import {  TouchableOpacity,  StyleSheet,  Text,  View, Dimensions, Image } from 'react-native';
 
 const {width, height} = Dimensions.get("window")
 
-const PlaylistSearchItem = () => {
+const PlaylistSearchItem = props => {
 
-    const [highlight, setHighlight] = useState(false)
+    const {item, onSelect} = props;
 
     return (
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={onSelect}>
             <View style={styles.itemContainer}>
             
                 {/* Image Container*/}
                 <View style={styles.imageContainer}>
-                    {/* Image Here */}
+                    <Image style={styles.imageContainer} source={{uri: item.imageUri}} />
                 </View>
                 
                 {/* Text Container */}
                 <View style={styles.textContainer}>
                     <Text numberOfLines={1} style={styles.title}>
                         {/* Title Here*/}
-                        Title
+                        {item.title}
                     </Text>
 
                     <Text numberOfLines={1} style={styles.songs}>
                         {/* No. of songs Here*/}
-                        xx Songs
+                        {item.totalSongs} Songs
                     </Text>
                 </View>
             

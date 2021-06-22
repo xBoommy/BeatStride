@@ -1,31 +1,31 @@
 import React, {useState} from 'react';
-import {  TouchableOpacity,  StyleSheet,  Text,  View, Dimensions } from 'react-native';
+import {  TouchableOpacity,  StyleSheet,  Text,  View, Dimensions, Image } from 'react-native';
 
 const {width, height} = Dimensions.get("window")
 
-const PlaylistItem = () => {
-
-    const [highlight, setHighlight] = useState(false)
+const PlaylistItem = props => {
 
     return (
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={props.goToSongScreen}>
             <View style={styles.itemContainer}>
             
                 {/* Image Container*/}
                 <View style={styles.imageContainer}>
                     {/* Image Here */}
+                    {/* Styling from view brought down to Image, else cannot see image */}
+                    <Image style={styles.imageContainer} source={{uri: props.item.imageUri}} />
                 </View>
                 
                 {/* Text Container */}
                 <View style={styles.textContainer}>
                     <Text numberOfLines={1} style={styles.title}>
                         {/* Title Here*/}
-                        Title
+                        {props.item.title}
                     </Text>
 
                     <Text numberOfLines={1} style={styles.songs}>
                         {/* No. of songs Here*/}
-                        xx Songs
+                        {props.item.totalSongs} Songs
                     </Text>
                 </View>
             

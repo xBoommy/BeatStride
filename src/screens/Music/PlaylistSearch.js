@@ -1,24 +1,58 @@
-import React from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert } from 'react-native';
+import { Button, TextInput, IconButton } from "react-native-paper";
+import { useDispatch } from 'react-redux';
 
 import SearchItem from './components/SearchItem';
+import Spotify_Search from '../../api/spotify/spotify_search';
+import * as Firestore from '../../api/firestore';
 
 const {width, height} = Dimensions.get("window")
 
-// For Testing Purpose - Remove before use
-const playlists = [
-    {id: 1, name : 1},
-    {id: 2, name : 2},
-    {id: 3, name : 3},
-    {id: 4, name : 4},
-    {id: 5, name : 5},
-    {id: 6, name : 6},
-    {id: 7, name : 7},
-]
 
 const PlaylistSearch = (props) => {
     const searchToggle = props.searchToggle;
     const setSearchToggle = props.setSearchToggle;
+    const [searchTitle, setSearchTitle] = useState('');
+    const [playlists, setPlaylists] = useState([]);
+    const dispatch = useDispatch();
+
+    const getPlaylists = async () => {
+        const newPlaylists = await Spotify_Search({
+          offset: 0,
+          limit: 10,
+          q: searchTitle,
+        });
+        //If no playlist found empty playlist [],
+        setPlaylists(newPlaylists);
+    };
+
+    const onSelect = (playlist) => {
+        //do some alert/pop up, if ok then proceed with adding
+        Alert.alert(
+          'Add Playlist',
+          'Are you sure that you want to add this playlist?',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => Alert.alert('Cancelled'),
+              style: 'default', //ignored on android...
+            },
+            {
+              text: 'Ok',
+              onPress: () => {
+                //console.log(playlist);
+                //dispatch(playlistActions.addPlaylist(playlist));
+                Firestore.db_addUserPlaylists(playlist);
+              },
+              style: 'default', //ignored on android
+            },
+          ],
+          {
+            cancelable: true,
+          }
+        );
+    };
 
     return (
         <Modal visible={searchToggle} transparent={true} animationType={'slide'}>
@@ -27,7 +61,27 @@ const PlaylistSearch = (props) => {
 
                     {/* Search Bar */}
                     <View style={styles.searchBar}>
-
+                        {/* Need to remove green back ground...? */}
+                        <TextInput
+                            mode="outlined"
+                            label="Search Playlists..."
+                            keyboardType="default"
+                            style={{width: 0.9 * width}}
+                            placeholder="Name of playlist..."
+                            value={searchTitle}
+                            onChangeText={setSearchTitle}
+                            autoCapitalize="none"
+                            returnKeyType="default"
+                            onSubmitEditing={() => {
+                                            Keyboard.dismiss();
+                                            getPlaylists();
+                                        }}
+                            blurOnSubmit={false}
+                            right={<TextInput.Icon name="search-web" onPress={getPlaylists} />}
+                            theme={{
+                                colors: {primary: "#FB5555", underlineColor: 'transparent'},
+                            }}
+                        />
                     </View>
 
                     {/* Playlist List */}
@@ -37,7 +91,7 @@ const PlaylistSearch = (props) => {
                         numColumns={2}
                         data={playlists}
                         keyExtractor={item => item.id}
-                        renderItem={({item}) => <SearchItem/>}
+                        renderItem={({item}) => <SearchItem item={item} onSelect={() => onSelect(item)}/>}
                     />
 
                     {/* Button Container */}

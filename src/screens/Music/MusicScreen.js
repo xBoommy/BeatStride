@@ -1,27 +1,54 @@
-import React, { useState } from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import Screen from '../MainScreen';
 
 import PlaylistItem from './components/PlaylistItem';
 import MusicPlayerMain from './components/MusicPlayerMain';
 import PlaylistSearch from './PlaylistSearch';
+import * as Firestore from '../../api/firestore';
+import Tracks_Getter from '../../api/spotify/spotify_tracks_getter';
+import * as Spotify from './components/spotify_player_controls';
 
 const {width, height} = Dimensions.get("window")
 
-// For Testing Purpose - Remove before use
-const playlists = [
-    {id: 1, name : 1},
-    {id: 2, name : 2},
-    {id: 3, name : 3},
-    {id: 4, name : 4},
-    {id: 5, name : 5},
-    {id: 6, name : 6},
-    {id: 7, name : 7},
-]
 
 const MusicScreen = () => {
-    const [searchToggle, setSearchToggle] = useState(false)
+    const navigation = useNavigation();
+    const [searchToggle, setSearchToggle] = useState(false);
+    const [playlists, setPlaylists] = useState([]);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentlyPlaying, setCurrentlyPlaying] = useState();
+    const [selectedPlaylistUri, setSelectedPlaylistUri] = useState('');
+
+    useEffect(() => {
+        Firestore.db_playlists(
+            (playlists) => { setPlaylists(playlists) },
+            (error) => {console.log('Failed to initiate playlist in music main')}
+        );
+    }, []);
+
+    useEffect(() => {
+        if (isPlaying) {
+            updatePlaying();
+        }
+    });
+
+    const getPlaylistDetails = async (playlistUri, title) => {
+        setSelectedPlaylistUri(playlistUri);
+        const tracks = await Tracks_Getter(playlistUri);
+        navigation.navigate('SongScreen', { tracks: tracks, title: title});
+    };
+
+    const updatePlaying = async () => {
+        const track = await Spotify.currentPlayingTrack();
+        if (track === undefined) {
+            updatePlaying();
+        } else {
+            setCurrentlyPlaying(track);
+        }
+    };
 
   return (
       <Screen>
@@ -37,12 +64,20 @@ const MusicScreen = () => {
                 numColumns={2}
                 data={playlists}
                 keyExtractor={item => item.id}
-                renderItem={({item}) => <PlaylistItem/>}
+                renderItem={({item}) => <PlaylistItem 
+                                            item={item}
+                                            goToSongScreen={() => getPlaylistDetails(item.playlistUri, item.title)}
+                                        />}
             />
 
             {/* Music Player */}
             <View style={styles.musicPlayer}>
-                <MusicPlayerMain/>
+                <MusicPlayerMain
+                    isPlaying={isPlaying}
+                    setIsPlaying={setIsPlaying}
+                    currentlyPlaying={currentlyPlaying}
+                    defaultUri={selectedPlaylistUri}
+                />
             </View>
             
             {/* Playlist Search Popup */}
@@ -55,6 +90,8 @@ const MusicScreen = () => {
             <TouchableOpacity style={styles.searchButton} onPress={() => {setSearchToggle(true)}}>
                 <View>
                     {/* Insert Plus Icon Here */}
+                    {/* Styling by XJ for this image */}
+                    <Image style={{height: 0.06 * height, width: 0.06 * height}} source={require('../../assets/icons/add.png')}/>
                 </View>
             </TouchableOpacity>
             
