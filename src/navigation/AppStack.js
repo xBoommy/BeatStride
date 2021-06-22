@@ -4,24 +4,45 @@ import { } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import AppTab from './AppTab';
-import MusicPlaylistSongs from '../screens/MusicScreen/MusicPlaylistSongs';
-import EventInfo from '../screens/SocialScreen/Events/EventInfo';
-
-import Loading from '../screens/LoadingScreen';
-import Login from '../screens/OnBoardingScreen/LoginScreen';
-import RegisterOne from '../screens/OnBoardingScreen/Register/RegisterOne';
-import RegisterTwo from '../screens/OnBoardingScreen/Register/RegisterTwo';
-import Guide from '../screens/OnBoardingScreen/GuideScreen/Guide';
-import RunningMain from  '../screens/ExerciseScreen/RunningComponents/RunningMain';
-import EndRun from '../screens/ExerciseScreen/RunningComponents/EndRun';
+import LoadingScreen from '../screens/Onboarding/LoadingScreen';
+import LoginScreen from '../screens/Onboarding/LoginScreen';
+import RegisterScreen from '../screens/Onboarding/RegisterScreen';
+import GuideScreen from '../screens/Onboarding/GuideScreen';
+import SongScreen from '../screens/Music/SongsScreen';
+import RunningScreen from '../screens/Running/RunningScreen';
+import EndScreen from '../screens/RunEnd/EndScreen';
 
 const Stack = createStackNavigator();
 
 const AppStack = () => {
     return(
         <Stack.Navigator
-            initialRouteName="Loading"
+            initialRouteName="LoadingScreen"
         >
+            <Stack.Screen
+                key="LoadingScreen"
+                name="LoadingScreen"
+                component={LoadingScreen}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen
+                key="LoginScreen"
+                name="LoginScreen"
+                component={LoginScreen}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen
+                key="RegisterScreen"
+                name="RegisterScreen"
+                component={RegisterScreen}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen
+                key="GuideScreen"
+                name="GuideScreen"
+                component={GuideScreen}
+                options={{headerShown: false}}
+            />
             <Stack.Screen
                 key="AppTab"
                 name="AppTab"
@@ -29,64 +50,35 @@ const AppStack = () => {
                 options={{headerShown: false}}
             />
             <Stack.Screen
-                key="MusicPlaylistSongs"
-                name="MusicPlaylistSongs"
-                component={MusicPlaylistSongs}
-                options={{title: 'Playlist Songs'}}
+                key="SongScreen"
+                name="SongScreen"
+                component={SongScreen}
+                options={{
+                    title: "Playlist Song",
+                    headerStyle: {
+                        backgroundColor: '#1E2124',
+                    },
+                    headerTintColor: '#FFFFFF',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }
+                }}
             />
             <Stack.Screen
-                key="EventInfo"
-                name="EventInfo"
-                component={EventInfo}
-                options={{title: "Event Info"}}
-
-            />
-            <Stack.Screen
-                key="Login"
-                name="Login"
-                component={Login}
-                options={{headerShown: false}}
-
-            />
-            <Stack.Screen
-                key="RegisterOne"
-                name="RegisterOne"
-                component={RegisterOne}
-                options={{headerShown: false}}
-
-            />
-            <Stack.Screen
-                key="RegisterTwo"
-                name="RegisterTwo"
-                component={RegisterTwo}
-                options={{headerShown: false}}
-
-            />
-            <Stack.Screen
-                key="Guide"
-                name="Guide"
-                component={Guide}
+                key="RunningScreen"
+                name="RunningScreen"
+                component={RunningScreen}
                 options={{headerShown: false}}
             />
             <Stack.Screen
-                key="Loading"
-                name="Loading"
-                component={Loading}
+                key="EndScreen"
+                name="EndScreen"
+                component={EndScreen}
                 options={{headerShown: false}}
             />
-            <Stack.Screen
-                key="RunningMain"
-                name="RunningMain"
-                component={RunningMain}
-                options={{headerShown: false}}
-            />
-            <Stack.Screen
-                key="EndRun"
-                name="EndRun"
-                component={EndRun}
-                options={{headerShown: false}}
-            />
+            
         </Stack.Navigator>
-    )
-}
-export default AppStack
+    );
+};
+
+export default AppStack;

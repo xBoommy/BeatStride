@@ -3,12 +3,9 @@ import React, { } from 'react';
 import {  StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import color from '../constants/color';
+import ExerciseScreen from '../screens/Exercise/ExerciseScreen';
+import MusicScreen from '../screens/Music/MusicScreen';
 
-import ExerciseMain from '../screens/ExerciseScreen/ExerciseMain'
-import MusicMain from '../screens/MusicScreen/MusicMain'
-import SocialMain from '../screens/SocialScreen/SocialMain'
-import ProfileMain from '../screens/ProfileScreen/ProfileMain'
 
 const {width, height} = Dimensions.get("window")
 
@@ -24,8 +21,8 @@ const AppTab = () => {
                 initialRouteName="Exercise"
         >
             <Tab.Screen 
-                name="ExerciseMain" 
-                component={ExerciseMain}
+                name="ExerciseScreen" 
+                component={ExerciseScreen}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <View style={styles.tabIconContainer}>
@@ -34,12 +31,12 @@ const AppTab = () => {
                                 resizeMode= 'contain'
                                 style={{
                                     ...styles.tabIconImage,
-                                    tintColor: focused ? color.primary : color.secondary,
+                                    tintColor: focused ? '#7289DA' : '#BABBBF',
                                 }}/>
                             <Text 
                                 style = {{
                                     ...styles.tabIconText,
-                                    color:focused ? color.primary : color.secondary,
+                                    color: focused ? '#7289DA' : '#BABBBF',
                                 }}>EXERCISE</Text>
                         </View>
                     )
@@ -47,8 +44,8 @@ const AppTab = () => {
             />
 
             <Tab.Screen 
-                name="MusicMain" 
-                component={MusicMain}
+                name="MusicScreen" 
+                component={MusicScreen}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <View style={styles.tabIconContainer}>
@@ -57,42 +54,19 @@ const AppTab = () => {
                                 resizeMode= 'contain'
                                 style={{
                                     ...styles.tabIconImage,
-                                    tintColor: focused ? color.primary : color.secondary,
+                                    tintColor: focused ? '#7289DA' : '#BABBBF',
                                 }}/>
                             <Text 
                                 style = {{
                                     ...styles.tabIconText,
-                                    color:focused ? color.primary : color.secondary,
+                                    color: focused ? '#7289DA' : '#BABBBF',
                                 }}>MUSIC</Text>
                         </View>
                     )
                 }}
             />
-            
-            <Tab.Screen 
-                name="SocialMain" 
-                component={SocialMain}
-                options={{
-                    tabBarIcon: ({focused}) => (
-                        <View style={styles.tabIconContainer}>
-                            <Image 
-                                source={require('../assets/icons/TabSocial.png')}
-                                resizeMode= 'contain'
-                                style={{
-                                    ...styles.tabIconImage,
-                                    tintColor: focused ? color.primary : color.secondary,
-                                }}/>
-                            <Text 
-                                style = {{
-                                    ...styles.tabIconText,
-                                    color:focused ? color.primary : color.secondary,
-                                }}>SOCIAL</Text>
-                        </View>
-                    )
-                }}
-            />
 
-            <Tab.Screen 
+            {/* <Tab.Screen 
                 name="ProfileMain" 
                 component={ProfileMain}
                 options={{
@@ -103,17 +77,17 @@ const AppTab = () => {
                                 resizeMode= 'contain'
                                 style={{
                                     ...styles.tabIconImage,
-                                    tintColor: focused ? color.primary : color.secondary,
+                                    tintColor: focused ? '#7289DA' : '#BABBBF',
                                 }}/>
                             <Text 
                                 style = {{
                                     ...styles.tabIconText,
-                                    color:focused ? color.primary : color.secondary,
+                                    color: focused ? '#7289DA' : '#BABBBF',
                                 }}>PROFILE</Text>
                         </View>
                     )
                 }}
-            />
+            /> */}
             
         </Tab.Navigator>
     )

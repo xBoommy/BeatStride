@@ -70,9 +70,6 @@ export const storage_retrieveProfilePic = async (onSuccess, onError) => {
     }
 }
 
-
-
-
 //Add run record to history
 const db_updateUserHistory = ( record ) => {
     const user_id = Authentication.getCurrentUserId()
