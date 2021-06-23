@@ -41,7 +41,7 @@ const RegisterScreen = ({navigation}) => {
                     () => {
                         navigation.dispatch(CommonActions.reset({ 
                             index: 0, 
-                            routes: [{ name: "AppTab" }]
+                            routes: [{ name: "GuideScreen" }]
                         }))
                     },
                     () => {

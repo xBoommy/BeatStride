@@ -1,9 +1,11 @@
 import React, {useState, useRef} from 'react';
-import { View, Text, StyleSheet, FlatList, Animated} from 'react-native';
+import { View, Text, StyleSheet, FlatList, Animated, Dimensions} from 'react-native';
 
 import GuideItem from './components/GuideItem';
 import guideSlides from './components/GuideSlides';
 import PageIndicator from './components/PageIndicator';
+
+const { width, height } = Dimensions.get('window');
 
 const Guide = props => {
 
@@ -29,11 +31,13 @@ const Guide = props => {
           showsHorizontalScrollIndicator={false}
           pagingEnabled
           bounces={false}
+          overScrollMode="never"
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {x: scrollX}}}],
             {useNativeDriver: false},
           )}
-          scrollEventThrottle={32}
+          snapToInterval={width}
+          decelerationRate="fast"
           onViewableItemsChanged={viewableItemsChanged}
           viewabilityConfig={viewConfig}
           ref={slidesRef}
@@ -49,6 +53,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#282B30',
     },
 });
 
