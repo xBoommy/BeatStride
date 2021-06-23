@@ -316,7 +316,6 @@ const RunningScreen = ({navigation, route}) => {
         }
         if (runStatus === 5) {
             console.log("RunStatus - 5: Stop from Pause");
-            TTS.getInitStatus().then(()=> TTS.speak('Run Ended'));
             setRunStatus(6);
         }
         if (runStatus === 6) {
@@ -364,7 +363,10 @@ const RunningScreen = ({navigation, route}) => {
                     "Run Stopped",
                     "You haven't covered enough ground to create a record. End Run?",
                     [ { text:"Continue", onPress: () => {setRunStatus(3)} }, 
-                    { text:"Understood", onPress: () => {navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);} } ]
+                    { text:"Understood", onPress: () => {
+                        navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);
+                        TTS.getInitStatus().then(()=> TTS.speak('Run Ended'));
+                    } } ]
                 )
             }
             

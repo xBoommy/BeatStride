@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {  CommonActions } from '@react-navigation/native'; 
 import moment from 'moment';
+import TTS from 'react-native-tts';
 
 import EndMap from './components/EndMap';
 
@@ -38,6 +39,10 @@ const EndScreen = ({navigation, route}) => {
             navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);
         }
     }, [closed]);
+
+    useEffect(() => {
+        TTS.getInitStatus().then(()=> TTS.speak('Run Ended'));
+    }, [])
 
     return (
         <SafeAreaView style={styles.screen}>
