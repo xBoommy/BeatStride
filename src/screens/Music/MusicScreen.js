@@ -90,6 +90,7 @@ const MusicScreen = () => {
 
             {/* Playlist List */}
             <FlatList
+                showsVerticalScrollIndicator ={false}
                 style={styles.list}
                 contentContainerStyle={styles.listContent}
                 numColumns={2}
