@@ -25,7 +25,7 @@ const EndScreen = ({navigation, route}) => {
     useEffect(() => {
         const back = navigation.addListener('beforeRemove', (e) => {
             if (!closed) {
-                e.preventDefault();
+                setClosed(true)
             }
         });
         return back;
@@ -37,7 +37,7 @@ const EndScreen = ({navigation, route}) => {
         if (closed) {
             navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);
         }
-    });
+    }, [closed]);
 
     return (
         <SafeAreaView style={styles.screen}>
@@ -99,7 +99,7 @@ const EndScreen = ({navigation, route}) => {
             </View>
 
             {/* Cross Button */}
-            <TouchableOpacity style={styles.crossContainer} onPress={() => {setClosed(true); navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);}}>
+            <TouchableOpacity style={styles.crossContainer} onPress={() => {setClosed(true)}}>
                 <Image
                     source={require('../../assets/icons/close.png')}
                     resizeMode='contain'
@@ -110,7 +110,7 @@ const EndScreen = ({navigation, route}) => {
             {/* Button Container */}
             <View style={styles.buttonContainer}>
                         {/* Close Button */}
-                        <TouchableOpacity onPress={() => {setClosed(true); navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);}}>
+                        <TouchableOpacity onPress={() => {setClosed(true)}}>
                             <View style={styles.closeButton}>
                                 <Text style={styles.buttonText}>Close</Text>
                             </View>

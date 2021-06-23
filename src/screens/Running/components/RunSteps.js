@@ -20,7 +20,7 @@ const RunSteps = (props) => {
     }
 
     useEffect(() => {
-        if (runStatus == 2){
+        if (runStatus == 2 || runStatus == 8 || runStatus == 9){
             setSteps((prevSteps) => prevSteps + 1)
         }
     },[stepCounter])

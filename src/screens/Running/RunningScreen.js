@@ -27,16 +27,14 @@ const RunningScreen = ({navigation, route}) => {
 
     useEffect(() => {
         const back = navigation.addListener('beforeRemove', (e) => {
-            if (runStatus !== 6) {
-                setRunStatus(4);
+            if (runStatus === 2 || runStatus == 3 || runStatus == 8) {
+                e.preventDefault();
+                setRunStatus(9);
             }
-            //navigation.dispatch(e.data.action);
         });
         return back;
-    }, [runStatus]);
- 
-
-
+    } )
+    
     const mode = route.params.mode;
     const tracks = useSelector(state => state.playlists.tracksForRun);
 
@@ -256,7 +254,7 @@ const RunningScreen = ({navigation, route}) => {
     This update occurs whenever Positions Array is udpated(valid movement is made) */
     useEffect(() => {
         /* Ensure that this update is only when running/Prevent override of initial refresh */
-        if (runStatus == 2) {
+        if (runStatus == 2 || runStatus == 8 || runStatus == 9) {
             /* Previous coordinate only updates if there are at least 2 positions in array */
             if (positions.length > 1) {
                 setPrevCoord(positions[positions.length - 2])
@@ -265,6 +263,7 @@ const RunningScreen = ({navigation, route}) => {
         }
     }, [positions])
 
+    const [paused , setPaused] = useState(false);
     /* [Run Status Render] 
     This render is triggered upon a change in app status */
     useEffect(() => {
@@ -285,19 +284,36 @@ const RunningScreen = ({navigation, route}) => {
             resumeCountdown();
         }
         if (runStatus === 2) {
+            setPaused(false);
             console.log("RunStatus - 2: Running");
         }
         if (runStatus === 3) {
             console.log("RunStatus - 3: Pause");
             unsubscribePosition();
+            setPaused(true);
             TTS.getInitStatus().then(()=> TTS.speak('Run Paused'));
         }
         if (runStatus === 4) {
-            console.log("RunStatus - 4: Stop from Running");
-            unsubscribePosition();
-            //TTS.getInitStatus().then(()=> TTS.speak('Run Stopped'));
+            console.log("RunStatus - 4: BACK confirm");
+            if (!paused) {
+                unsubscribePosition();
+            }
+            navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}]}));
         }
-
+        if (runStatus === 8) { 
+            console.log("RunStatus - 8: on BACK Press");
+            Alert.alert(
+                "Leave Run",
+                "Are you sure you want to leave the run? The run record will not be saved.",
+                [ { text:"Cancel", onPress: () => {} }, 
+                { text:"Confirm", onPress: () => {setRunStatus(4)} }]
+            )
+            //Alert > (N)=>{close without change} (Y)=> setRunStatus (4)
+        }
+        if (runStatus === 9) {
+            console.log("RunStatus - 9");
+            setRunStatus(8);
+        }
         if (runStatus === 5) {
             console.log("RunStatus - 5: Stop from Pause");
             TTS.getInitStatus().then(()=> TTS.speak('Run Ended'));
@@ -402,7 +418,7 @@ const RunningScreen = ({navigation, route}) => {
                 <View style={styles.buttonContainer}>
 
                     {/* Pause button */}
-                    {(runStatus === 2) ?  <TouchableOpacity style={styles.button} onPress={() => setRunStatus(3)}>
+                    {(runStatus === 2 || (runStatus === 8 && !paused) || (runStatus === 9 && !paused)) ?  <TouchableOpacity style={styles.button} onPress={() => setRunStatus(3)}>
                         <Image 
                             source={require('../../assets/icons/ExercisePause.png')}
                             resizeMode= 'contain'
@@ -411,7 +427,7 @@ const RunningScreen = ({navigation, route}) => {
                     </TouchableOpacity> : <></>}
 
                     {/* Play button */}
-                    {(runStatus === 3) ? <TouchableOpacity style={styles.button} onPress={() => setRunStatus(7)}>
+                    {(runStatus === 3 || (runStatus === 8 && paused) || (runStatus === 9 && paused)) ? <TouchableOpacity style={styles.button} onPress={() => setRunStatus(7)}>
                         <Image 
                             source={require('../../assets/icons/ExercisePlay.png')}
                             resizeMode= 'contain'
@@ -420,7 +436,7 @@ const RunningScreen = ({navigation, route}) => {
                     </TouchableOpacity> : <></>}
                     
                     {/* Stop button */}
-                    {(runStatus === 3) ? <TouchableOpacity style={styles.button} onPress={() => setRunStatus(5)}>
+                    {(runStatus === 3 || (runStatus === 8 && paused) || (runStatus === 9 && paused)) ? <TouchableOpacity style={styles.button} onPress={() => setRunStatus(5)}>
                         <Image 
                             source={require('../../assets/icons/ExerciseStop.png')}
                             resizeMode= 'contain'
