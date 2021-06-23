@@ -6,7 +6,7 @@ const {width, height} = Dimensions.get("window")
 const PlaylistItem = props => {
 
     return (
-        <TouchableOpacity onPress={props.goToSongScreen}>
+        <TouchableOpacity onPress={props.goToSongScreen} onLongPress={props.removePlaylist}>
             <View style={styles.itemContainer}>
             
                 {/* Image Container*/}
