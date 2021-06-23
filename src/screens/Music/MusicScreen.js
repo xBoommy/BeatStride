@@ -151,15 +151,15 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
     },
     list:{
-        height: height,
+        height: height * 0.8,
         // backgroundColor: 'pink',
     },
     listContent:{
-        paddingBottom: height * 0.33
+        paddingBottom: height * 0.14,
     },
     musicPlayer:{
         position: 'absolute',
-        bottom: height * 0.21 ,
+        bottom: height * 0.02 ,
         alignSelf: 'center',
     },
     searchButton:{

@@ -1,13 +1,26 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet,  Text,  View, Dimensions, ScrollView, Animated, TouchableWithoutFeedback } from 'react-native';
+import { auth as SpotifyAuth,  remote as SpotifyRemote } from 'react-native-spotify-remote';
 
 import Screen from '../MainScreen';
 import RunTab from './components/RunTab';
 import HistoryTab from './components/HistoryTab';
 
+import * as Spotify from '../Music/components/spotify_player_controls';
+
 const {width, height} = Dimensions.get("window")
 
 const ExerciseScreen = () => {
+
+    useEffect(async() => {
+        const spotifyConfig = Spotify.spotifyConfig
+
+        const isConnected = await SpotifyRemote.isConnectedAsync(); //returns a boolean, true/false
+        if (!isConnected) {
+            const session = await SpotifyAuth.authorize(spotifyConfig);
+            await SpotifyRemote.connect(session.accessToken);
+        }
+    }, [])
 
     const [scrollRef , setScrollRef] = useState(null)
 

@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image} from 'react-native';
+import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image, Alert } from 'react-native';
 import { CommonActions } from '@react-navigation/native'; 
 import * as Location from 'expo-location';
 import * as geolib from 'geolib';
 import moment from 'moment';
 import TTS from 'react-native-tts';
+import { useSelector } from 'react-redux';
 import * as Firestore from '../../api/firestore';
 
 import RunDistance from './components/RunDistance';
@@ -24,6 +25,7 @@ const RunningScreen = ({navigation, route}) => {
     } )
 
     const mode = route.params.mode;
+    const tracks = useSelector(state => state.playlists.tracksForRun);
 
     const [countdown, setCountdown] = useState(true);           //Countdown popup
     const [countdownMsg, setCountdownMsg] = useState("5");      //Countdown message
@@ -292,41 +294,52 @@ const RunningScreen = ({navigation, route}) => {
         if (runStatus === 6) {
             console.log("RunStatus - 6: Run End");
 
-            //Compile Data
-            const record = {
-                distance:distance, 
-                positions:positions, 
-                steps:steps, 
-                duration:duration,
-                time:timeStart,
-                day:day,
-                date:date,
-                mode: mode,
-                id:moment().format(),
+            if (distance >= 10) {
+                //Compile Data
+                const record = {
+                    distance:distance, 
+                    positions:positions, 
+                    steps:steps, 
+                    duration:duration,
+                    time:timeStart,
+                    day:day,
+                    date:date,
+                    mode: mode,
+                    id:moment().format(),
+                }
+                //Add to history + update personal stats
+                Firestore.db_recordRun(record,
+                    () => {
+                        navigation.navigate("EndScreen", {
+                            message:"Run Concluded",
+                            distance:distance, 
+                            positions:positions, 
+                            steps:steps, 
+                            duration:duration,
+                            time:timeStart,
+                            day:day,
+                            date:date,
+                            mode: mode,
+                        });
+                    },
+                    (error) => {console.log(error)}    
+                )
+                
+                //Update Stride Distance, only if user in Calibration mode
+                if (mode=="Calibration") {
+                    const strideDistance = (distance / steps)
+                    Firestore.db_calibrateStride(strideDistance);
+                }
+            } else {
+
+                Alert.alert(
+                    "Run Stopped",
+                    "You haven't covered enough ground to create a record. End Run?",
+                    [ { text:"Continue", onPress: () => {setRunStatus(3)} }, 
+                    { text:"Understood", onPress: () => {navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);} } ]
+                )
             }
-            //Add to history + update personal stats
-            Firestore.db_recordRun(record,
-                () => {
-                    navigation.navigate("EndScreen", {
-                        message:"Run Concluded",
-                        distance:distance, 
-                        positions:positions, 
-                        steps:steps, 
-                        duration:duration,
-                        time:timeStart,
-                        day:day,
-                        date:date,
-                        mode: mode,
-                    });
-                },
-                (error) => {console.log(error)}    
-            )
             
-            //Update Stride Distance, only if user in Calibration mode
-            if (mode=="Calibration") {
-                const strideDistance = (distance / steps)
-                Firestore.db_calibrateStride(strideDistance);
-            }
         }
     },[runStatus])
 
@@ -403,12 +416,6 @@ const RunningScreen = ({navigation, route}) => {
                         />
                     </TouchableOpacity> : <></>}
                     
-
-                    
-                    
-
-                    
-
                 </View>
 
             </View>
@@ -424,9 +431,11 @@ const RunningScreen = ({navigation, route}) => {
             </View>
 
             {/* Music Player */}
-            <View style={styles.musicPlayer}>
-                <MusicPlayerRun runStatus={runStatus}/>
-            </View>
+            { (tracks.length == 0) ? <></> : 
+                <View style={styles.musicPlayer}>
+                    <MusicPlayerRun runStatus={runStatus}/>
+                </View>
+            }
 
             {/* Countdown */}
             <RunCountdown

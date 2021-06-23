@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     },
     searchBar: {
         width: width * 0.9,
-        height: height * 0.08,
+        height: height * 0.1,
         alignSelf: 'center',
         marginTop: height * 0.01,
         // backgroundColor: 'green',
