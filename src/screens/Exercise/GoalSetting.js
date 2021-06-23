@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     },
     subHeaderContainer:{
         width: width * 0.95, 
-        height: height * 0.07,
+        height: height * 0.05,
         justifyContent: 'flex-end',
         paddingHorizontal: width * 0.95 * 0.05,
     },
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     },
     inputContainer:{
         width: width * 0.95, 
-        height: height * 0.08,
+        height: height * 0.1,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     },
     textInput:{
         width: width * 0.95 * 0.38, 
-        height: height * 0.06,
+        // height: height * 0.06,
     },
     buttonContainer:{
         position: 'absolute',
