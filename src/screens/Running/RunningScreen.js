@@ -335,7 +335,7 @@ const RunningScreen = ({navigation, route}) => {
                 Alert.alert(
                     "Run Stopped",
                     "You haven't covered enough ground to create a record. End Run?",
-                    [ { text:"Continue", onPress: () => {console.log("Alert closed")} }, 
+                    [ { text:"Continue", onPress: () => {setRunStatus(3)} }, 
                     { text:"Understood", onPress: () => {navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);} } ]
                 )
             }

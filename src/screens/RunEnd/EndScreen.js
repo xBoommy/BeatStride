@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity} from 'react-native';
+import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {  CommonActions } from '@react-navigation/native'; 
 import moment from 'moment';
 
@@ -82,7 +82,11 @@ const EndScreen = ({navigation, route}) => {
 
             {/* Cross Button */}
             <TouchableOpacity style={styles.crossContainer} onPress={() => {navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);}}>
-
+                <Image
+                    source={require('../../assets/icons/close.png')}
+                    resizeMode='contain'
+                    style={styles.icon}
+                />
             </TouchableOpacity>
 
             {/* Button Container */}
@@ -225,7 +229,14 @@ const styles = StyleSheet.create({
         zIndex: 2,
         left: width * 0.025,
         top: ((height * 0.1) - (width * 0.1)) * 0.5,
-        backgroundColor: 'red',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'red',
+    },
+    icon:{
+        height: width * 0.05,
+        aspectRatio: 1,
+        tintColor: '#BABBBF',
     },
     buttonContainer:{
         position: 'absolute',
