@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import {  SafeAreaView, StyleSheet, Text, View, Dimensions, Keyboard, Image, ScrollView } from 'react-native';
+import {  SafeAreaView, StyleSheet, Text, View, Dimensions, Keyboard, Image, ScrollView, Alert } from 'react-native';
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 
@@ -30,12 +30,27 @@ const LoginScreen = ({navigation}) => {
             setIsLoginLoading(false);
             if (error.code === 'auth/invalid-email') {
                 // setMessage('Invalid Email')
+                Alert.alert(
+                  "Invalid Email",
+                  "Please ensure that the email you've entered is valid.",
+                  [ { text:"Understood", onPress: () => {} } ]
+                )
             };
             if (error.code === 'auth/user-not-found') {
                 // setMessage('Incorrect Email. There is no account linked to the email')
+                Alert.alert(
+                  "User Not Found",
+                  "Please ensure that you have an account associated with the email.",
+                  [ { text:"Understood", onPress: () => {} } ]
+                )
             };
             if (error.code === 'auth/wrong-password'){
                 // setMessage('Incorrect Password. The password you entered is incorrect')
+                Alert.alert(
+                  "Incorrect Password",
+                  "The password you entered is incorrect.",
+                  [ { text:"Understood", onPress: () => {} } ]
+                )
             };
             return console.error(error);
           }
