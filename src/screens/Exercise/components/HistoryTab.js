@@ -14,7 +14,7 @@ const HistoryTab = () => {
 
     useEffect(async() => {
         Firestore.db_historyView(
-            (historyList) => { setHistory(historyList)},
+            (historyList) => { setHistory(historyList.reverse())},
             (error) => {console.log('history view fail')}
         )
         
