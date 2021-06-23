@@ -74,7 +74,7 @@ export const storage_retrieveProfilePic = async (onSuccess, onError) => {
 const db_updateUserHistory = ( record ) => {
     const user_id = Authentication.getCurrentUserId()
     try {
-        db.collection("users").doc(user_id).collection("history").add(record);
+        db.collection("users").doc(user_id).collection("history").doc(record.id).set(record);
     } catch (error) {
         console.log("Fail history record")
     }
@@ -97,6 +97,64 @@ const db_updateUserRunCount = () => {
         console.log("fail user run count record")
     }
 }
+
+// Used after run complete to record.
+export const db_recordRun = async(record, onSuccess, onError) => {
+    try {
+        //Update personal info
+        db_updateUserHistory(record);
+        db_updateUserTotalDistance(record);
+        db_updateUserRunCount();
+        
+        return onSuccess();
+    } catch (error) {
+        return onError(error)
+    }
+}
+
+//Update cummulative distance
+const db_decreaseUserTotalDistance = ( distance ) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users").doc(user_id).update({totalDistance: firebase.firestore.FieldValue.increment(-distance)})
+    } catch (error) {
+        console.log("fail user update distance record")
+    }
+}
+//Update run count
+const db_decreaseUserRunCount = () => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users").doc(user_id).update({runCount: firebase.firestore.FieldValue.increment(-1)})   
+    } catch (error) {
+        console.log("fail user run count record")
+    }
+}
+
+/**Remove Run History */
+const db_removeRunHistory = ( recordID ) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        // console.log(recordID);
+        db.collection("users").doc(user_id).collection("history").doc(recordID).delete();
+    } catch (error) {
+        console.log("Fail to delete Run History record");
+    }
+}
+
+// Used after run complete to record.
+export const db_removeRun = async(recordID , distance) => {
+    try {
+        //Update personal info
+        db_removeRunHistory(recordID);
+        db_decreaseUserRunCount();
+        db_decreaseUserTotalDistance(distance);
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 /**get all the events that user is participating in, as an array - NOT WORKING */ 
 export const db_getUserData = async() => {
     const user_id = Authentication.getCurrentUserId()
@@ -113,18 +171,6 @@ export const db_getUserData = async() => {
     }
 }
 
-export const db_recordRun = async(record, onSuccess, onError) => {
-    try {
-        //Update personal info
-        db_updateUserHistory(record);
-        db_updateUserTotalDistance(record);
-        db_updateUserRunCount();
-        
-        return onSuccess();
-    } catch (error) {
-        return onError(error)
-    }
-}
 
 /**Obtain user's run history from docs in 'history' collection under user doc - WORKS
  * 
@@ -160,7 +206,7 @@ export const db_addUserPlaylists = ( playlist ) => {
 export const db_removeUserPlaylists = ( playlist ) => {
     const user_id = Authentication.getCurrentUserId()
     try {
-        console.log(playlist.id);
+        // console.log(playlist.id);
         db.collection("users").doc(user_id).collection("playlists").doc(playlist.id).delete();
     } catch (error) {
         console.log("Fail to delete playlist record");

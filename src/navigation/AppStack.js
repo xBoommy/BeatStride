@@ -11,6 +11,7 @@ import GuideScreen from '../screens/Onboarding/GuideScreen';
 import SongScreen from '../screens/Music/SongsScreen';
 import RunningScreen from '../screens/Running/RunningScreen';
 import EndScreen from '../screens/RunEnd/EndScreen';
+import HistoryView from '../screens/Exercise/components/HistoryView';
 
 const {width, height} = Dimensions.get("window")
 
@@ -77,6 +78,12 @@ const AppStack = () => {
                 key="EndScreen"
                 name="EndScreen"
                 component={EndScreen}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen
+                key="HistoryView"
+                name="HistoryView"
+                component={HistoryView}
                 options={{headerShown: false}}
             />
             

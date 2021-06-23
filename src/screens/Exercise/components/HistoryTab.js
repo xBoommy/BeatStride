@@ -18,14 +18,13 @@ const HistoryTab = () => {
             (error) => {console.log('history view fail')}
         )
         
-        try {
-            const user = await Firestore.db_getUserData()
-            setTotalDistance(user.totalDistance)
-            setTotalRuns(user.runCount)
-        } catch (error) {
-            console.log(error)
-        }
-        
+        Firestore.db_getUserDataSnapshot(
+            (userData) => {
+                setTotalDistance(userData.totalDistance)
+                setTotalRuns(userData.runCount)
+            },
+            (error) => {console.log(error)},
+        )
     },[])
 
     return (
