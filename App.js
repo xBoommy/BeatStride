@@ -6,6 +6,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import * as Paper from "react-native-paper";
+import { useKeepAwake } from 'expo-keep-awake';
 
 import AppStack from './src/navigation/AppStack'
 import AppTab from './src/navigation/AppTab'
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const App = () => {
+  useKeepAwake();
   return (
     <Provider store={store}>
       <Paper.Provider>
