@@ -69,19 +69,24 @@ const PlaylistSelectionBasic = (props) => {
                     </View>
 
                     {/* Playlist List */}
-                    <FlatList
-                        showsVerticalScrollIndicator ={false}
-                        style={styles.list}
-                        contentContainerStyle={styles.listContent}
-                        numColumns={2}
-                        data={playlists}
-                        keyExtractor={item => item.id}
-                        renderItem={({item}) => <PlaylistSelectionItem 
-                                                    item={item}
-                                                    inserted={inSelected}
-                                                    insert={setInSelected}
-                                                />}
-                    />
+                    { (playlists.length == 0) ? 
+                        <View style={styles.emptyMessageContainer}>
+                            <Text style={styles.emptyMessageText}>You have not added a playlist to Library.</Text>
+                        </View>  
+                        : <FlatList
+                            showsVerticalScrollIndicator ={false}
+                            style={styles.list}
+                            contentContainerStyle={styles.listContent}
+                            numColumns={2}
+                            data={playlists}
+                            keyExtractor={item => item.id}
+                            renderItem={({item}) => <PlaylistSelectionItem 
+                                                        item={item}
+                                                        inserted={inSelected}
+                                                        insert={setInSelected}
+                                                    />}
+                        />
+                    }
 
                     {/* Button Container */}
                     <View style={styles.buttonContainer}>
@@ -130,6 +135,19 @@ const styles = StyleSheet.create({
     },
     messageText:{
         fontSize: 12,
+        color: '#BABBBF',
+    },
+    emptyMessageContainer:{
+        width: width * 0.90,
+        height: height * 0.6,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'orange',
+    },
+    emptyMessageText:{
+        fontWeight: 'bold',
+        fontSize: 16,
         color: '#BABBBF',
     },
     list:{

@@ -2,6 +2,7 @@ import React, { useState, useRef, useContext } from 'react';
 import {  SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable, Keyboard, Dimensions } from 'react-native';
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
+import moment from 'moment';
 
 import * as Authentication from '../../api/auth';
 import * as Firestore from '../../api/firestore';
@@ -33,6 +34,7 @@ const RegisterScreen = ({navigation}) => {
                     goalDistance: 0,
                     goalTime: 0,
                     strideDistance: 0,
+                    joinDate: moment().format('MMMM Do YYYY, h:mm:ss a'),
                 }
 
                 Firestore.db_createAccount(Credentials, 
