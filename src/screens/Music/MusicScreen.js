@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity, Image } from 'react-native';
+import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity, Image, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Screen from '../MainScreen';
@@ -48,6 +48,30 @@ const MusicScreen = () => {
         navigation.navigate('SongScreen', { tracks: tracks, title: title, currentlyPlaying: currentlyPlaying, isPlaying: isPlaying});
     };
 
+    const removePlaylist = (item) => {
+        Alert.alert(
+            'Delete Playlist',
+            'Are you sure that you want to remove this playlist?',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => {},
+                style: 'default', //ignored on android...
+              },
+              {
+                text: 'Ok',
+                onPress: () => {
+                  Firestore.db_removeUserPlaylists(item);
+                },
+                style: 'default', //ignored on android
+              },
+            ],
+            {
+              cancelable: true,
+            }
+        );
+    };
+
     const updatePlaying = async () => {
         const track = await Spotify.currentPlayingTrack();
         if (track === undefined) {
@@ -74,6 +98,7 @@ const MusicScreen = () => {
                 renderItem={({item}) => <PlaylistItem 
                                             item={item}
                                             goToSongScreen={() => getPlaylistDetails(item.playlistUri, item.title)}
+                                            removePlaylist={() => removePlaylist(item)}
                                         />}
             />
 

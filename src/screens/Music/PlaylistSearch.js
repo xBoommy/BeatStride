@@ -20,9 +20,9 @@ const PlaylistSearch = (props) => {
 
     const getPlaylists = async () => {
         const newPlaylists = await Spotify_Search({
-          offset: 0,
-          limit: 10,
-          q: searchTitle,
+            offset: 0,
+            limit: 50,
+            q: searchTitle,
         });
         //If no playlist found empty playlist [],
         setPlaylists(newPlaylists);
