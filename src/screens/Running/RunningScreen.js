@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image, Alert } from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image, Alert, BackHandler } from 'react-native';
 import { CommonActions } from '@react-navigation/native'; 
 import * as Location from 'expo-location';
 import * as geolib from 'geolib';
@@ -23,6 +23,19 @@ const RunningScreen = ({navigation, route}) => {
         getCurrentLocation();
         setRunStatus(1);
     } )
+
+
+    useEffect(() => {
+        const back = navigation.addListener('beforeRemove', (e) => {
+            if (runStatus !== 6) {
+                setRunStatus(4);
+            }
+            //navigation.dispatch(e.data.action);
+        });
+        return back;
+    }, [runStatus]);
+ 
+
 
     const mode = route.params.mode;
     const tracks = useSelector(state => state.playlists.tracksForRun);
@@ -282,8 +295,7 @@ const RunningScreen = ({navigation, route}) => {
         if (runStatus === 4) {
             console.log("RunStatus - 4: Stop from Running");
             unsubscribePosition();
-            TTS.getInitStatus().then(()=> TTS.speak('Run Ended'));
-            setRunStatus(6);
+            //TTS.getInitStatus().then(()=> TTS.speak('Run Stopped'));
         }
 
         if (runStatus === 5) {

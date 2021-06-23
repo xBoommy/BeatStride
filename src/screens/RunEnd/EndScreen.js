@@ -19,7 +19,25 @@ const EndScreen = ({navigation, route}) => {
     const mode = route.params.mode;             //Run mode
 
     /* [Convert miliseconds to time breakdown] */
-    const displayDuration = moment.duration(duration)
+    const displayDuration = moment.duration(duration);
+
+    const [closed, setClosed] = useState(false);
+    useEffect(() => {
+        const back = navigation.addListener('beforeRemove', (e) => {
+            if (!closed) {
+                e.preventDefault();
+            }
+        });
+        return back;
+    }, [closed]);
+
+    useEffect(() => { 
+        //if remove this block, need to click close twice, note changes at the close onPress too, the codestyle
+        //like trash
+        if (closed) {
+            navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);
+        }
+    });
 
     return (
         <SafeAreaView style={styles.screen}>
@@ -81,7 +99,7 @@ const EndScreen = ({navigation, route}) => {
             </View>
 
             {/* Cross Button */}
-            <TouchableOpacity style={styles.crossContainer} onPress={() => {navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);}}>
+            <TouchableOpacity style={styles.crossContainer} onPress={() => {setClosed(true); navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);}}>
                 <Image
                     source={require('../../assets/icons/close.png')}
                     resizeMode='contain'
@@ -92,7 +110,7 @@ const EndScreen = ({navigation, route}) => {
             {/* Button Container */}
             <View style={styles.buttonContainer}>
                         {/* Close Button */}
-                        <TouchableOpacity onPress={() => {navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);}}>
+                        <TouchableOpacity onPress={() => {setClosed(true); navigation.dispatch(CommonActions.reset({index: 0, routes: [{name: 'AppTab'}],}),);}}>
                             <View style={styles.closeButton}>
                                 <Text style={styles.buttonText}>Close</Text>
                             </View>
