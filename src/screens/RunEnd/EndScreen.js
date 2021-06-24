@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'yellow',
+        // backgroundColor: 'yellow',
     }, 
     crossContainer:{
         position: 'absolute',

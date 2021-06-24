@@ -547,7 +547,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'yellow',
+        // backgroundColor: 'yellow',
     },
     musicPlayer:{
         position: 'absolute',

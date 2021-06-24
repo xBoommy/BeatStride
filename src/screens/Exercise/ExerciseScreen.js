@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
         transform: [{translateY: -(height * 0.01) }]
     },
     scrollview:{
-        backgroundColor: 'green',
+        // backgroundColor: 'green',
         height: height * 0.73,
     },
 })

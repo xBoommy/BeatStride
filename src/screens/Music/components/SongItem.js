@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     imageContainer:{
         height: height * 0.12 * 0.8,
         aspectRatio: 1,
-        backgroundColor: 'yellow',
+        // backgroundColor: 'yellow',
         alignSelf: 'center',
     },
     textContainer:{
