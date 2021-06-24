@@ -7,10 +7,46 @@ import RunTab from './components/RunTab';
 import HistoryTab from './components/HistoryTab';
 
 import * as Spotify from '../Music/components/spotify_player_controls';
+import * as LocationLib from '../../api/LocationPermissions';
 
 const {width, height} = Dimensions.get("window")
 
 const ExerciseScreen = () => {
+
+    const [permissionsStatus, setPermissionsStatus] = useState(3);
+    
+    /* LOCATION PERMISSIONS */
+    const forePermissionHandler = () => {
+        LocationLib.forePermissionCheck(() => {
+            setPermissionsStatus(1);
+        })
+    } 
+
+    const backPermissionHandler = () => {
+        LocationLib.backPermissionCheck(() => {
+            setPermissionsStatus(2);
+        })
+    } 
+
+    useEffect(() => {
+        if (permissionsStatus === 0) {
+            console.log ('P_Status : 0 - FOREGROUND:not granted / BACKGROUND:not granted')
+            forePermissionHandler()
+        }
+        if (permissionsStatus === 1) {
+            console.log ('P_Status : 1 - FOREGROUND:granted / BACKGROUND:not granted')
+            backPermissionHandler()
+        }
+        if (permissionsStatus === 2) {
+            console.log ('P_Status : 2 - FOREGROUND:granted / BACKGROUND:granted')
+        }
+        if (permissionsStatus === 3) {
+            setPermissionsStatus(0)
+            console.log('P_Status : 3 - App Start')
+        }
+    }, [permissionsStatus])
+
+    /* SPOTIFY */
 
     useEffect(async() => {
         const spotifyConfig = Spotify.spotifyConfig
@@ -22,6 +58,7 @@ const ExerciseScreen = () => {
         }
     }, [])
 
+    /* SCROLL ANIMATIONS */
     const [scrollRef , setScrollRef] = useState(null)
 
     const scrollHandler = (num) => {
