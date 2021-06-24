@@ -9,7 +9,6 @@ const {width, height} = Dimensions.get("window")
 
 const MusicPlayer = props => {
 
-    const navigation = useNavigation();
     const runStatus = props.runStatus;
 
     const tracks = useSelector(state => state.playlists.tracksForRun);
@@ -25,10 +24,7 @@ const MusicPlayer = props => {
         setTime( (prevTime) => prevTime + 1000 )
     }
     const startTimer = () => {
-        if (!isPlaying) { 
-            //Taking previous snapshot of isPlaying...
-            setTick( setInterval(ticking, 1000) );
-        }
+        setTick( setInterval(ticking, 1000) );
     };
 
     const stopTimer = () => {
@@ -55,12 +51,10 @@ const MusicPlayer = props => {
     }
     const pause = async () => {
         await Spotify.pause();
-        stopTimer();
         setIsPlaying(false);
     };
     const resume = async () => {
         await Spotify.play(tracks[index].trackUri);
-        startTimer();
         setIsPlaying(true);
     }
     const nextSong = async () => {
@@ -98,13 +92,12 @@ const MusicPlayer = props => {
                 setFirst(false);
                 playSong(0);
             } else {
+                startTimer();
                 resume();
             }
         }
-        if (runStatus == 3) {
-            pause();
-        }
-        if (runStatus == 4 ) {
+        if (runStatus == 3 || runStatus == 4 ) {
+            stopTimer();
             pause();
         }
 
