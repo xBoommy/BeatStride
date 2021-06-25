@@ -14,6 +14,7 @@ import RunSteps from './components/RunSteps';
 import RunMap from './components/RunMap';
 import MusicPlayerRun from './components/MusicPlayerRun';
 import RunCountdown from './RunCountdown';
+import { run } from 'jest';
 
 const {width, height} = Dimensions.get("window")
 
@@ -43,19 +44,20 @@ const RunningScreen = ({navigation, route}) => {
 
     const [runStatus, setRunStatus] = useState(0);              //Status of activity
     const [promise, setPromise] = useState({});                 //For GPS Subscription Promise
-
+    
+    //GPS Tracking Data
     const [startCoord, setStartCoord] = useState( {latitude: 1.377621, longitude: 103.805178,} );   //Initial coordinate
-    const [prevCoord, setPrevCoord] = useState(startCoord);     //Previous coordinate
     const [currCoord, setCurrCoord] = useState(startCoord);     //Current coordinate
     const [positions, setPositions] = useState([startCoord]);   //Array of "valid" positons 
+    const [mapPositions, setMapPositions] = useState([])
     const [distance, setDistance] = useState(0);
 
     //Additonal (For Speaker)
     const [km, setKm] = useState(0);
 
-    const [duration, setDuration] = useState(0);    //Total Run Duration
-    const [steps, setSteps] = useState(0);          //Total Run Steps
-
+    //Compiled Data
+    const [duration, setDuration] = useState(0);        //Total Run Duration
+    const [steps, setSteps] = useState(0);               //Total Run Steps
     const [timeStart, setTimeStart] = useState('')      //Start Time of Run
     const [day , setDay] = useState('')                 //Start Day of Run
     const [date, setDate] = useState('')                //Start Date of Run
@@ -69,12 +71,11 @@ const RunningScreen = ({navigation, route}) => {
     const getCurrentLocation = async() => {
         try {
             const { coords: {latitude, longitude} } = await Location.getCurrentPositionAsync()
-            // console.log('Getting current Location')
 
-            setStartCoord( {latitude: latitude, longitude: longitude} )
-            setPrevCoord( {latitude: latitude, longitude: longitude} );
-            setCurrCoord( {latitude: latitude, longitude: longitude} );
+            // console.log('Getting current Location')
             setPositions( [{latitude: latitude, longitude: longitude}] );
+            setCurrCoord( {latitude: latitude, longitude: longitude} );
+
         } catch (error) {
             console.log(error)
         }
@@ -86,7 +87,8 @@ const RunningScreen = ({navigation, route}) => {
             const { coords: {latitude, longitude} } = await Location.getCurrentPositionAsync()
             console.log('Getting current Location')
 
-            setPositions( (prevState) => [...prevState, {latitude: latitude, longitude: longitude},  {latitude: latitude, longitude: longitude}] );
+            setPositions( (prevState) => [...prevState, {latitude: latitude, longitude: longitude}] );
+            setCurrCoord( {latitude: latitude, longitude: longitude} );
         } catch (error) {
             console.log(error)
         }
@@ -179,7 +181,7 @@ const RunningScreen = ({navigation, route}) => {
 
     /* [ON GPS Subscription/Tracking] */
     const subscribePosition = async() => {
-        const options = {accuracy: 6,  timeInterval: 1000, distanceInterval: 2};
+        const options = {accuracy: 6,  timeInterval: 500, distanceInterval: 2};
 
         if ( Location.hasServicesEnabledAsync() ){
             try {
@@ -211,6 +213,8 @@ const RunningScreen = ({navigation, route}) => {
         const currLat = locationObj.coords.latitude
         const currLong = locationObj.coords.longitude
         const currPos = {latitude: currLat, longitude: currLong}
+
+        setPositions((prev) => [...prev , currPos]);
         setCurrCoord(currPos);
     }
 
@@ -218,22 +222,28 @@ const RunningScreen = ({navigation, route}) => {
     This checks the distance between the current position & previous position
     Only movement within Limit Range would be taken into consideration of position */
     const positionValidation = () => {
-        /* Previous position from current state */
-        // console.log("=========position in update==========")
-        // console.log(positions)
-        const prevPos = positions[positions.length - 1]
-        // console.log("prevPos")
+       
+        let currPos
+        let prevPos
+        if (positions.length == 1) {
+            currPos = positions[0];
+            prevPos = positions[0];
+        } else {
+            currPos = positions[positions.length - 1];
+            prevPos = positions[positions.length - 2];
+        }     
+        // console.log(currPos)
         // console.log(prevPos)
 
         /* Calculate distance change from position update */
-        const distGain = distanceCalculate(prevPos, currCoord)
+        const distGain = distanceCalculate(prevPos, currPos)
 
         /* Validation of position update */
         const minGain = 2.5;
         const maxGain= 20;
         if ( (minGain < distGain) && (distGain < maxGain) ) {
-            setDistance((prevCurrentDistance) => (Math.round( (prevCurrentDistance + distGain)*100 ))  / 100)
-            setPositions( (prevState) => [...prevState, currCoord] );
+            setDistance((prevCurrentDistance) => (Math.round( (prevCurrentDistance + distGain)*100 ))  / 100);
+            setMapPositions((prev) => [...prev, currPos]);
         }
     }
 
@@ -246,23 +256,12 @@ const RunningScreen = ({navigation, route}) => {
     /* [Validation of position movement] 
     This renders after every callback from GPS subscription. It validates movements and update accordingly */
     useEffect(() => {
-        positionValidation()
-    },[currCoord])
-
-
-    /* [Coordinates Update] 
-    This update occurs whenever Positions Array is udpated(valid movement is made) */
-    useEffect(() => {
-        /* Ensure that this update is only when running/Prevent override of initial refresh */
         if (runStatus == 2 || runStatus == 8 || runStatus == 9) {
-            /* Previous coordinate only updates if there are at least 2 positions in array */
-            if (positions.length > 1) {
-                setPrevCoord(positions[positions.length - 2])
-            }
-        setCurrCoord(positions[positions.length - 1])
+            positionValidation();
+            // console.log("validating")
         }
-    }, [positions])
-
+    },[positions])
+  
     const [paused , setPaused] = useState(false);
     /* [Run Status Render] 
     This render is triggered upon a change in app status */
@@ -325,7 +324,7 @@ const RunningScreen = ({navigation, route}) => {
                 //Compile Data
                 const record = {
                     distance:distance, 
-                    positions:positions, 
+                    positions:mapPositions, 
                     steps:steps, 
                     duration:duration,
                     time:timeStart,
@@ -340,7 +339,7 @@ const RunningScreen = ({navigation, route}) => {
                         navigation.navigate("EndScreen", {
                             message:"Run Concluded",
                             distance:distance, 
-                            positions:positions, 
+                            positions:mapPositions, 
                             steps:steps, 
                             duration:duration,
                             time:timeStart,
@@ -380,6 +379,8 @@ const RunningScreen = ({navigation, route}) => {
     //     // console.log(startCoord)
     //     console.log("Positions")
     //     console.log(positions)
+    //     console.log("map pos")
+    //     console.log(mapPositions)
     // },[positions])
 
 
@@ -455,7 +456,7 @@ const RunningScreen = ({navigation, route}) => {
             <View style={styles.mapContainer}>
                 <RunMap
                     runStatus={runStatus}
-                    positions={positions} 
+                    mapPositions={mapPositions} 
                     currCoord={currCoord}
                 />
             </View>

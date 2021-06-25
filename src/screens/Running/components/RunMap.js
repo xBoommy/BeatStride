@@ -6,7 +6,7 @@ const {width, height} = Dimensions.get("window")
 
 const RunMap = (props) => {
     const runStatus = props.runStatus;
-    const positions = props.positions;
+    const mapPositions = props.mapPositions;
     const currCoord = props.currCoord;
 
     return (
@@ -21,9 +21,9 @@ const RunMap = (props) => {
                 }}
                 >
                 <Polyline
-                    coordinates={positions}
+                    coordinates={mapPositions}
                     strokeWidth={5}
-                    strokeColor={'orange'}
+                    strokeColor={'#7289DA'}
                 />
             </MapView>
         </View>

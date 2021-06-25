@@ -52,7 +52,7 @@ const EndMap = (props) => {
                 <Polyline
                     coordinates={positions}
                     strokeWidth={5}
-                    strokeColor={'orange'}
+                    strokeColor={'#7289DA'}
                 />
             </MapView>
             
