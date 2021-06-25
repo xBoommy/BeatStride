@@ -61,11 +61,9 @@ const SongsScreen = props => {
       stopTimer();
       setTime(0);
       if (index === tracks.length - 1) {
-        setDuration(tracks[0].duration);
         setIndex(0);
         playSong(0);
       } else {
-        setDuration(tracks[index + 1].duration);
         setIndex(prevIndex => prevIndex + 1);
         playSong(index + 1);
       }
@@ -74,11 +72,9 @@ const SongsScreen = props => {
       stopTimer();
       setTime(0);
       if (index === 0) {
-        setDuration(tracks[tracks.length - 1].duration);
         setIndex(tracks.length - 1);
         playSong(tracks.length - 1);
       } else {
-        setDuration(tracks[index - 1].duration);
         setIndex(prevIndex => prevIndex - 1);
         playSong(index - 1);
       }
@@ -90,6 +86,7 @@ const SongsScreen = props => {
       }
       Spotify.playDirect(tracks[id].trackUri);
       setCurrentlyPlaying(tracks[id]);
+      setDuration(tracks[id].duration);
       startTimer();
       setIsPlaying(true);
     };
@@ -156,7 +153,7 @@ const SongsScreen = props => {
                 numColumns={1}
                 data={tracks}
                 keyExtractor={item => item.id}
-                renderItem={({item}) => <SongItem item={item} playThis={() => playSpecific(item.id)}/>}
+                renderItem={({item, index}) => <SongItem item={item} index={index} playThis={() => playSpecific(item.id)}/>}
             />        
 
             {/* Music Player */}

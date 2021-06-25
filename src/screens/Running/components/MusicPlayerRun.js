@@ -15,7 +15,7 @@ const MusicPlayer = props => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [index, setIndex] = useState(0);
     const [currentlyPlaying, setCurrentlyPlaying] = useState(tracks.length > 0 ? tracks[0] : undefined);
-    const [duration, setDuration] = useState(tracks.length > 0 ? tracks[0].duration : 0);
+    const [duration, setDuration] = useState(tracks[0].duration);
     //Timer
     const [time, setTime] = useState(0);
     const [tick, setTick] = useState();
@@ -31,7 +31,8 @@ const MusicPlayer = props => {
         clearInterval(tick);
     };
   
-    useEffect(()=>{
+    useEffect(() => {
+        console.log('Time: ', time);
         if (time > duration) {
             setIsPlaying(false);
             nextSong();
@@ -46,6 +47,8 @@ const MusicPlayer = props => {
         }
         await Spotify.playDirect(tracks[id].trackUri);
         setCurrentlyPlaying(tracks[id]);
+        setDuration(tracks[id].duration);
+        console.log("Song duration: ", tracks[id].duration);
         startTimer();
         setIsPlaying(true);
     }
@@ -61,11 +64,9 @@ const MusicPlayer = props => {
         stopTimer();
         setTime(0);
         if (index === tracks.length - 1) {
-            setDuration(tracks[0].duration);
             setIndex(0);
             playSong(0);
         } else {
-            setDuration(tracks[index + 1].duration);
             setIndex(prevIndex => prevIndex + 1);
             playSong(index + 1);
         }
@@ -74,11 +75,9 @@ const MusicPlayer = props => {
         stopTimer();
         setTime(0);
         if (index === 0) {
-            setDuration(tracks[tracks.length - 1].duration);
             setIndex(tracks.length - 1);
             playSong(tracks.length - 1);
         } else {
-            setDuration(tracks[index - 1].duration);
             setIndex(prevIndex => prevIndex - 1);
             playSong(index - 1);
         }
