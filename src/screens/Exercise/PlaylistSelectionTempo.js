@@ -34,10 +34,6 @@ const PlaylistSelectionTempo = (props) => {
     const UPPERLIMIT = BPM + 10; //lower = target - allowance, upper - target + allowance
 
     const getTracksForRun = async () => {
-        if (inSelected.length === 0) {
-            console.log('No playlists selected');
-            return;
-        }
         setIsLoading(true);
         await FilterbyBPM(
             inSelected,

@@ -32,10 +32,6 @@ const PlaylistSelectionBasic = (props) => {
     }, []);
 
     const getTracksForRun = async () => {
-        if (inSelected.length === 0) {
-            console.log('No playlists selected');
-            return;
-        }
         setIsLoading(true);
         await TracksNoFilter(inSelected,
             (tracks) => {
