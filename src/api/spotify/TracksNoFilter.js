@@ -5,7 +5,7 @@ export default async (playlists, onSuccess, onError) => {
 
         let arr = [];
         for (let i = 0; i < playlists.length; i++) {
-            const tracksFromThisPlaylist = await Tracks_Getter(playlists[i].playlistUri);
+            const tracksFromThisPlaylist = await Tracks_Getter(playlists[i].playlistUri, playlists[i].totalSongs);
             arr = arr.concat(tracksFromThisPlaylist);
         }
         

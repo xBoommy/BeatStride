@@ -80,13 +80,14 @@ const SongsScreen = props => {
       }
     };
     const playSong = async (id) => {
-      console.log("Timer Start")
+      //console.log("Timer Start")
       if (tracks.length === 0) {
         return;
       }
       Spotify.playDirect(tracks[id].trackUri);
       setCurrentlyPlaying(tracks[id]);
       setDuration(tracks[id].duration);
+      //console.log('Duration: ', tracks[id].duration);
       startTimer();
       setIsPlaying(true);
     };
@@ -152,8 +153,8 @@ const SongsScreen = props => {
                 contentContainerStyle={styles.listContent}
                 numColumns={1}
                 data={tracks}
-                keyExtractor={item => item.id}
-                renderItem={({item, index}) => <SongItem item={item} index={index} playThis={() => playSpecific(item.id)}/>}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => <SongItem item={item} playThis={() => playSpecific(item.id)}/>}
             />        
 
             {/* Music Player */}
@@ -227,4 +228,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default SongsScreen
+export default SongsScreen;

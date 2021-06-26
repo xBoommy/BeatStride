@@ -42,9 +42,9 @@ const MusicScreen = () => {
         }
     });
 
-    const getPlaylistDetails = async (playlistUri, title) => {
+    const getPlaylistDetails = async (playlistUri, title, totalSongs) => {
         setSelectedPlaylistUri(playlistUri);
-        const tracks = await Tracks_Getter(playlistUri);
+        const tracks = await Tracks_Getter(playlistUri, totalSongs);
         navigation.navigate('SongScreen', { tracks: tracks, title: title, currentlyPlaying: currentlyPlaying, isPlaying: isPlaying});
     };
 
@@ -98,7 +98,7 @@ const MusicScreen = () => {
                 keyExtractor={item => item.id}
                 renderItem={({item}) => <PlaylistItem 
                                             item={item}
-                                            goToSongScreen={() => getPlaylistDetails(item.playlistUri, item.title)}
+                                            goToSongScreen={() => getPlaylistDetails(item.playlistUri, item.title, item.totalSongs)}
                                             removePlaylist={() => removePlaylist(item)}
                                         />}
             />

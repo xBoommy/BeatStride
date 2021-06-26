@@ -7,7 +7,7 @@ export default async (playlists, bpm, allowance, onSuccess, onError) => {
         const LOWERLIMIT = (bpm - allowance) > 0 ? (bpm - allowance) : 0;
         let arr = [];
         for (let i = 0; i < playlists.length; i++) {
-            const tracksFromThisPlaylist = await Tracks_Getter(playlists[i].playlistUri);
+            const tracksFromThisPlaylist = await Tracks_Getter(playlists[i].playlistUri, playlists[i].totalSongs);
             arr = arr.concat(tracksFromThisPlaylist);
         }
         
