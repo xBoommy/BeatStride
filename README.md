@@ -1,4 +1,4 @@
-# Maple_EXP
+# Beat Stride
 Hello! Welcome to our Application, Beat Stride!
 
 This is a bare react native project.
