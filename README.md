@@ -1,5 +1,5 @@
 # Maple_EXP
-Hello! Welcome to our Application, Maple_EXP!
+Hello! Welcome to our Application, Beat Stride!
 
 This is a bare react native project.
 Remember to run ``npm install`` before you try to run the application.
