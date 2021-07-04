@@ -6,11 +6,11 @@ export default async (playlistUri, totalSongs) => {
     const numberOfIterations = Math.ceil(totalSongs / 100);
     //console.log('total Songs is: ', totalSongs);
 
-    const resultantPlaylist = [];
+    let resultantPlaylist = [];
 
     for(let i = 0; i < numberOfIterations; i++) {
         const results = await tracks_getter_helper(playlistUri, i * 100); //offset = 0, 100, 200 ...
-        resultantPlaylist.push(...results);
+        resultantPlaylist = resultantPlaylist.concat(results);
     }
 
     //console.log(resultantPlaylist.length);

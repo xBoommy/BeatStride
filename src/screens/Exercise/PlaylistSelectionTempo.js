@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity } from 'react-native';
+import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
@@ -35,7 +35,7 @@ const PlaylistSelectionTempo = (props) => {
 
     const getTracksForRun = async () => {
         setIsLoading(true);
-        await FilterbyBPM(
+        const filteredTracks = await FilterbyBPM(
             inSelected,
             BPM, //should be target
             10, //should be allowance
@@ -49,13 +49,32 @@ const PlaylistSelectionTempo = (props) => {
                 console.log(error);
             },
         );
+
+        return filteredTracks; //Can be array/empty array/ null (error)
     };
 
     const confirmation = () => {
-        getTracksForRun().then(() => {
+        getTracksForRun().then((filteredTracks) => {
             setIsLoading(false);
-            setSelectToggle(false);
-            navigation.navigate("RunningScreen", {mode: mode});
+
+            if (filteredTracks === null) { //Error handling
+                Alert.alert(
+                    "",
+                    "Error getting tracks from Spotify. Please try again",
+                    [ {text: 'Ok', onPress: () => {setSelectToggle(false)} } ]
+                )
+            }
+            Alert.alert(
+                "",
+                `There is ${filteredTracks.length} tracks in this BPM Range, select again or proceed anyways?`,
+                [ { text: "Choose again", onPress: () => {} },
+                    { text: "Continue", onPress: () => {
+                        setSelectToggle(false);
+                        navigation.navigate("RunningScreen", {mode: mode});
+                        }
+                    }
+                ]
+            );
         })
     }
 

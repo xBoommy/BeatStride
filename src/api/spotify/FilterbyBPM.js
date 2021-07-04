@@ -5,6 +5,16 @@ export default async (playlists, bpm, allowance, onSuccess, onError) => {
     try{
         const UPPERLIMIT = (bpm + allowance);
         const LOWERLIMIT = (bpm - allowance) > 0 ? (bpm - allowance) : 0;
+
+        const halfBPM = bpm/2;
+        const halfLOWER = halfBPM - allowance;
+        const halfUPPER = halfBPM + allowance;
+        
+
+        const doubleBPM = bpm*2;
+        const doubleLOWER = doubleBPM - allowance;
+        const doubleUPPER = doubleBPM + allowance;
+
         let arr = [];
         for (let i = 0; i < playlists.length; i++) {
             const tracksFromThisPlaylist = await Tracks_Getter(playlists[i].playlistUri, playlists[i].totalSongs);
@@ -18,16 +28,20 @@ export default async (playlists, bpm, allowance, onSuccess, onError) => {
         const finalArr = [];
         for (let i = 0; i < arr.length; i++) {
             const thisBPM = await BPMGetter(arr[i].id);
-            if (thisBPM >= LOWERLIMIT && thisBPM <= UPPERLIMIT) {
+            if ( (thisBPM >= LOWERLIMIT && thisBPM <= UPPERLIMIT) || 
+                (thisBPM >= halfLOWER && thisBPM <= halfUPPER) || 
+                (thisBPM >= doubleLOWER && thisBPM <= doubleUPPER) ) {
+
                 finalArr.push(arr[i]);
             }
         }
-        // console.log('finalArr:');
-        // console.log(finalArr);
 
-        return onSuccess(finalArr);
+
+        onSuccess(finalArr);
+        return finalArr;
     } catch (error) {
-        return onError(error)
+        onError(error);
+        return null;
     }
     
 };
