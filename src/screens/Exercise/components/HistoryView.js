@@ -59,7 +59,13 @@ const HistoryView = ({navigation, route}) => {
                 <View style={styles.secondaryDataContainer}>
                     {/* Time */}
                     <View style={styles.timeContainer}>
-                        <Text numberOfLines={1} style={styles.text}>{displayDuration.hours()}:{displayDuration.minutes()}:{displayDuration.seconds()}</Text>
+                        <Text numberOfLines={1} style={styles.text}>
+                            {displayDuration.hours() < 10 ? `0${displayDuration.hours()}` : displayDuration.hours()}
+                            :
+                            {displayDuration.minutes() < 10 ? `0${displayDuration.minutes()}` : displayDuration.minutes()}
+                            :
+                            {displayDuration.seconds() < 10 ? `0${displayDuration.seconds()}` : displayDuration.seconds()}
+                        </Text>
                         <Text style={styles.subtext}>Duration</Text>
                     </View>
                     {/* Steps */}

@@ -80,9 +80,11 @@ const RunTimer = (props) => {
             if (paceSec !== 0) {
                 msg += paceSec + (paceSec === 1 ? " second" : " seconds") + " per kilometer";
             }
-            TTS.getInitStatus().then(()=> 
-                TTS.speak(msg)
-            );
+            TTS.getInitStatus().then(()=> {
+                TTS.setDefaultRate(0.8);
+                TTS.setDefaultLanguage('en-US');
+                TTS.speak(msg);
+            });
             setKm(distInKm);
         }
     }, [distance, time])
@@ -92,7 +94,13 @@ const RunTimer = (props) => {
 
     return (
         <View style={styles.componentContainer}>
-            <Text numberOfLines={1} style={styles.text}>{duration.hours()}:{duration.minutes()}:{duration.seconds()}</Text>
+            <Text numberOfLines={1} style={styles.text}>
+                {duration.hours() < 10 ? `0${duration.hours()}` : duration.hours()}
+                :
+                {duration.minutes() < 10 ? `0${duration.minutes()}` : duration.minutes()}
+                :
+                {duration.seconds() < 10 ? `0${duration.seconds()}` : duration.seconds()}
+            </Text>
             <Text style={styles.subtext}>Duration</Text>
         </View>
     );
