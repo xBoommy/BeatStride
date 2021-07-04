@@ -19,12 +19,12 @@ const MusicPlayer = props => {
     //Timer
     const [time, setTime] = useState(0);
     const [tick, setTick] = useState();
-    /* [Tick every 1000ms increase time by 1 second] */
+    /* [Tick every 500ms increase time by 0.5 second] */
     const ticking = () => {
-        setTime( (prevTime) => prevTime + 1000 )
+        setTime( (prevTime) => prevTime + 500 );
     }
     const startTimer = () => {
-        setTick( setInterval(ticking, 1000) );
+        setTick( setInterval(ticking, 500) );
     };
 
     const stopTimer = () => {
@@ -32,7 +32,7 @@ const MusicPlayer = props => {
     };
   
     useEffect(() => {
-        console.log('Time: ', time);
+        //console.log('Time: ', time);
         if (time > duration) {
             setIsPlaying(false);
             nextSong();
@@ -48,7 +48,7 @@ const MusicPlayer = props => {
         await Spotify.playDirect(tracks[id].trackUri);
         setCurrentlyPlaying(tracks[id]);
         setDuration(tracks[id].duration);
-        console.log("Song duration: ", tracks[id].duration);
+        //console.log("Song duration: ", tracks[id].duration);
         startTimer();
         setIsPlaying(true);
     }

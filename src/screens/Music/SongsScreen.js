@@ -31,10 +31,10 @@ const SongsScreen = props => {
     const [tick, setTick] = useState();
     /* [Tick every 1000ms increase time by 1 second] */
     const ticking = () => {
-      setTime( (prevTime) => prevTime + 1000 )
+      setTime( (prevTime) => prevTime + 500 )
     }
     const startTimer = () => {
-        setTick( setInterval(ticking, 1000) );
+        setTick( setInterval(ticking, 500) );
     };
     const stopTimer = () => {
         clearInterval(tick);
