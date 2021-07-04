@@ -172,7 +172,11 @@ const RunningScreen = ({navigation, route}) => {
         /* 5 second */
         setTimeout( () => {
             console.log('Start');
-            TTS.getInitStatus().then(()=> TTS.speak('Run Resumed'));
+            TTS.getInitStatus().then(() => {
+                TTS.setDefaultLanguage('en-US');
+                TTS.speak('Run Resumed');
+            });
+            
             subscribePosition();
             setRunStatus(2);
             setCountdown(false);
@@ -333,7 +337,7 @@ const RunningScreen = ({navigation, route}) => {
                     mode: mode,
                     id:moment().format(),
                 }
-                //Add to history + update personal stats
+                //Add to history + update personal stats (If the user sets to "recordHistory to true")
                 Firestore.db_recordRun(record,
                     () => {
                         navigation.navigate("EndScreen", {
