@@ -6,6 +6,7 @@ import TTS from 'react-native-tts';
 import Icon from 'react-native-vector-icons/AntDesign'
 
 import EndMap from './components/EndMap';
+import ShareImage from '../Share/ShareImage';
 
 const {width, height} = Dimensions.get("window")
 
@@ -126,13 +127,28 @@ const EndScreen = ({navigation, route}) => {
 
             {/* Button Container */}
             <View style={styles.buttonContainer}>
-                        {/* Close Button */}
-                        <TouchableOpacity onPress={() => {setClosed(true)}}>
-                            <View style={styles.closeButton}>
-                                <Text style={styles.buttonText}>Close</Text>
-                            </View>
-                        </TouchableOpacity>
+                {/* Close Button */}
+                <TouchableOpacity onPress={() => {setClosed(true)}}>
+                    <View style={styles.closeButton}>
+                        <Text style={styles.buttonText}>Close</Text>
                     </View>
+                </TouchableOpacity>
+            </View>
+
+            {/* Share Image */}
+            { (true) ? <></> :
+                <ShareImage
+                    distance = {distance}   
+                    steps = {steps}           
+                    positions = {positions}   
+                    duration = {duration}     
+                    time = {time}             
+                    day = {day}               
+                    date = {date}             
+                    mode = {mode}             
+                />
+            }
+            
             
         </SafeAreaView>
     );
