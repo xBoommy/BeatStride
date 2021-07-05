@@ -17,12 +17,11 @@ const EndMap = (props) => {
     const [latDelta, setLatDelta] = useState(0.2);
 
     const mapRange = () => {
-        const centerCoord = geolib.getCenter(positions);
-        // console.log(centerCoord)
-        setCenter(centerCoord);
         const boundary = geolib.getBounds(positions);
-        const LongBound = geolib.getDistance({latitude: 0 , longitude: boundary.maxLng}, {latitude: 0 , longitude: boundary.minLng}, 1)
-        const LatBound = geolib.getDistance({latitude: boundary.maxLat , longitude: 0}, {latitude: boundary.minLat , longitude: 0}, 1)
+        setCenter({latitude: (boundary.maxLat + boundary.minLat)/2, longitude: (boundary.maxLng + boundary.minLng)/2 });
+
+        const LongBound = geolib.getDistance({latitude: 0 , longitude: boundary.maxLng}, {latitude: 0 , longitude: boundary.minLng}, 1);
+        const LatBound = geolib.getDistance({latitude: boundary.maxLat , longitude: 0}, {latitude: boundary.minLat , longitude: 0}, 1);
         
         if (LongBound > LatBound) {
             setLatDelta((0.00001 * LongBound)+ 0.00050)
