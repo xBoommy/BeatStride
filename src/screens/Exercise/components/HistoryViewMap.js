@@ -47,6 +47,7 @@ const HistoryViewMap = (props) => {
                     latitudeDelta: latDelta,
                     longitudeDelta: latDelta,
                 }}
+                customMapStyle={mapStyle}
                 >
                 <Polyline
                     coordinates={positions}
@@ -69,5 +70,32 @@ const styles = StyleSheet.create({
         height: height * 0.65,
     },
 })
+
+const mapStyle = [
+    {
+      "elementType": "labels",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.land_parcel",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.neighborhood",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    }
+  ]
 
 export default HistoryViewMap;
