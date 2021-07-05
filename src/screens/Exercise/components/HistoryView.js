@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {  CommonActions } from '@react-navigation/native'; 
 import moment from 'moment';
+import Icon from 'react-native-vector-icons/AntDesign'
 
 import HistoryViewMap from './HistoryViewMap';
 
@@ -30,6 +31,11 @@ const HistoryView = ({navigation, route}) => {
                 <View style={styles.infoContainer}>
                     <View style={styles.header}>
                         <Text style={styles.headerText}>{message}</Text>
+
+                        {/* Share */}
+                        <TouchableOpacity style={styles.shareIconContainer}>
+                                <Icon name="sharealt" size={height * 0.04} color="#BABBBF"/>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={styles.infoContainer2}>
@@ -139,6 +145,15 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         color: '#FFFFFF'
+    },
+    shareIconContainer:{
+        height: height * 0.1,
+        aspectRatio: 1,
+        position: 'absolute',
+        alignSelf: 'flex-end',
+        alignItems: 'center',
+        justifyContent: 'center',
+        // backgroundColor: 'yellow',
     },
     infoContainer2:{
         width: width * 0.9,
