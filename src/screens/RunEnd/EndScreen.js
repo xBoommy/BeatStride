@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {  CommonActions } from '@react-navigation/native'; 
 import moment from 'moment';
@@ -44,7 +44,20 @@ const EndScreen = ({navigation, route}) => {
 
     useEffect(() => {
         TTS.getInitStatus().then(()=> TTS.speak('Run Ended'));
-    }, [])
+    }, []);
+
+    const toSharePage = () => {
+        navigation.navigate('Share', {
+            distance:distance,
+            steps: steps,
+            positions: positions,
+            duration: duration,
+            time: time,
+            day: day,
+            date: date,
+            mode: mode
+        });
+    };
 
     return (
         <SafeAreaView style={styles.screen}>
@@ -57,7 +70,7 @@ const EndScreen = ({navigation, route}) => {
                         <Text style={styles.headerText}>{message}</Text>
 
                         {/* Share */}
-                        <TouchableOpacity style={styles.shareIconContainer}>
+                        <TouchableOpacity style={styles.shareIconContainer} onPress={toSharePage}>
                                 <Icon name="sharealt" size={height * 0.04} color="#BABBBF"/>
                         </TouchableOpacity>
                     </View>
@@ -109,7 +122,7 @@ const EndScreen = ({navigation, route}) => {
 
 
             {/* Map */}
-            <View style={styles.mapContainer}>
+            <View>
                 <EndMap
                     positions={positions}
                 />
@@ -137,16 +150,18 @@ const EndScreen = ({navigation, route}) => {
 
             {/* Share Image */}
             { (true) ? <></> :
-                <ShareImage
-                    distance = {distance}   
-                    steps = {steps}           
-                    positions = {positions}   
-                    duration = {duration}     
-                    time = {time}             
-                    day = {day}               
-                    date = {date}             
-                    mode = {mode}             
-                />
+                <ViewShot ref={viewShotRef} options={{format: 'jpg', quality: 1.0}} style={styles.mapContainer}>
+                    <ShareImage
+                        distance = {distance}   
+                        steps = {steps}           
+                        positions = {positions}   
+                        duration = {duration}     
+                        time = {time}             
+                        day = {day}               
+                        date = {date}             
+                        mode = {mode}             
+                    />
+                </ViewShot>
             }
             
             

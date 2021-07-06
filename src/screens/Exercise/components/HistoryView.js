@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {  CommonActions } from '@react-navigation/native'; 
 import moment from 'moment';
@@ -21,7 +21,20 @@ const HistoryView = ({navigation, route}) => {
     const mode = route.params.mode;             //Run mode
 
     /* [Convert miliseconds to time breakdown] */
-    const displayDuration = moment.duration(duration)
+    const displayDuration = moment.duration(duration);
+
+    const toSharePage = () => {
+        navigation.navigate('Share', {
+            distance:distance,
+            steps: steps,
+            positions: positions,
+            duration: duration,
+            time: time,
+            day: day,
+            date: date,
+            mode: mode
+        });
+    };
 
     return (
         <SafeAreaView style={styles.screen}>
@@ -34,7 +47,7 @@ const HistoryView = ({navigation, route}) => {
                         <Text style={styles.headerText}>{message}</Text>
 
                         {/* Share */}
-                        <TouchableOpacity style={styles.shareIconContainer}>
+                        <TouchableOpacity style={styles.shareIconContainer} onPress={toSharePage}>
                                 <Icon name="sharealt" size={height * 0.04} color="#BABBBF"/>
                         </TouchableOpacity>
                     </View>
@@ -113,7 +126,7 @@ const HistoryView = ({navigation, route}) => {
             </View>
 
             {/* Share Image */}
-            { (true) ? <></> :
+                {/* <ViewShot ref={viewShotRef} options={{format: 'jpg', quality: 1.0}}>
                 <ShareImage
                     distance = {distance}   
                     steps = {steps}           
@@ -122,9 +135,11 @@ const HistoryView = ({navigation, route}) => {
                     time = {time}             
                     day = {day}               
                     date = {date}             
-                    mode = {mode}             
+                    mode = {mode}
+                    visible = {!hideShare}
                 />
-            }
+                </ViewShot> */}
+
             
         </SafeAreaView>
     );

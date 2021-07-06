@@ -13,6 +13,8 @@ import RunningScreen from '../screens/Running/RunningScreen';
 import EndScreen from '../screens/RunEnd/EndScreen';
 import HistoryView from '../screens/Exercise/components/HistoryView';
 
+import ShareImage from '../screens/Share/ShareImage';
+
 const {width, height} = Dimensions.get("window")
 
 const Stack = createStackNavigator();
@@ -84,6 +86,12 @@ const AppStack = () => {
                 key="HistoryView"
                 name="HistoryView"
                 component={HistoryView}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen
+                key="Share"
+                name="Share"
+                component={ShareImage}
                 options={{headerShown: false}}
             />
             

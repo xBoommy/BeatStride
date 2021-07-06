@@ -1,22 +1,33 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions} from 'react-native';
 import MapView, { Polyline } from 'react-native-maps';
 import * as geolib from 'geolib';
 import moment from 'moment';
 import LinearGradient from 'react-native-linear-gradient';
 import { IconButton } from "react-native-paper";
+import ViewShot, {captureScreen, captureRef} from 'react-native-view-shot';
+import Share from 'react-native-share';
 
 const {width, height} = Dimensions.get("window")
 
 const ShareImage = (props) => {
-    const distance =  props.distance;    //Total Distance Ran
-    const steps = props.steps;           //Total Steps
-    const positions = props.positions;   //Array of Positions Travelled
-    const duration = props.duration;     //Total Run Duration
-    const time = props.time;             //Start Time of Run
-    const day = props.day;               //Start Time of Run
-    const date = props.date;             //Start Time of Run
-    const mode = props.mode;             //Run mode 
+    // const distance =  props.distance;    //Total Distance Ran
+    // const steps = props.steps;           //Total Steps
+    // const positions = props.positions;   //Array of Positions Travelled
+    // const duration = props.duration;     //Total Run Duration
+    // const time = props.time;             //Start Time of Run
+    // const day = props.day;               //Start Time of Run
+    // const date = props.date;             //Start Time of Run
+    // const mode = props.mode;             //Run mode 
+
+    const distance =  props.route.params.distance;    //Total Distance Ran
+    const steps = props.route.params.steps;           //Total Steps
+    const positions = props.route.params.positions;   //Array of Positions Travelled
+    const duration = props.route.params.duration;     //Total Run Duration
+    const time = props.route.params.time;             //Start Time of Run
+    const day = props.route.params.day;               //Start Time of Run
+    const date = props.route.params.date;             //Start Time of Run
+    const mode = props.route.params.mode;             //Run mode 
 
     /* [Convert miliseconds to time breakdown] */
     const displayDuration = moment.duration(duration);
@@ -43,10 +54,40 @@ const ShareImage = (props) => {
 
     useEffect(()=> {
         mapRange();
-    },[])        
+        //setTimeout(share, 1000); //Uncomment this to auto direct sharing when reach this page
+    },[]);
+
+
+    const viewShotRef = useRef();
+    const share = async () => {
+        // const img = await captureScreen({
+        //     format: "jpg",
+        //     quality: 1.0
+        // });
+
+        // const img2 = await captureRef(viewShotRef, {
+        //         format: "jpg",
+        //         quality: 1.0,
+        //         result: "tmpfile",
+        //     });
+
+        const vsPic = await viewShotRef.current.capture();
+
+        const shareOptions = {
+            message: 'Check out my run route today and join me on Beat Stride!',
+            url: vsPic,
+        }
+      
+        try {
+            const ShareResponse = await Share.open(shareOptions);
+            console.log(JSON.stringify(ShareResponse));
+        } catch(error) {
+            console.log('Error => ', error);
+        }
+    };
 
     return (
-        <View style={styles.componentContainer}>
+        <ViewShot ref={viewShotRef} options={{format: 'jpg', quality: 1.0}} style={styles.componentContainer}>
 
             {/* Run Info */}
             <LinearGradient colors={['#FFFFFF', '#FFFFFF', '#FFFFFF00']} style={styles.infoContainer}>
@@ -106,8 +147,7 @@ const ShareImage = (props) => {
                 </View>
 
             </LinearGradient>
-            
-        </View>
+        </ViewShot>
     );
 };
 
