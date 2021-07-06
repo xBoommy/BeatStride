@@ -62,19 +62,20 @@ const PlaylistSelectionTempo = (props) => {
                     "",
                     "Error getting tracks from Spotify. Please try again",
                     [ {text: 'Ok', onPress: () => {setSelectToggle(false)} } ]
-                )
-            }
-            Alert.alert(
-                "",
-                `There is ${filteredTracks.length} tracks in this BPM Range, select again or proceed anyways?`,
-                [ { text: "Choose again", onPress: () => {} },
-                    { text: "Continue", onPress: () => {
-                        setSelectToggle(false);
-                        navigation.navigate("RunningScreen", {mode: mode});
+                );
+            } else {
+                Alert.alert(
+                    "",
+                    "There" + ( filteredTracks.length <= 1 ? ` is ${filteredTracks.length} track` : ` are ${filteredTracks.length} tracks` ) +" in this BPM Range, select again or proceed anyways?",
+                    [ { text: "Choose again", onPress: () => {} },
+                        { text: "Continue", onPress: () => {
+                            setSelectToggle(false);
+                            navigation.navigate("RunningScreen", {mode: mode});
+                            }
                         }
-                    }
-                ]
-            );
+                    ]
+                );
+            }
         })
     }
 
