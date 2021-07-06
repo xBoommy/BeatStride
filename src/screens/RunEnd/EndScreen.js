@@ -1,10 +1,11 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {  CommonActions } from '@react-navigation/native'; 
 import moment from 'moment';
 import TTS from 'react-native-tts';
 import Icon from 'react-native-vector-icons/AntDesign'
 import Share from 'react-native-share';
+import ViewShot from 'react-native-view-shot';
 
 import EndMap from './components/EndMap';
 import ShareImage from '../Share/ShareImage';
@@ -52,9 +53,11 @@ const EndScreen = ({navigation, route}) => {
     }, []);
 
     const [shareToggle, setShareToggle] = useState(false);
-    const [sharePic, getSharePic] = useState();
+    const viewShotRef = useRef();
     const share = async () => {
-        
+
+        const sharePic = await viewShotRef.current.capture();
+
         const shareOptions = {
             message: 'Check out my run route today and join me on Beat Stride!',
             url: sharePic,
@@ -162,18 +165,19 @@ const EndScreen = ({navigation, route}) => {
             </View>
 
             {/* Share Image */}
-            {(shareToggle) ? 
-                <ShareImage
-                    distance = {distance}   
-                    steps = {steps}           
-                    positions = {positions}   
-                    duration = {duration}     
-                    time = {time}             
-                    day = {day}               
-                    date = {date}             
-                    mode = {mode}
-                    getPicture={getSharePic}
-                /> :
+            {(shareToggle) ?
+                <ViewShot ref={viewShotRef} options={{format: 'png', quality: 1.0}} style={styles.shareImage}>
+                    <ShareImage
+                        distance = {distance}   
+                        steps = {steps}           
+                        positions = {positions}   
+                        duration = {duration}     
+                        time = {time}             
+                        day = {day}               
+                        date = {date}             
+                        mode = {mode}
+                    /> 
+                </ViewShot>:
                 <></>
             }
             
@@ -344,6 +348,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         color: '#FFFFFF',
+    },
+    shareImage: {
+        width: width,
+        height: width,
+        backgroundColor:'#FFFFFF',
+        position: 'absolute',
+        zIndex: -1,
     },
 })
 

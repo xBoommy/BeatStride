@@ -44,18 +44,18 @@ const ShareImage = (props) => {
 
     useEffect(async ()=> {
         mapRange();
-        await getPicture();
+        //await getPicture();
     },[]);
 
 
-    const viewShotRef = useRef();
-    const getPicture = async () => {
-        const vsPic = await viewShotRef.current.capture();
-        props.getPicture(vsPic);
-    };
+    // const viewShotRef = useRef();
+    // const getPicture = async () => {
+    //     const vsPic = await viewShotRef.current.capture();
+    //     props.getPicture(vsPic);
+    // };
 
     return (
-        <ViewShot ref={viewShotRef} options={{format: 'png', quality: 1.0}} style={styles.componentContainer}>
+        <View style={styles.componentContainer}>
 
             <View style={styles.textContainer}>
                 {/* Run Info */}
@@ -118,7 +118,7 @@ const ShareImage = (props) => {
                 />
             </MapView>
 
-        </ViewShot>
+        </View>
     );
 };
 
