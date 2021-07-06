@@ -46,18 +46,7 @@ const EndScreen = ({navigation, route}) => {
         TTS.getInitStatus().then(()=> TTS.speak('Run Ended'));
     }, []);
 
-    const toSharePage = () => {
-        navigation.navigate('Share', {
-            distance:distance,
-            steps: steps,
-            positions: positions,
-            duration: duration,
-            time: time,
-            day: day,
-            date: date,
-            mode: mode
-        });
-    };
+    const [shareToggle, setShareToggle] = useState(false);
 
     return (
         <SafeAreaView style={styles.screen}>
@@ -70,7 +59,7 @@ const EndScreen = ({navigation, route}) => {
                         <Text style={styles.headerText}>{message}</Text>
 
                         {/* Share */}
-                        <TouchableOpacity style={styles.shareIconContainer} onPress={toSharePage}>
+                        <TouchableOpacity style={styles.shareIconContainer} onPress={() => setShareToggle(true)}>
                                 <Icon name="sharealt" size={height * 0.04} color="#BABBBF"/>
                         </TouchableOpacity>
                     </View>
@@ -149,19 +138,19 @@ const EndScreen = ({navigation, route}) => {
             </View>
 
             {/* Share Image */}
-            { (true) ? <></> :
-                <ViewShot ref={viewShotRef} options={{format: 'jpg', quality: 1.0}} style={styles.mapContainer}>
-                    <ShareImage
-                        distance = {distance}   
-                        steps = {steps}           
-                        positions = {positions}   
-                        duration = {duration}     
-                        time = {time}             
-                        day = {day}               
-                        date = {date}             
-                        mode = {mode}             
-                    />
-                </ViewShot>
+            {(shareToggle) ? 
+                <ShareImage
+                    distance = {distance}   
+                    steps = {steps}           
+                    positions = {positions}   
+                    duration = {duration}     
+                    time = {time}             
+                    day = {day}               
+                    date = {date}             
+                    mode = {mode}
+                    setShareToggle={setShareToggle}
+                /> :
+                <></>
             }
             
             
@@ -178,10 +167,10 @@ const styles = StyleSheet.create({
     contentContainer:{
         width: width,
         height: height * 0.4,
-        zIndex: 1,
         borderBottomRightRadius: 5,
         borderBottomLeftRadius: 5,
         backgroundColor: '#282B30',
+        zIndex: 1,
     },
     infoContainer:{
         width: width,

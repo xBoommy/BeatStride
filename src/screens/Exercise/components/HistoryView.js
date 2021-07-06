@@ -23,18 +23,7 @@ const HistoryView = ({navigation, route}) => {
     /* [Convert miliseconds to time breakdown] */
     const displayDuration = moment.duration(duration);
 
-    const toSharePage = () => {
-        navigation.navigate('Share', {
-            distance:distance,
-            steps: steps,
-            positions: positions,
-            duration: duration,
-            time: time,
-            day: day,
-            date: date,
-            mode: mode
-        });
-    };
+    const [shareToggle, setShareToggle] = useState(false);
 
     return (
         <SafeAreaView style={styles.screen}>
@@ -47,7 +36,7 @@ const HistoryView = ({navigation, route}) => {
                         <Text style={styles.headerText}>{message}</Text>
 
                         {/* Share */}
-                        <TouchableOpacity style={styles.shareIconContainer} onPress={toSharePage}>
+                        <TouchableOpacity style={styles.shareIconContainer} onPress={() => setShareToggle(true)}>
                                 <Icon name="sharealt" size={height * 0.04} color="#BABBBF"/>
                         </TouchableOpacity>
                     </View>
@@ -126,7 +115,7 @@ const HistoryView = ({navigation, route}) => {
             </View>
 
             {/* Share Image */}
-                {/* <ViewShot ref={viewShotRef} options={{format: 'jpg', quality: 1.0}}>
+            {(shareToggle) ? 
                 <ShareImage
                     distance = {distance}   
                     steps = {steps}           
@@ -136,9 +125,11 @@ const HistoryView = ({navigation, route}) => {
                     day = {day}               
                     date = {date}             
                     mode = {mode}
-                    visible = {!hideShare}
-                />
-                </ViewShot> */}
+                    setShareToggle={setShareToggle}
+                /> :
+                <></>
+            }
+            
 
             
         </SafeAreaView>
@@ -154,10 +145,10 @@ const styles = StyleSheet.create({
     contentContainer:{
         width: width,
         height: height * 0.4,
-        zIndex: 1,
         borderBottomRightRadius: 5,
         borderBottomLeftRadius: 5,
         backgroundColor: '#282B30',
+        zIndex: 1,
     },
     infoContainer:{
         width: width,
@@ -272,6 +263,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         // backgroundColor: 'yellow',
+        
     }, 
     crossContainer:{
         position: 'absolute',

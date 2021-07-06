@@ -88,12 +88,6 @@ const AppStack = () => {
                 component={HistoryView}
                 options={{headerShown: false}}
             />
-            <Stack.Screen
-                key="Share"
-                name="Share"
-                component={ShareImage}
-                options={{headerShown: false}}
-            />
             
         </Stack.Navigator>
     );

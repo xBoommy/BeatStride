@@ -11,23 +11,15 @@ import Share from 'react-native-share';
 const {width, height} = Dimensions.get("window")
 
 const ShareImage = (props) => {
-    // const distance =  props.distance;    //Total Distance Ran
-    // const steps = props.steps;           //Total Steps
-    // const positions = props.positions;   //Array of Positions Travelled
-    // const duration = props.duration;     //Total Run Duration
-    // const time = props.time;             //Start Time of Run
-    // const day = props.day;               //Start Time of Run
-    // const date = props.date;             //Start Time of Run
-    // const mode = props.mode;             //Run mode 
-
-    const distance =  props.route.params.distance;    //Total Distance Ran
-    const steps = props.route.params.steps;           //Total Steps
-    const positions = props.route.params.positions;   //Array of Positions Travelled
-    const duration = props.route.params.duration;     //Total Run Duration
-    const time = props.route.params.time;             //Start Time of Run
-    const day = props.route.params.day;               //Start Time of Run
-    const date = props.route.params.date;             //Start Time of Run
-    const mode = props.route.params.mode;             //Run mode 
+    const distance =  props.distance;    //Total Distance Ran
+    const steps = props.steps;           //Total Steps
+    const positions = props.positions;   //Array of Positions Travelled
+    const duration = props.duration;     //Total Run Duration
+    const time = props.time;             //Start Time of Run
+    const day = props.day;               //Start Time of Run
+    const date = props.date;             //Start Time of Run
+    const mode = props.mode;             //Run mode 
+    const setShareToggle = props.setShareToggle;
 
     /* [Convert miliseconds to time breakdown] */
     const displayDuration = moment.duration(duration);
@@ -44,33 +36,24 @@ const ShareImage = (props) => {
         const LatBound = geolib.getDistance({latitude: boundary.maxLat , longitude: 0}, {latitude: boundary.minLat , longitude: 0}, 1);
         
         if (LongBound > LatBound) {
-            setLatDelta((0.00001 * LongBound)+ 0.0055)
+            setLatDelta((0.00001 * LongBound)+ 0.001)
             // console.log((0.00001 * LongBound)+ 0.00050)
         } else {
-            setLatDelta((0.00001 *LatBound)+ 0.0055)
+            setLatDelta((0.00001 *LatBound)+ 0.001)
             // console.log((0.00001 *LatBound)+ 0.00050)
         }
     }
 
     useEffect(()=> {
         mapRange();
-        //setTimeout(share, 1000); //Uncomment this to auto direct sharing when reach this page
+        setTimeout(share, 300); //Uncomment this to auto direct sharing when reach this page
+        setTimeout(() => {setShareToggle(false)}, 316)
     },[]);
 
 
     const viewShotRef = useRef();
     const share = async () => {
-        // const img = await captureScreen({
-        //     format: "jpg",
-        //     quality: 1.0
-        // });
-
-        // const img2 = await captureRef(viewShotRef, {
-        //         format: "jpg",
-        //         quality: 1.0,
-        //         result: "tmpfile",
-        //     });
-
+    
         const vsPic = await viewShotRef.current.capture();
 
         const shareOptions = {
@@ -87,27 +70,51 @@ const ShareImage = (props) => {
     };
 
     return (
-        <ViewShot ref={viewShotRef} options={{format: 'jpg', quality: 1.0}} style={styles.componentContainer}>
+        <ViewShot ref={viewShotRef} options={{format: 'png', quality: 1.0}} style={styles.componentContainer}>
 
-            {/* Run Info */}
-            <LinearGradient colors={['#FFFFFF', '#FFFFFF', '#FFFFFF00']} style={styles.infoContainer}>
-                {/* Icon */}
-                <View style={styles.iconContainer}>
-                    <IconButton icon="run" style={{ margin: 0 }} color={'#000000'} />
-                    <Text style={{ fontSize: 16, color: '#000000' }}>Beat Stride</Text>
-                </View>
-
-                {/* Date */}
-                <View style={styles.dateContainer}>
-                    <View style={styles.dateTopContainer}>
-                        <Text style={styles.dayText}>{day}</Text>
-                        <Text style={styles.dateText}>, {time}</Text>
+            <View style={styles.textContainer}>
+                {/* Run Info */}
+                <View style={styles.infoContainer}>
+                    {/* Icon */}
+                    <View style={styles.iconContainer}>
+                        <IconButton icon="run" style={{ margin: 0 }} color={'#000000'} />
+                        <Text style={{ fontSize: 16, color: '#000000' }}>Beat Stride</Text>
                     </View>
-                    
-                    <Text style={styles.dateText}>{date}</Text>
+
+                    {/* Date */}
+                    <View style={styles.dateContainer}>
+                        <View style={styles.dateTopContainer}>
+                            <Text style={styles.dayText}>{day}</Text>
+                            <Text style={styles.dateText}>, {time}</Text>
+                        </View>
+                        
+                        <Text style={styles.dateText}>{date}</Text>
+                    </View>
+
                 </View>
 
-            </LinearGradient>
+                {/* Run Data */}
+                <View style={styles.dataContainer}>
+                    {/* Distance */}
+                    <View style={styles.distanceContainer}>
+                        <Text numberOfLines={1} style={styles.text}>{(distance/1000).toFixed(2)}</Text>
+                        <Text style={styles.subtext}>Total Distance (km)</Text>
+                    </View>
+
+                    {/* Time */}
+                    <View style={styles.timeContainer}>
+                        <Text numberOfLines={1} style={styles.text}>
+                            {displayDuration.hours() < 10 ? `0${displayDuration.hours()}` : displayDuration.hours()}
+                            :
+                            {displayDuration.minutes() < 10 ? `0${displayDuration.minutes()}` : displayDuration.minutes()}
+                            :
+                            {displayDuration.seconds() < 10 ? `0${displayDuration.seconds()}` : displayDuration.seconds()}
+                        </Text>
+                        <Text style={styles.subtext}>Duration</Text>
+                    </View>
+
+                </View>
+            </View>
 
             <MapView 
                 style={styles.map}
@@ -126,27 +133,6 @@ const ShareImage = (props) => {
                 />
             </MapView>
 
-            {/* Run Data */}
-            <LinearGradient colors={['#FFFFFF00', '#FFFFFF', '#FFFFFF']} style={styles.dataContainer}>
-                {/* Distance */}
-                <View style={styles.distanceContainer}>
-                    <Text numberOfLines={1} style={styles.text}>{(distance/1000).toFixed(2)}</Text>
-                    <Text style={styles.subtext}>Total Distance (km)</Text>
-                </View>
-
-                {/* Time */}
-                <View style={styles.timeContainer}>
-                    <Text numberOfLines={1} style={styles.text}>
-                        {displayDuration.hours() < 10 ? `0${displayDuration.hours()}` : displayDuration.hours()}
-                        :
-                        {displayDuration.minutes() < 10 ? `0${displayDuration.minutes()}` : displayDuration.minutes()}
-                        :
-                        {displayDuration.seconds() < 10 ? `0${displayDuration.seconds()}` : displayDuration.seconds()}
-                    </Text>
-                    <Text style={styles.subtext}>Duration</Text>
-                </View>
-
-            </LinearGradient>
         </ViewShot>
     );
 };
@@ -154,22 +140,24 @@ const ShareImage = (props) => {
 const styles = StyleSheet.create({
     componentContainer:{
         width: width,
-        aspectRatio: 1,
-        top: 200,
+        height: width,
+        backgroundColor:'#FFFFFF',
         position: 'absolute',
-        zIndex: 2,
+        zIndex: -1,
+    },
+    textContainer:{
+        width: width,
+        height: width,
+        justifyContent: 'space-between',
+        position: 'absolute',
+        zIndex: 1,
     },
     infoContainer:{
         width: width,
         height: width * 0.2,
-        paddingBottom: width * 0.05,
         paddingHorizontal: width * 0.05,
-        position: 'absolute',
-        top: 0,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        // backgroundColor: 'blue',
-        zIndex: 3,
     },
     iconContainer:{
         flexDirection: 'row',
@@ -198,18 +186,15 @@ const styles = StyleSheet.create({
         color: '#000000'
     },
     map: {
-        width: width,
-        aspectRatio: 1,
+        width: width * 0.8,
+        height: width * 0.6,
+        top: width * 0.2,
+        alignSelf: 'center',
     },
     dataContainer:{
         width: width,
-        height: width * 0.25,
-        paddingTop: width * 0.05,
-        position: 'absolute',
-        bottom: 0,
+        height: width * 0.2,
         flexDirection: 'row',
-        // backgroundColor: 'blue',
-        zIndex: 3,
     },
     distanceContainer:{
         width: width * 0.5,
