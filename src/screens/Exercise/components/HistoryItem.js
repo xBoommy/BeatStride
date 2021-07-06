@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet,  Text,  View, Dimensions, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
-import Icon from 'react-native-vector-icons/FontAwesome5'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import moment from 'moment';
 import * as Firestore from '../../../api/firestore';
 
@@ -69,12 +70,31 @@ const HistoryItem = (props) => {
                     <View style={styles.substatsContainer}>
                         {/* Duration */}
                         <View style={styles.subsubstatsContainer}>
-                            <Text style={styles.substatsText}>{displayTime.hours()}:{displayTime.minutes()}:{displayTime.seconds()}</Text>
+                            <View style={styles.iconContainer}>
+                                <FontAwesome5 name="stopwatch" size={height * 0.025} color='#BABBBF'/>
+                            </View> 
+
+                            <Text style={styles.substatsText}>
+                                {displayTime.hours() < 10 ? `0${displayTime.hours()}` : displayTime.hours()}
+                                :
+                                {displayTime.minutes() < 10 ? `0${displayTime.minutes()}` : displayTime.minutes()}
+                                :
+                                {displayTime.seconds() < 10 ? `0${displayTime.seconds()}` : displayTime.seconds()}
+                            </Text>
                         </View>
 
                         {/* Average time /km */}
                         <View style={styles.subsubstatsContainer}>
-                            <Text style={styles.substatsText}>{displayPace.minutes()}'{displayPace.seconds()}" /km</Text>
+                            <View style={styles.iconContainer}>
+                                <MaterialCommunityIcons name="speedometer" size={height * 0.03} color='#BABBBF'/>
+                            </View> 
+
+                            <Text style={styles.substatsText}>
+                                {displayTime.minutes() < 10 ? `0${displayTime.minutes()}` : displayTime.minutes()}
+                                '
+                                {displayTime.seconds() < 10 ? `0${displayTime.seconds()}` : displayTime.seconds()}
+                                " /km
+                            </Text>
                         </View>
                     </View>
                 </View>
@@ -142,6 +162,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: width * 0.05,
         justifyContent: 'center',
         // backgroundColor: 'blue',
+        flexDirection: 'row',
+    },
+    iconContainer:{
+        height: height * 0.03,
+        aspectRatio: 1.5,
+        // backgroundColor: 'pink',
     },
     substatsText:{
         fontSize: 14,
