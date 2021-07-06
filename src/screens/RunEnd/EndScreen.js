@@ -43,7 +43,11 @@ const EndScreen = ({navigation, route}) => {
     }, [closed]);
 
     useEffect(() => {
-        TTS.getInitStatus().then(()=> TTS.speak('Run Ended'));
+        TTS.getInitStatus().then(() => {
+            TTS.setDefaultLanguage('en-US');
+            TTS.setDefaultRate(0.5);
+            TTS.speak('Run Ended');
+        });
     }, []);
 
     const [shareToggle, setShareToggle] = useState(false);

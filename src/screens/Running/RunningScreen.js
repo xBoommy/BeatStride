@@ -97,90 +97,71 @@ const RunningScreen = ({navigation, route}) => {
     /* [GPS Subcription countdown] */
     const subcriptionCountdown = () => {
         /* 0 second */
-        console.log('Starting in 5');
+        console.log('Starting in 3');
         getCurrentLocation();
-        setCountdownMsg(5);
+        setCountdownMsg(3);
         setCountdown(true);
         
         /* 1 second */
         setTimeout( () => {
-            console.log('Starting in 4');
-            setCountdownMsg(4);
+            console.log('Starting in 2');
+            setCountdownMsg(2);
             getCurrentLocation();
         }, 1000);
     
         /* 2 second */
         setTimeout( () => {
-            console.log('Starting in 3');
-            setCountdownMsg(3);
-        }, 2000);
-
-        /* 3 second */
-        setTimeout( () => {
-            console.log('Starting in 2');
-            setCountdownMsg(2);
-        }, 3000);
-
-        /* 4 second */
-        setTimeout( () => {
             console.log('Starting in 1');
             setCountdownMsg(1);
-        }, 4000);
+        }, 2000);
     
-        /* 5 second */
+        /* 3 second */
         setTimeout( () => {
             console.log('Start');
-            TTS.getInitStatus().then(()=> TTS.speak('Run Started'));
+            TTS.getInitStatus().then(() => {
+                TTS.setDefaultLanguage('en-US');
+                TTS.setDefaultRate(0.5);
+                TTS.speak('Run Started');
+            });
             subscribePosition();
             setRunStatus(2);
             setCountdown(false);
-        }, 5000);
+        }, 3000);
     }
 
     /* [GPS Subcription countdown] */
     const resumeCountdown = () => {
         /* 0 second */
-        console.log('Starting in 5');
-        setCountdownMsg(5);
+        console.log('Starting in 3');
+        setCountdownMsg(3);
         setCountdown(true);
         
         /* 1 second */
         setTimeout( () => {
-            console.log('Starting in 4');
-            setCountdownMsg(4);
+            console.log('Starting in 2');
+            setCountdownMsg(2);
         }, 1000);
     
         /* 2 second */
         setTimeout( () => {
-            console.log('Starting in 3');
-            setCountdownMsg(3);
-        }, 2000);
-
-        /* 3 second */
-        setTimeout( () => {
-            console.log('Starting in 2');
-            setCountdownMsg(2);
-        }, 3000);
-
-        /* 4 second */
-        setTimeout( () => {
             console.log('Starting in 1');
-            getResumeLocation();
             setCountdownMsg(1);
-        }, 4000);
+            getResumeLocation();
+        }, 2000);
     
-        /* 5 second */
+        /* 3 second */
         setTimeout( () => {
             console.log('Start');
             TTS.getInitStatus().then(() => {
                 TTS.setDefaultLanguage('en-US');
+                TTS.setDefaultRate(0.5);
                 TTS.speak('Run Resumed');
             });
             
             subscribePosition();
             setRunStatus(2);
             setCountdown(false);
-        }, 5000);
+        }, 3000);
     }
 
     /* [ON GPS Subscription/Tracking] */
@@ -294,7 +275,11 @@ const RunningScreen = ({navigation, route}) => {
             console.log("RunStatus - 3: Pause");
             unsubscribePosition();
             setPaused(true);
-            TTS.getInitStatus().then(()=> TTS.speak('Run Paused'));
+            TTS.getInitStatus().then(() => {
+                TTS.setDefaultLanguage('en-US');
+                TTS.setDefaultRate(0.5);
+                TTS.speak('Run Paused');
+            });
         }
         if (runStatus === 4) {
             console.log("RunStatus - 4: BACK confirm");

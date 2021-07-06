@@ -46,8 +46,8 @@ const ShareImage = (props) => {
 
     useEffect(()=> {
         mapRange();
-        setTimeout(share, 300); //Uncomment this to auto direct sharing when reach this page
-        setTimeout(() => {setShareToggle(false)}, 316)
+        setTimeout(share, 1000); //Uncomment this to auto direct sharing when reach this page
+        setTimeout(() => {setShareToggle(false)}, 1016)
     },[]);
 
 

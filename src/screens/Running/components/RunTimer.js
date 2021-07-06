@@ -61,7 +61,7 @@ const RunTimer = (props) => {
             const paceHour = Math.floor(avgTime / 3600000);
             const paceMin = Math.floor((avgTime % 3600000) / 60000);
             const paceSec = Math.floor((avgTime % 60000)/1000);
-            let msg = `Total distance ${distInKm} kilometers, time now, `;
+            let msg = `Total distance ${distInKm} kilometers, total time, `;
             if (hour !== 0) {
                 msg += hour + (hour === 1 ? " hour" :  " hours") + " ";
             }
@@ -69,7 +69,7 @@ const RunTimer = (props) => {
                 msg += min + (min === 1 ? " minute" : " minutes") + " and";
             }
             if (sec !== 0) {
-                msg += sec + (sec === 1 ? " second" : " seconds") + " Average pace, ";
+                msg += sec + (sec === 1 ? " second" : " seconds") + ". Average pace, ";
             }
             if (paceHour !== 0) {
                 msg += paceHour + (paceHour === 1 ? " hour " : " hours ")
@@ -81,7 +81,7 @@ const RunTimer = (props) => {
                 msg += paceSec + (paceSec === 1 ? " second" : " seconds") + " per kilometer";
             }
             TTS.getInitStatus().then(()=> {
-                TTS.setDefaultRate(0.8);
+                TTS.setDefaultRate(0.3);
                 TTS.setDefaultLanguage('en-US');
                 TTS.speak(msg);
             });
