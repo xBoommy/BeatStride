@@ -6,7 +6,6 @@ import moment from 'moment';
 import LinearGradient from 'react-native-linear-gradient';
 import { IconButton } from "react-native-paper";
 import ViewShot, {captureScreen, captureRef} from 'react-native-view-shot';
-import Share from 'react-native-share';
 
 const {width, height} = Dimensions.get("window")
 
@@ -19,7 +18,6 @@ const ShareImage = (props) => {
     const day = props.day;               //Start Time of Run
     const date = props.date;             //Start Time of Run
     const mode = props.mode;             //Run mode 
-    const setShareToggle = props.setShareToggle;
 
     /* [Convert miliseconds to time breakdown] */
     const displayDuration = moment.duration(duration);
@@ -44,29 +42,16 @@ const ShareImage = (props) => {
         }
     }
 
-    useEffect(()=> {
+    useEffect(async ()=> {
         mapRange();
-        setTimeout(share, 1000); //Uncomment this to auto direct sharing when reach this page
-        setTimeout(() => {setShareToggle(false)}, 1016)
+        await getPicture();
     },[]);
 
 
     const viewShotRef = useRef();
-    const share = async () => {
-    
+    const getPicture = async () => {
         const vsPic = await viewShotRef.current.capture();
-
-        const shareOptions = {
-            message: 'Check out my run route today and join me on Beat Stride!',
-            url: vsPic,
-        }
-      
-        try {
-            const ShareResponse = await Share.open(shareOptions);
-            console.log(JSON.stringify(ShareResponse));
-        } catch(error) {
-            console.log('Error => ', error);
-        }
+        props.getPicture(vsPic);
     };
 
     return (

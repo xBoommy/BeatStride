@@ -4,6 +4,7 @@ import {  CommonActions } from '@react-navigation/native';
 import moment from 'moment';
 import TTS from 'react-native-tts';
 import Icon from 'react-native-vector-icons/AntDesign'
+import Share from 'react-native-share';
 
 import EndMap from './components/EndMap';
 import ShareImage from '../Share/ShareImage';
@@ -51,6 +52,25 @@ const EndScreen = ({navigation, route}) => {
     }, []);
 
     const [shareToggle, setShareToggle] = useState(false);
+    const [sharePic, getSharePic] = useState();
+    const share = async () => {
+        
+        const shareOptions = {
+            message: 'Check out my run route today and join me on Beat Stride!',
+            url: sharePic,
+        }
+      
+        try {
+            const ShareResponse = await Share.open(shareOptions);
+            console.log(JSON.stringify(ShareResponse));
+        } catch(error) {
+            console.log('Error => ', error);
+        }
+    };
+    
+    useEffect(() => {
+        setTimeout(() => setShareToggle(true), 100);
+    }, []);
 
     return (
         <SafeAreaView style={styles.screen}>
@@ -63,7 +83,7 @@ const EndScreen = ({navigation, route}) => {
                         <Text style={styles.headerText}>{message}</Text>
 
                         {/* Share */}
-                        <TouchableOpacity style={styles.shareIconContainer} onPress={() => setShareToggle(true)}>
+                        <TouchableOpacity style={styles.shareIconContainer} onPress={share}>
                                 <Icon name="sharealt" size={height * 0.04} color="#BABBBF"/>
                         </TouchableOpacity>
                     </View>
@@ -152,7 +172,7 @@ const EndScreen = ({navigation, route}) => {
                     day = {day}               
                     date = {date}             
                     mode = {mode}
-                    setShareToggle={setShareToggle}
+                    getPicture={getSharePic}
                 /> :
                 <></>
             }
