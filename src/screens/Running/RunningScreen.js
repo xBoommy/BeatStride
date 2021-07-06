@@ -120,7 +120,7 @@ const RunningScreen = ({navigation, route}) => {
             console.log('Start');
             TTS.getInitStatus().then(() => {
                 TTS.setDefaultLanguage('en-US');
-                TTS.setDefaultRate(0.5);
+                // TTS.setDefaultRate(0.5);
                 TTS.speak('Run Started');
             });
             subscribePosition();
@@ -154,7 +154,7 @@ const RunningScreen = ({navigation, route}) => {
             console.log('Start');
             TTS.getInitStatus().then(() => {
                 TTS.setDefaultLanguage('en-US');
-                TTS.setDefaultRate(0.5);
+                // TTS.setDefaultRate(0.5);
                 TTS.speak('Run Resumed');
             });
             
@@ -277,7 +277,7 @@ const RunningScreen = ({navigation, route}) => {
             setPaused(true);
             TTS.getInitStatus().then(() => {
                 TTS.setDefaultLanguage('en-US');
-                TTS.setDefaultRate(0.5);
+                // TTS.setDefaultRate(0.5);
                 TTS.speak('Run Paused');
             });
         }

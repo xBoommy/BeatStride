@@ -46,7 +46,7 @@ const EndScreen = ({navigation, route}) => {
     useEffect(() => {
         TTS.getInitStatus().then(() => {
             TTS.setDefaultLanguage('en-US');
-            TTS.setDefaultRate(0.5);
+            // TTS.setDefaultRate(0.5);
             TTS.speak('Run Ended');
         });
     }, []);

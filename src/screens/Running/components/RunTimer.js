@@ -81,7 +81,7 @@ const RunTimer = (props) => {
                 msg += paceSec + (paceSec === 1 ? " second" : " seconds") + " per kilometer";
             }
             TTS.getInitStatus().then(()=> {
-                TTS.setDefaultRate(0.3);
+                // TTS.setDefaultRate(0.3);
                 TTS.setDefaultLanguage('en-US');
                 TTS.speak(msg);
             });
