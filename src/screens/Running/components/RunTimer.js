@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions} from 'react-native';
 import moment from 'moment';
 import TTS from 'react-native-tts';
+import BackgroundTimer from 'react-native-background-timer';
 
 const {width, height} = Dimensions.get("window")
 
@@ -24,13 +25,13 @@ const RunTimer = (props) => {
     /* [Start timing] */
     const startTimer = () => {
         // console.log("Timer Start")
-        setTick( setInterval( ticking, 1000) )
+        setTick( BackgroundTimer.setInterval( ticking, 1000) )
     }
 
     /* [Stop timing] */
     const stopTimer = () => {
         // console.log("Timer Stop")
-        clearInterval(tick)
+        BackgroundTimer.clearInterval(tick)
     }
     
     /* [Run Status Render] 

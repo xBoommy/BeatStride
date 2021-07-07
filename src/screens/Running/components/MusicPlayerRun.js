@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import BackgroundTimer from 'react-native-background-timer';
 
 import * as Spotify from '../../Music/components/spotify_player_controls';
 
@@ -24,11 +25,11 @@ const MusicPlayer = props => {
         setTime( (prevTime) => prevTime + 500 );
     }
     const startTimer = () => {
-        setTick( setInterval(ticking, 500) );
+        setTick( BackgroundTimer.setInterval(ticking, 500) );
     };
 
     const stopTimer = () => {
-        clearInterval(tick);
+        BackgroundTimer.clearInterval(tick);
     };
   
     useEffect(() => {
