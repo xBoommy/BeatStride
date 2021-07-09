@@ -320,7 +320,8 @@ const RunningScreen = ({navigation, route}) => {
                     date:date,
                     mode: mode,
                     id:moment().format(),
-                }
+                }             
+
                 //Add to history + update personal stats (If the user sets to "recordHistory to true")
                 Firestore.db_recordRun(record,
                     () => {

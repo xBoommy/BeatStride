@@ -37,8 +37,8 @@ const db_createAccount3 = (uid, region) => {
  */
 export const db_createAccount = (credentials, onSuccess, onError) => {
     db_createAccount1(credentials, onSuccess, onError);
-    db_createAccount2(credentials.region);
-    db_createAccount3(credentials.uid, credentials.region);
+    // db_createAccount2(credentials.region);
+    // db_createAccount3(credentials.uid, credentials.region);
 }
 
 //Upload profile picture: ***** This uses Firebase.storage, not firestore *****
@@ -98,6 +98,57 @@ const db_updateUserRunCount = () => {
     }
 }
 
+//Update longest Distance
+const db_updateLongestDistance = async(record) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        const currLongest = await db.collection("users").doc(user_id).get().then(
+            (snapshot) => {
+                const userData = snapshot.data();
+                return userData.longestDistance;
+            }
+        );
+        console.log("checking distance")
+        console.log(currLongest)
+        console.log(record.distance)
+        if (record.distance > currLongest) {
+            try {
+                db.collection("users").doc(user_id).update({longestDistance: record.distance})   
+            } catch (error) {
+                console.log("fail to update longest distance")
+            }
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//Update fastest pace
+const db_updateFastestPace = async(record) => {
+    const user_id = Authentication.getCurrentUserId()
+    const pace = record.duration / (record.distance/1000) 
+    try {
+        const currFastest = await db.collection("users").doc(user_id).get().then(
+            (snapshot) => {
+                const userData = snapshot.data();
+                return userData.fastestPace; 
+            }
+        );
+        console.log("checking pace")
+        console.log(currFastest)
+        console.log(pace)
+        if (pace < currFastest || currFastest == 0) {
+            try {
+                db.collection("users").doc(user_id).update({fastestPace: pace})   
+            } catch (error) {
+                console.log("fail to update fastest pace")
+            }
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 // Used after run complete to record.
 export const db_recordRun = async(record, onSuccess, onError) => {
     try {
@@ -105,6 +156,8 @@ export const db_recordRun = async(record, onSuccess, onError) => {
         db_updateUserHistory(record);
         db_updateUserTotalDistance(record);
         db_updateUserRunCount();
+        db_updateLongestDistance(record);
+        db_updateFastestPace(record);
         
         return onSuccess();
     } catch (error) {
@@ -142,7 +195,7 @@ const db_removeRunHistory = ( recordID ) => {
     }
 }
 
-// Used after run complete to record.
+// Used remove run record.
 export const db_removeRun = async(recordID , distance) => {
     try {
         //Update personal info
@@ -266,6 +319,9 @@ export const db_editGoals = async( distance, time, onSuccess) => {
         console.log(error)
     }
 }
+
+
+
 
 
 //SAMPLE DB FUNCTION

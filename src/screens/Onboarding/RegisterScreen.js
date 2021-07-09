@@ -34,6 +34,8 @@ const RegisterScreen = ({navigation}) => {
                     goalDistance: 0,
                     goalTime: 0,
                     strideDistance: 0,
+                    longestDistance: 0,
+                    fastestPace: 0,
                     joinDate: moment().format('MMMM Do YYYY, h:mm:ss a'),
                 }
 
