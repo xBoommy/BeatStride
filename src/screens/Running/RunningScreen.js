@@ -7,6 +7,7 @@ import moment from 'moment';
 import TTS from 'react-native-tts';
 import { useSelector } from 'react-redux';
 import * as Firestore from '../../api/firestore';
+import BackgroundTimer from 'react-native-background-timer';
 
 import RunDistance from './components/RunDistance';
 import RunTimer from './components/RunTimer';
@@ -14,7 +15,6 @@ import RunSteps from './components/RunSteps';
 import RunMap from './components/RunMap';
 import MusicPlayerRun from './components/MusicPlayerRun';
 import RunCountdown from './RunCountdown';
-import { run } from 'jest';
 
 const {width, height} = Dimensions.get("window")
 
@@ -165,22 +165,27 @@ const RunningScreen = ({navigation, route}) => {
     }
 
     /* [ON GPS Subscription/Tracking] */
-    const subscribePosition = async() => {
-        const options = {accuracy: 6,  timeInterval: 500, distanceInterval: 2};
+    const subscribePosition = () => {
 
-        if ( Location.hasServicesEnabledAsync() ){
-            try {
-                setPromise( await Location.watchPositionAsync( options, onPositionChange) )
-                console.log('GPS Tracking on')
-            } catch (error) {
-                console.log(error);
-            }
+        if ( Location.hasServicesEnabledAsync() ) {
+            console.log('GPS Tracking on')
+            setPromise( BackgroundTimer.setInterval(
+                async() => {
+                    try {
+                        const locationObj = await Location.getCurrentPositionAsync();
+                        onPositionChange(locationObj);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                },
+                500 
+            ))
         }
     }
 
     /* [OFF GPS Subscription/Tracking] */
     const unsubscribePosition = () => {
-        promise.remove()
+        BackgroundTimer.clearInterval(promise)
         console.log('GPS Tracking off')
     }
 
@@ -273,7 +278,7 @@ const RunningScreen = ({navigation, route}) => {
         }
         if (runStatus === 3) {
             console.log("RunStatus - 3: Pause");
-            unsubscribePosition();
+            // unsubscribePosition();
             setPaused(true);
             TTS.getInitStatus().then(() => {
                 TTS.setDefaultLanguage('en-US');
@@ -304,6 +309,7 @@ const RunningScreen = ({navigation, route}) => {
         }
         if (runStatus === 5) {
             console.log("RunStatus - 5: Stop from Pause");
+            unsubscribePosition();
             setRunStatus(6);
         }
         if (runStatus === 6) {
