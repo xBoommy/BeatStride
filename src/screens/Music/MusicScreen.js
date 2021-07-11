@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity, Image, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Entypo from 'react-native-vector-icons/Entypo'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import Screen from '../MainScreen';
 
@@ -86,6 +88,19 @@ const MusicScreen = () => {
             {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.headerText}>Music</Text>
+
+                {/* Icons */}
+                <View style={styles.iconComponent}>
+                    {/* Friend Request Icon */}
+                    <TouchableOpacity style={styles.iconContainer} onPress={() => {}}>
+                        <MaterialCommunityIcons name="cloud-upload-outline" size={width * 0.09} color="#BABBBF"/>
+                    </TouchableOpacity>
+
+                    {/* Search Icon */}
+                    <TouchableOpacity style={styles.iconContainer} onPress={() => {setSearchToggle(true)}}>
+                        <Entypo name="plus" size={width * 0.1} color="#BABBBF"/>
+                    </TouchableOpacity>
+                </View>
             </View>
 
             {/* Playlist List */}
@@ -117,18 +132,7 @@ const MusicScreen = () => {
             <PlaylistSearch
                 searchToggle={searchToggle}
                 setSearchToggle={setSearchToggle}
-            />
-
-            {/* Playlist Search Button */}
-            <TouchableOpacity style={styles.searchButton} onPress={() => {setSearchToggle(true)}}>
-                <View>
-                    <Image 
-                        style={styles.searchIcon} 
-                        source={require('../../assets/icons/add.png')}
-                    />
-                </View>
-            </TouchableOpacity>
-            
+            />       
           
       </Screen>
   );
@@ -150,6 +154,23 @@ const styles = StyleSheet.create({
         includeFontPadding: false,
         textAlignVertical: 'center',
     },
+    iconComponent:{
+        position: 'absolute',
+        height: height * 0.1,
+        width: width * 0.35,
+        right: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        // backgroundColor: 'green',
+    },
+    iconContainer:{
+        width: width * 0.15,
+        aspectRatio: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'blue',
+    },
     list:{
         height: height * 0.8,
         // backgroundColor: 'pink',
@@ -162,21 +183,6 @@ const styles = StyleSheet.create({
         bottom: height * 0.02 ,
         alignSelf: 'center',
     },
-    searchButton:{
-        height: height * 0.1 * 0.6,
-        aspectRatio: 1,
-        position: 'absolute',
-        top: height * 0.1 * 0.2,
-        right: width * 0.05,
-        justifyContent: 'center',
-        alignItems: 'center',
-        // backgroundColor: 'green',
-    },
-    searchIcon:{
-        height: height * 0.1 * 0.6 * 0.6, 
-        aspectRatio: 1,
-        tintColor: '#BABBBF'
-    }
 })
 
 export default MusicScreen;
