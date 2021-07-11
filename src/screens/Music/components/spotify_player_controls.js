@@ -8,9 +8,7 @@ import SingleTrackGetter from '../../../api/spotify/spotify_single_track_getter'
   
 export const spotifyConfig = {
   clientID: '715a7736d82c4216be65be4772890fa4',
-  redirectURL: 'http://localhost:8888/callback',
-  tokenRefreshURL: 'http://192.168.1.9:3000/refresh',
-  tokenSwapURL: 'http://192.168.1.9:3000/swap',
+  redirectURL: 'com.okta.dev-05488202:/callback',
   scopes: [
     ApiScope.AppRemoteControlScope,
     ApiScope.UserFollowReadScope,

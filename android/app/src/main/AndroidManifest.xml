@@ -59,7 +59,7 @@
 
                 <data
                     android:scheme="Development mode"
-                    android:host="http://localhost:8888/callback"/>
+                    android:host="com.okta.dev-05488202:/callback"/>
             </intent-filter>
         </activity>
 

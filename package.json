@@ -27,6 +27,7 @@
     "react": "17.0.1",
     "react-native": "0.64.2",
     "react-native-accurate-step-counter": "^2.0.0",
+    "react-native-app-auth": "^6.4.0",
     "react-native-background-timer": "^2.4.1",
     "react-native-base64": "^0.2.1",
     "react-native-elements": "^3.4.2",

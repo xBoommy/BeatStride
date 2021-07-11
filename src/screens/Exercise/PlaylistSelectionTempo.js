@@ -30,15 +30,15 @@ const PlaylistSelectionTempo = (props) => {
         );
     }, []);
 
-    const LOWERLIMIT = BPM - 10; //suppose to pass in props, target, allowance
-    const UPPERLIMIT = BPM + 10; //lower = target - allowance, upper - target + allowance
+    const LOWERLIMIT = BPM - 5; //suppose to pass in props, target, allowance
+    const UPPERLIMIT = BPM + 5; //lower = target - allowance, upper - target + allowance
 
     const getTracksForRun = async () => {
         setIsLoading(true);
         const filteredTracks = await FilterbyBPM(
             inSelected,
             BPM, //should be target
-            10, //should be allowance
+            5, //should be allowance
             tracks => {
                 // console.log('selected tracks by bpm:');
                 // console.log(tracks);

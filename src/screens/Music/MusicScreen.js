@@ -12,6 +12,7 @@ import PlaylistSearch from './PlaylistSearch';
 import * as Firestore from '../../api/firestore';
 import Tracks_Getter from '../../api/spotify/spotify_tracks_getter';
 import * as Spotify from './components/spotify_player_controls';
+import spotify_personal_playlist from '../../api/spotify/spotify_personal_playlist';
 
 const {width, height} = Dimensions.get("window")
 
@@ -83,6 +84,14 @@ const MusicScreen = () => {
         }
     };
 
+    const loadPersonalPlaylist = async () => {
+        const personalPlaylist = await spotify_personal_playlist();
+        for (let i = 0; i < personalPlaylist.length; i++) {
+            Firestore.db_addUserPlaylists(personalPlaylist[i]);
+        }
+        console.log('All loaded!');
+    };
+
   return (
       <Screen>
             {/* Header */}
@@ -92,7 +101,7 @@ const MusicScreen = () => {
                 {/* Icons */}
                 <View style={styles.iconComponent}>
                     {/* Friend Request Icon */}
-                    <TouchableOpacity style={styles.iconContainer} onPress={() => {}}>
+                    <TouchableOpacity style={styles.iconContainer} onPress={loadPersonalPlaylist}>
                         <MaterialCommunityIcons name="cloud-upload-outline" size={width * 0.09} color="#BABBBF"/>
                     </TouchableOpacity>
 
