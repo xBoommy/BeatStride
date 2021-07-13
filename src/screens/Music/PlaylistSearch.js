@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert, Keyboard } from 'react-native';
 import { TextInput } from "react-native-paper";
 import { useDispatch } from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import SearchItem from './components/SearchItem';
 import Spotify_Search from '../../api/spotify/spotify_search';
@@ -63,7 +63,6 @@ const PlaylistSearch = (props) => {
                     {/* Search Bar */}
                     <View style={styles.searchBar}>
 
-                        {/* Need to remove green back ground...? */}
                         <TextInput
                             mode="outlined"
                             label="Search Playlists..."
@@ -99,6 +98,14 @@ const PlaylistSearch = (props) => {
                         data={playlists}
                         keyExtractor={item => item.id}
                         renderItem={({item}) => <SearchItem item={item} onSelect={() => onSelect(item)}/>}
+                        ListEmptyComponent={
+                            <View style={styles.emptyList}>
+                                <View style={styles.emptyIcon}>
+                                    <Icon name="search" size={height * 0.04} color="#72767D"/>
+                                </View> 
+                                <Text style={styles.emptyText}>Search for Playlists from Spotify</Text>
+                            </View>
+                        }
                     />
 
                     {/* Button Container */}
@@ -140,10 +147,30 @@ const styles = StyleSheet.create({
         // backgroundColor: 'green',
     },
     list:{
+        width: width * 0.95,
+        height: height * 0.7,
     //    backgroundColor: 'pink',
     },
     listContent:{
         paddingBottom: (height * 0.13 * 0.4) + (height * 0.95 * 0.02)
+    },
+    emptyList: {
+        width: width,
+        height: height * 0.7,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'red',
+    },
+    emptyText:{
+        fontSize: 14,
+        color: '#72767D'
+    },
+    emptyIcon:{
+        height: height * 0.07,
+        aspectRatio: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'red',
     },
     buttonContainer:{
         position: 'absolute',
