@@ -14,6 +14,7 @@ import RunSteps from './components/RunSteps';
 import RunMap from './components/RunMap';
 import MusicPlayerRun from './components/MusicPlayerRun';
 import RunCountdown from './RunCountdown';
+import HoldableButton from './components/CircularProgressBar/HoldableButton';
 
 const {width, height} = Dimensions.get("window")
 
@@ -428,13 +429,21 @@ const RunningScreen = ({navigation, route}) => {
                     </TouchableOpacity> : <></>}
                     
                     {/* Stop button */}
-                    {(runStatus === 3 || (runStatus === 8 && paused) || (runStatus === 9 && paused)) ? <TouchableOpacity style={styles.button} onPress={() => setRunStatus(5)}>
-                        <Image 
-                            source={require('../../assets/icons/ExerciseStop.png')}
-                            resizeMode= 'contain'
-                            style={styles.buttonIcon}
-                        />
-                    </TouchableOpacity> : <></>}
+                    {(runStatus === 3 || (runStatus === 8 && paused) || (runStatus === 9 && paused)) ? 
+                    // <TouchableOpacity style={styles.button} onPress={() => setRunStatus(5)}>
+                    //     <Image 
+                    //         source={require('../../assets/icons/ExerciseStop.png')}
+                    //         resizeMode= 'contain'
+                    //         style={styles.buttonIcon}
+                    //     />
+                    // </TouchableOpacity> 
+                    <HoldableButton 
+                        radius={0.05 * height}
+                        onSuccess={() => setRunStatus(5)}
+                        imageSource={require('../../assets/icons/ExerciseStop.png')}
+                    />
+                    
+                    : <></>}
                     
                 </View>
 
