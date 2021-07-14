@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert } from 'react-native';
+import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert, Image } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
@@ -100,25 +100,31 @@ const PlaylistSelectionTempo = (props) => {
                     </View>
 
                     {/* Playlist List */}
-                    { (playlists.length == 0) ? 
-                        <View style={styles.emptyMessageContainer}>
-                            <Text style={styles.emptyMessageText}>You have not added a playlist to Library.</Text>
-                        </View>  
-                        : <FlatList
-                            showsVerticalScrollIndicator ={false}
-                            style={styles.list}
-                            contentContainerStyle={styles.listContent}
-                            numColumns={2}
-                            data={playlists}
-                            keyExtractor={item => item.id}
-                            renderItem={({item}) => 
-                                <PlaylistSelectionItem 
-                                    item={item}
-                                    inserted={inSelected}
-                                    insert={setInSelected}
-                                />}
-                        />
-                    }
+                    <FlatList
+                        showsVerticalScrollIndicator ={false}
+                        style={styles.list}
+                        contentContainerStyle={styles.listContent}
+                        numColumns={2}
+                        data={playlists}
+                        keyExtractor={item => item.id}
+                        renderItem={({item}) => 
+                            <PlaylistSelectionItem 
+                                item={item}
+                                inserted={inSelected}
+                                insert={setInSelected}
+                            />}
+                        ListEmptyComponent={
+                            <View style={styles.emptyMessageContainer}>
+                                <Image 
+                                    source={require('../../assets/icons/TabMusic.png')}
+                                    resizeMode= 'contain'
+                                    style={styles.emptyMessageIcon}
+                                />
+                                <Text style={styles.emptyMessageText}>No Playlists in Library</Text>
+                            </View> 
+                        }
+                    />
+                    
 
                     {/* Button Container */}
                     <View style={styles.buttonContainer}>
@@ -200,10 +206,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         // backgroundColor: 'orange',
     },
+    emptyMessageIcon:{
+        height: height * 0.05,
+        aspectRatio: 1,
+        marginBottom: height * 0.01,
+        tintColor: '#72767D',
+    },
     emptyMessageText:{
-        fontWeight: 'bold',
         fontSize: 16,
-        color: '#BABBBF',
+        color: '#72767D',
     },
     list:{
     //    backgroundColor: 'pink',
