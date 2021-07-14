@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions} from 'react-native';
-import MapView, { Polyline } from 'react-native-maps';
+import MapView, { Polyline, Circle } from 'react-native-maps';
 
 const {width, height} = Dimensions.get("window")
 
@@ -24,6 +24,19 @@ const RunMap = (props) => {
                     coordinates={mapPositions}
                     strokeWidth={5}
                     strokeColor={'#7289DA'}
+                />
+                <Circle 
+                    center={currCoord}
+                    radius={10}
+                    fillColor={'#7289DA'}
+                    strokeWidth={0}
+                    zIndex={1}
+                />
+                <Circle 
+                    center={currCoord}
+                    radius={15}
+                    fillColor={'#ddddff'}
+                    strokeWidth={0}
                 />
             </MapView>
         </View>
