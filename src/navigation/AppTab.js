@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ExerciseScreen from '../screens/Exercise/ExerciseScreen';
 import MusicScreen from '../screens/Music/MusicScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
+import SocialScreen from '../screens/Social/SocialScreen';
 
 
 const {width, height} = Dimensions.get("window")
@@ -62,6 +63,29 @@ const AppTab = () => {
                                     ...styles.tabIconText,
                                     color: focused ? '#7289DA' : '#BABBBF',
                                 }}>MUSIC</Text>
+                        </View>
+                    )
+                }}
+            />
+
+            <Tab.Screen 
+                name="SocialScreen" 
+                component={SocialScreen}
+                options={{
+                    tabBarIcon: ({focused}) => (
+                        <View style={styles.tabIconContainer}>
+                            <Image 
+                                source={require('../assets/icons/TabSocial.png')}
+                                resizeMode= 'contain'
+                                style={{
+                                    ...styles.tabIconImage,
+                                    tintColor: focused ? '#7289DA' : '#BABBBF',
+                                }}/>
+                            <Text 
+                                style = {{
+                                    ...styles.tabIconText,
+                                    color: focused ? '#7289DA' : '#BABBBF',
+                                }}>SOCIAL</Text>
                         </View>
                     )
                 }}
