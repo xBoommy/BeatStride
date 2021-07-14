@@ -120,11 +120,31 @@ const MusicScreen = () => {
                 numColumns={2}
                 data={playlists}
                 keyExtractor={item => item.id}
-                renderItem={({item}) => <PlaylistItem 
-                                            item={item}
-                                            goToSongScreen={() => getPlaylistDetails(item.playlistUri, item.title, item.totalSongs)}
-                                            removePlaylist={() => removePlaylist(item)}
-                                        />}
+                renderItem={({item}) => 
+                    <PlaylistItem 
+                        item={item}
+                        goToSongScreen={() => getPlaylistDetails(item.playlistUri, item.title, item.totalSongs)}
+                        removePlaylist={() => removePlaylist(item)}
+                    />}
+                ListEmptyComponent={
+                    <View style={styles.emptyList}>
+                        <View style={styles.emptyMessageContainer}>
+                            <Text style={styles.emptyMainText}>No Playlists Added</Text>
+                        </View>
+
+                        <View style={styles.emptyMessageContainer}>
+                            <MaterialCommunityIcons name="cloud-upload-outline" size={height * 0.045} color="#72767D"/>
+                            <Text style={styles.emptyText}>Import/Update Your Personal Playlists</Text>
+                        </View>
+
+                        <View style={styles.emptyMessageContainer}>
+                            <Entypo name="plus" size={height * 0.05} color="#72767D"/>
+                            <Text style={styles.emptyText}>Search For Public Playlists</Text>
+                        </View>
+                        
+                        
+                    </View>
+                }
             />
 
             {/* Music Player */}
@@ -181,11 +201,36 @@ const styles = StyleSheet.create({
         // backgroundColor: 'blue',
     },
     list:{
+        width: width,
         height: height * 0.8,
         // backgroundColor: 'pink',
     },
     listContent:{
         paddingBottom: height * 0.14,
+    },
+    emptyList: {
+        width: width,
+        height: height * 0.8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: height * 0.14,
+        // backgroundColor: 'red',
+    },
+    emptyMainText:{
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#72767D'
+    },
+    emptyMessageContainer:{
+        width: width,
+        height: height * 0.1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'green',
+    },
+    emptyText:{
+        fontSize: 14,
+        color: '#72767D'
     },
     musicPlayer:{
         position: 'absolute',

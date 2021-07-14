@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         height: height * 0.25,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        // backgroundColor: 'red',
+        backgroundColor: '#424549',
     },
     ButtonContainer:{
         width: width,
