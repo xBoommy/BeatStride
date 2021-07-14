@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet,  Text,  View, Dimensions, ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import { IconButton } from "react-native-paper";
 import * as Firestore from '../../../api/firestore';
 
 import HistoryItem from './HistoryItem';
@@ -62,7 +63,13 @@ const HistoryTab = () => {
                         mode={item.mode}
                         id={item.id}
                     />
-            }
+                }
+                ListEmptyComponent={
+                    <View style={styles.emptyList}>
+                        <IconButton icon="run" style={{ margin: 0 }} color={'#72767D'} />
+                        <Text style={styles.emptyText}>No Run History</Text>
+                    </View>
+                }
             />
 
         </View>
@@ -102,6 +109,7 @@ const styles = StyleSheet.create({
         color: '#BABBBF'
     },
     list:{
+        width: width,
         height: height * 0.58,
         // backgroundColor: 'green',
     },
@@ -109,6 +117,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: height * 0.01,
     },
+    emptyList: {
+        width: width,
+        height: height * 0.58,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'red',
+    },
+    emptyText:{
+        fontSize: 14,
+        color: '#72767D'
+    }
 })
 
 export default HistoryTab;
