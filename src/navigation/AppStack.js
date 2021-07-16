@@ -12,8 +12,8 @@ import SongScreen from '../screens/Music/SongsScreen';
 import RunningScreen from '../screens/Running/RunningScreen';
 import EndScreen from '../screens/RunEnd/EndScreen';
 import HistoryView from '../screens/Exercise/components/HistoryView';
-
-import ShareImage from '../screens/Share/ShareImage';
+import RequestScreen from '../screens/Social/RequestScreen';
+import SearchScreen from '../screens/Social/SearchScreen';
 
 const {width, height} = Dimensions.get("window")
 
@@ -87,6 +87,38 @@ const AppStack = () => {
                 name="HistoryView"
                 component={HistoryView}
                 options={{headerShown: false}}
+            />
+            <Stack.Screen
+                key="RequestScreen"
+                name="RequestScreen"
+                component={RequestScreen}
+                options={{
+                    title: "Friend Requests",
+                    headerStyle: {
+                        backgroundColor: '#1E2124',
+                        height: height * 0.1,
+                    },
+                    headerTintColor: '#BABBBF',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }
+                }}
+            />
+            <Stack.Screen
+                key="SearchScreen"
+                name="SearchScreen"
+                component={SearchScreen}
+                options={{
+                    title: "Search Users ",
+                    headerStyle: {
+                        backgroundColor: '#1E2124',
+                        height: height * 0.1,
+                    },
+                    headerTintColor: '#BABBBF',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }
+                }}
             />
             
         </Stack.Navigator>

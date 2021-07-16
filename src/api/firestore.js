@@ -320,6 +320,156 @@ export const db_editGoals = async( distance, time, onSuccess) => {
     }
 }
 
+/**Obtain users in system - WORKS
+ * 
+ * @param {function} onSuccess 
+ * @param {function} onError 
+ * @returns {array} historyList => list of run records in history
+ */
+ export const db_userList = (onSuccess, onError) => {
+    try {
+        db.collection("users")
+        .onSnapshot((collection) => {
+            const userList = collection.docs.map((doc) => doc.data());
+            return onSuccess(userList);
+        })
+    } catch (error) {
+        return onError(error);
+    }
+}
+
+// List of Friends
+export const db_friendsList = (onSuccess, onError) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users")
+        .doc(user_id).collection("friends")
+        .where('status', '==', 'friend')
+        .onSnapshot((collection) => {
+            const userList = collection.docs.map((doc) => doc.data());
+            return onSuccess(userList);
+        })
+    } catch (error) {
+        return onError(error);
+    }
+}
+
+// List of users requesting friend
+export const db_requestList = (onSuccess, onError) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users")
+        .doc(user_id).collection("friends")
+        .where('status', '==', 'request')
+        .onSnapshot((collection) => {
+            const userList = collection.docs.map((doc) => doc.data());
+            return onSuccess(userList);
+        })
+    } catch (error) {
+        return onError(error);
+    }
+}
+
+// List of pending friend users
+export const db_pendingList = (onSuccess, onError) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users")
+        .doc(user_id).collection("friends")
+        .where('status', '==', 'pending')
+        .onSnapshot((collection) => {
+            const userList = collection.docs.map((doc) => doc.data());
+            return onSuccess(userList);
+        })
+    } catch (error) {
+        return onError(error);
+    }
+}
+
+//Get other user's data
+export const db_getOtherDataSnapshot = async( uid, onSuccess, onError) => {
+    const user_id = uid
+    try {
+        db.collection("users").doc(user_id)
+        .onSnapshot((documentSnapshot) => {
+            const userData = documentSnapshot.data()
+            return onSuccess(userData);
+        })
+    } catch (error) {
+        return onError(error);
+    }
+}
+
+
+//Add friend status
+const db_setFriendStatus = ( uid1, uid2, status ) => {
+    try {
+        db.collection("users").doc(uid1).collection("friends").doc(uid2).set({uid: uid2, status: status});
+        console.log("success")
+    } catch (error) {
+        console.log("Fail to set friend status")
+    }
+}
+
+//Update friend status
+const db_updateFriendStatus = ( uid1, uid2, status ) => {
+    try {
+        db.collection("users").doc(uid1).collection("friends").doc(uid2).update({status: status});
+        console.log("success")
+    } catch (error) {
+        console.log("Fail to update friend status")
+    }
+}
+
+//delete friend status
+const db_deleteFriendDoc = ( uid1, uid2 ) => {
+    try {
+        db.collection("users").doc(uid1).collection("friends").doc(uid2).delete();
+    } catch (error) {
+        console.log("Fail to remove friend doc")
+    }
+}
+
+//Request Friend
+export const db_requestFriend = async( friend_id ) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        //update user
+        db_setFriendStatus(user_id, friend_id, "pending");
+        //update friend
+        db_setFriendStatus(friend_id, user_id, "request");
+    } catch (error) {
+        console.log("Fail to send friend request")
+    }
+}
+
+//Withdraw Friend Request
+//Reject Friend
+export const db_withdrawRejectRequest = async( friend_id ) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        //update user
+        db_deleteFriendDoc(user_id, friend_id);
+        //update friend
+        db_deleteFriendDoc(friend_id, user_id);
+    } catch (error) {
+        console.log("Fail to withdraw friend request")
+    }
+}
+
+//Accept Friend
+export const db_acceptFriend = async( friend_id ) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        //update user
+        db_updateFriendStatus(user_id, friend_id, "friend");
+        //update friend
+        db_updateFriendStatus(friend_id, user_id, "friend");
+    } catch (error) {
+        console.log("Fail to accept  friend request")
+    }
+}
+
 
 
 
