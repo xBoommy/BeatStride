@@ -60,9 +60,18 @@ export const storage_retrieveProfilePic = async (onSuccess, onError) => {
     const user_id = Authentication.getCurrentUserId();
     const path = `profilephotos/${user_id}/${user_id}.jpg`;
     try {
-        //console.log('trying to get file....');
         const file = await firebase.storage().ref(path).getDownloadURL();
-        //console.log('reached here, file is:');
+        const profilePicture = {uri: file};
+        onSuccess(profilePicture);
+    } catch (e) {
+        onError(e);
+    }
+}
+
+export const storage_retrieveOtherProfilePic = async (uid, onSuccess, onError) => {
+    const path = `profilephotos/${uid}/${uid}.jpg`;
+    try {
+        const file = await firebase.storage().ref(path).getDownloadURL();
         const profilePicture = {uri: file};
         onSuccess(profilePicture);
     } catch (e) {
