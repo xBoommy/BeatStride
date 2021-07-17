@@ -16,6 +16,9 @@ import RequestScreen from '../screens/Social/RequestScreen';
 import SearchScreen from '../screens/Social/SearchScreen';
 import UserProfile from '../screens/Social/components/UserProfile';
 
+import ChangePasswordScreen from '../screens/Profile/ChangePasswordScreen';
+import ForgotPasswordScreen from '../screens/Onboarding/ForgotPasswordScreen';
+
 const {width, height} = Dimensions.get("window")
 
 const Stack = createStackNavigator();
@@ -136,6 +139,15 @@ const AppStack = () => {
                         fontWeight: 'bold',
                     }
                 }}
+                key="ChangePasswordScreen"
+                name="ChangePasswordScreen"
+                component={ChangePasswordScreen}
+            />
+            <Stack.Screen
+                key="ForgotPasswordScreen"
+                name="ForgotPasswordScreen"
+                component={ForgotPasswordScreen}
+                options={{headerShown: false}}
             />
             
         </Stack.Navigator>

@@ -1,5 +1,6 @@
 import firebase from "./firebase";
 import React, { createContext  } from 'react';
+import { Alert } from 'react-native';
 
 const auth = firebase.auth();
 
@@ -45,3 +46,51 @@ export const setOnAuthStateChanged = (onUserAuthenticated, onUserNotFound) => au
     return onUserNotFound(user);
   }
 });
+
+export const changePassword = async (currentPassword, newPassword) => {
+    const user = auth.currentUser;
+    try {
+        //re-authenticate for PW change
+        const credentials = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+        await user.reauthenticateWithCredential(credentials);
+
+        //Change PW after re-authentication
+        await user.updatePassword(newPassword);
+
+        console.log("Password changed");
+
+        Alert.alert(
+          "Change Password",
+          "Password Changed Successfully",
+          [{ text: 'Ok', onPress: ()=>{} }],
+        );
+        return true; //successful
+    } catch (e) {
+        Alert.alert(
+          "Change Password",
+          "Password change failed: " + e,
+          [{ text: 'Ok', onPress: ()=>{} }],
+        );
+        return false;
+    }
+}
+
+export const resetPassword = async (email) => {
+    try {
+        await auth.sendPasswordResetEmail(email);
+
+        Alert.alert(
+          "Reset Password",
+          "Password reset email sent!",
+          [{ text: 'Ok', onPress: ()=>{} }],
+        );
+        return true;
+    } catch (e) {
+        Alert.alert(
+          "Change Password",
+          "" + e,
+          [{ text: 'Ok', onPress: ()=>{} }],
+        );
+        return false;
+    }
+}

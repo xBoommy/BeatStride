@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import * as Firestore from '../../../api/firestore';
 
 const {width, height} = Dimensions.get("window")
 
@@ -14,19 +16,39 @@ const GlobalProfileInfo = (props) => {
     const userData = props.userData;
     
     const [displayName, setDisplayName] = useState(userData.displayName);
+    const [displayPicture, setDisplayPicture] = useState(require('../../../assets/icons/defaultprofile.png'));
     const [uid, setUID] = useState(userData.uid);
 
     useEffect(() => {
         setDisplayName(userData.displayName);
         setUID(userData.uid);
-    }, [userData])
+        Firestore.storage_retrieveProfilePic(setDisplayPicture, () => console.log('Failed to load profile picture'));
+    }, [userData]);
+
+    const uploadProfilePic = async () => {
+
+        let results = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [2, 2],
+        })
+
+        if (!results.cancelled) {
+            console.log('Image location/uri: ');
+            console.log(results.uri);
+            setDisplayPicture({uri: results.uri});
+            Firestore.storage_uploadProfilePic(results.uri);
+        }
+    };
 
     return (
         <View style={styles.componentContainer}>
 
             {/* Profile Picture */}
             <View style={styles.profilePicContainer}>
-
+                <TouchableOpacity onPress={uploadProfilePic}>
+                    <Image style={styles.profilePicContainer} source={displayPicture} />
+                </TouchableOpacity>
             </View>
 
             {/* User Info */}
@@ -63,7 +85,7 @@ const styles = StyleSheet.create({
         height: height * 0.15,
         aspectRatio: 1,
         borderRadius: width,
-        backgroundColor: 'brown',
+        //backgroundColor: 'brown',
     },
     infoContainer:{
         width: (width * 0.95) - (height * 0.15) - (width * 0.05),
