@@ -15,6 +15,9 @@ import HistoryView from '../screens/Exercise/components/HistoryView';
 import RequestScreen from '../screens/Social/RequestScreen';
 import SearchScreen from '../screens/Social/SearchScreen';
 
+import ChangePasswordScreen from '../screens/Profile/ChangePasswordScreen';
+import ForgotPasswordScreen from '../screens/Onboarding/ForgotPasswordScreen';
+
 const {width, height} = Dimensions.get("window")
 
 const Stack = createStackNavigator();
@@ -119,6 +122,16 @@ const AppStack = () => {
                         fontWeight: 'bold',
                     }
                 }}
+            />
+            <Stack.Screen
+                key="ChangePasswordScreen"
+                name="ChangePasswordScreen"
+                component={ChangePasswordScreen}
+            />
+            <Stack.Screen
+                key="ForgotPasswordScreen"
+                name="ForgotPasswordScreen"
+                component={ForgotPasswordScreen}
             />
             
         </Stack.Navigator>

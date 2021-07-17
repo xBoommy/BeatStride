@@ -65,13 +65,13 @@ const ProfileScreen = ({navigation}) => {
 
             </View>
 
-            {/* Logout button */}
+            {/* Edit Profile */}
             <View style={styles.ButtonContainer}>
                 <Button
                     mode="contained"
                     style={{width: width * 0.8, borderRadius: 10,  backgroundColor: '#72767D'}}
                     contentStyle={{paddingVertical: 5}}
-                    onPress={() => {}}
+                    onPress={() => {navigation.navigate('ChangePasswordScreen');}}
                     theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}>
                     <Text style={{color: '#FFFFFF'}}>Edit Profile</Text>
                 </Button>

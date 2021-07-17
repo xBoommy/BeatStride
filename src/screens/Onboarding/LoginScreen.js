@@ -124,6 +124,14 @@ const LoginScreen = ({navigation}) => {
                   theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}
               >Create an account</Button>
 
+              <Button
+                  mode="outlined"
+                  style={{ marginTop: 20, borderRadius: 10, backgroundColor: '#424549', }}
+                  contentStyle={{ paddingVertical: 5 }}
+                  onPress={() => navigation.navigate("ForgotPasswordScreen")}
+                  theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}
+              >Forgot Password</Button>
+
           </ScrollView>
         </SafeAreaView>
     );
