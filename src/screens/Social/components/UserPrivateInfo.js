@@ -9,7 +9,7 @@ import JoinPage from './Page Item/JoinPage';
 
 const {width, height} = Dimensions.get("window")
 
-const PrivateProfileInfo = (props) => {
+const UserPrivateInfo = (props) => {
     const userData = props.userData;
 
     const [totalDistance, setTotalDistance] = useState(0);
@@ -90,7 +90,8 @@ const PrivateProfileInfo = (props) => {
 const styles = StyleSheet.create({
     componentContainer:{
         width: width,
-        height: height * 0.4,
+        height: height * 0.5,
+        justifyContent: 'center',
         alignItems: 'center',
         // backgroundColor: 'purple',
     },
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
         height: height * 0.22,
         borderRadius: 5,
         overflow: 'hidden',
-        marginTop: height * 0.01,
+        marginTop: height * 0.06,
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#7289DA',
@@ -144,4 +145,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default PrivateProfileInfo;
+export default UserPrivateInfo;

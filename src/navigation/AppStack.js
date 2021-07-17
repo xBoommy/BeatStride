@@ -139,9 +139,12 @@ const AppStack = () => {
                         fontWeight: 'bold',
                     }
                 }}
+            />
+            <Stack.Screen
                 key="ChangePasswordScreen"
                 name="ChangePasswordScreen"
                 component={ChangePasswordScreen}
+                options={{headerShown: false}}
             />
             <Stack.Screen
                 key="ForgotPasswordScreen"

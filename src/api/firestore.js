@@ -479,8 +479,10 @@ export const db_acceptFriend = async( friend_id ) => {
     }
 }
 
-export const db_friendStatus = async(friend_id, onExist, onNotExist) => {
+export const db_getFriendStatus = async(friend_id, onExist, onNotExist) => {
     const user_id = Authentication.getCurrentUserId()
+
+    let unsubscribe
     try {
         const docRef = db.collection("users").doc(user_id).collection("friends").doc(friend_id)
         // console.log("here")
@@ -488,10 +490,10 @@ export const db_friendStatus = async(friend_id, onExist, onNotExist) => {
         docRef.get().then((docSnapshot) => {
             // console.log("doc exists?", docSnapshot.exists)
             if (docSnapshot.exists) {
-                docRef.onSnapshot((documentSnapshot) => {
+                unsubscribe = docRef.onSnapshot((documentSnapshot) => {
                     const userData = documentSnapshot.data()
                     // console.log("userData", userData)
-                    return onExist(userData);
+                    return onExist(userData, unsubscribe);
                 })     
             } else {
                 return onNotExist();
