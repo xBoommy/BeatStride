@@ -9,19 +9,6 @@ import FriendItem from './components/FriendItem';
 
 const {width, height} = Dimensions.get("window")
 
-// const data = [
-//     {id:1, displayName: "james", uid: "123124"},
-//     {id:2, displayName: "alfred", uid: "346815"},
-//     {id:3, displayName: "max", uid: "16818"},
-//     {id:4, displayName: "john", uid: "321685"},
-//     {id:5, displayName: "mary", uid: "92623"},
-//     {id:6, displayName: "pepe", uid: "184626"},
-//     {id:7, displayName: "gabriel", uid: "16282"},
-//     {id:8, displayName: "jet", uid: "126653"},
-//     {id:9, displayName: "cheryl", uid: "84512"},
-//     {id:10, displayName: "gerald", uid: "518451"}
-// ]
-
 const SearchScreen = () => {
     const [selfID, setSelfID] = useState('')
     const [data, setData] = useState([])
@@ -135,8 +122,14 @@ const styles = StyleSheet.create({
     },
     list:{
         width: width,
-        height: height * 0.8,
+        height: height * 0.5,
         // backgroundColor: 'red',
+    },
+    listContent:{
+        width: width,
+        paddingBottom: height * 0.1,
+        // backgroundColor: 'red',
+
     },
     emptyList: {
         width: width,
