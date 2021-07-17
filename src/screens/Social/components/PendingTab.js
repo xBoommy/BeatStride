@@ -58,10 +58,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         // backgroundColor: 'red',
     },
+    listContent:{
+        width: width,
+    },
     emptyText:{
         fontSize: 14,
         color: '#72767D'
-    }
+    },
 });
 
 export default PendingTab;

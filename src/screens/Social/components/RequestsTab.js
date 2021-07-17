@@ -64,6 +64,9 @@ const styles = StyleSheet.create({
         height: height * 0.83,
         // backgroundColor: 'orange',
     },
+    listContent:{
+        width: width,
+    },
     emptyList: {
         width: width,
         height: height * 0.83,
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
     emptyText:{
         fontSize: 14,
         color: '#72767D'
-    }
+    },
 });
 
 export default RequestsTab;
