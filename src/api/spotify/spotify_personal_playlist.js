@@ -14,7 +14,7 @@ const config = {
 const apiPrefix = 'https://api.spotify.com/v1/me/playlists';
 
 export default async () => {
-
+  try {
     const authState = await authorize(config);
     const {accessToken} = authState;
 
@@ -48,7 +48,11 @@ export default async () => {
         }
     }
 
-    return result; //outside just freaking spam the firestore.add_playlist... it should be fine... it deals with duplicates
+    return result;
+  } catch (e) {
+    console.log('Access denied');
+    return [];
+  }
 };
 
 const getPersonalPlaylist = async (offset, accessToken) => {
