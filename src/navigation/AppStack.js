@@ -14,6 +14,7 @@ import EndScreen from '../screens/RunEnd/EndScreen';
 import HistoryView from '../screens/Exercise/components/HistoryView';
 import RequestScreen from '../screens/Social/RequestScreen';
 import SearchScreen from '../screens/Social/SearchScreen';
+import UserProfile from '../screens/Social/components/UserProfile';
 
 const {width, height} = Dimensions.get("window")
 
@@ -110,6 +111,22 @@ const AppStack = () => {
                 component={SearchScreen}
                 options={{
                     title: "Search Users ",
+                    headerStyle: {
+                        backgroundColor: '#1E2124',
+                        height: height * 0.1,
+                    },
+                    headerTintColor: '#BABBBF',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }
+                }}
+            />
+            <Stack.Screen
+                key="UserProfile"
+                name="UserProfile"
+                component={UserProfile}
+                options={{
+                    title: "User Profile ",
                     headerStyle: {
                         backgroundColor: '#1E2124',
                         height: height * 0.1,

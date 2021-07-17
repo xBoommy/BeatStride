@@ -50,9 +50,10 @@ const GlobalProfileInfo = (props) => {
 
 const styles = StyleSheet.create({
     componentContainer:{
-        width: width * 0.95,
-        height: height * 0.24,
-        borderRadius: 5,
+        width: width,
+        height: height * 0.25,
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',

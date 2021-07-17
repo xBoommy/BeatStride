@@ -6,6 +6,7 @@ import * as Firestore from '../../../api/firestore';
 const {width, height} = Dimensions.get("window")
 
 const RequestItem = (props) => {
+    const navigation = useNavigation();
     const item = props.item;
     const uid = item.uid;
 
@@ -27,7 +28,7 @@ const RequestItem = (props) => {
     }, [])
 
     return (
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => {navigation.navigate("UserProfile", {userData: userData})}}>
             <View style={styles.componentContainer}>
 
                 {/* profile image */}
@@ -45,22 +46,25 @@ const RequestItem = (props) => {
 
                     {/* User id */}
                     <View style={styles.idContainer}>
-                        <Text style={styles.idText} numberOfLines={1}>ID: {uid}</Text>
+                        <Text style={styles.idText} numberOfLines={1}>{uid}</Text>
                     </View>
                     
                 </View>
 
                 {/* Button Container */}
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.buttonComponent} onPress={() => {Firestore.db_acceptFriend(uid)}}>
-                        <Text style={styles.buttonText}>Accept</Text>
+                    <TouchableOpacity 
+                        style={styles.buttonComponent1} 
+                        onPress={() => {Firestore.db_acceptFriend(uid)}}
+                    >
+                        <Text style={styles.buttonText1}>Accept</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity 
-                        style={styles.buttonComponent} 
+                        style={styles.buttonComponent2} 
                         onPress={() => {Firestore.db_withdrawRejectRequest(uid)}}
                     >
-                        <Text style={styles.buttonText}>Reject</Text>
+                        <Text style={styles.buttonText2}>Reject</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -115,7 +119,7 @@ const styles = StyleSheet.create({
     },
     idText:{
         fontSize: 10,
-        color: '#FFFFFF',
+        color: '#BABBBF',
     },
     buttonContainer:{
         height: height * 0.1,
@@ -127,7 +131,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         // backgroundColor: 'orange',
     },
-    buttonComponent:{
+    buttonComponent1:{
         height: height * 0.035,
         width: (width * 0.34 - height * 0.02) * 0.9,
         borderRadius: 5,
@@ -137,7 +141,23 @@ const styles = StyleSheet.create({
         // borderColor: '#7289DA',
         backgroundColor: '#7289DA',
     },
-    buttonText:{
+    buttonText1:{
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#FFFFFF',
+        textAlign: 'center',
+        includeFontPadding: false,
+    },
+    buttonComponent2:{
+        height: height * 0.035,
+        width: (width * 0.34 - height * 0.02) * 0.9,
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: '#7289DA',
+    },
+    buttonText2:{
         fontSize: 14,
         fontWeight: 'bold',
         color: '#FFFFFF',

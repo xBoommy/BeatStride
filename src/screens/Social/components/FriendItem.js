@@ -6,6 +6,7 @@ import * as Firestore from '../../../api/firestore';
 const {width, height} = Dimensions.get("window")
 
 const FriendItem = (props) => {
+    const navigation = useNavigation();
     const item = props.item;
     const uid = item.uid;
 
@@ -27,7 +28,7 @@ const FriendItem = (props) => {
     }, [])
 
     return (
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => {navigation.navigate("UserProfile", {userData: userData})}}>
             <View style={styles.componentContainer}>
 
                 {/* profile image */}
@@ -45,7 +46,7 @@ const FriendItem = (props) => {
 
                     {/* User id */}
                     <View style={styles.idContainer}>
-                        <Text style={styles.idText} numberOfLines={1}>ID: {uid}</Text>
+                        <Text style={styles.idText} numberOfLines={1}>{uid}</Text>
                     </View>
                     
                 </View>
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     },
     idText:{
         fontSize: 10,
-        color: '#FFFFFF',
+        color: '#BABBBF',
     },
 })
 

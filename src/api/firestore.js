@@ -134,9 +134,9 @@ const db_updateFastestPace = async(record) => {
                 return userData.fastestPace; 
             }
         );
-        console.log("checking pace")
-        console.log(currFastest)
-        console.log(pace)
+        // console.log("checking pace")
+        // console.log(currFastest)
+        // console.log(pace)
         if (pace < currFastest || currFastest == 0) {
             try {
                 db.collection("users").doc(user_id).update({fastestPace: pace})   
@@ -405,7 +405,7 @@ export const db_getOtherDataSnapshot = async( uid, onSuccess, onError) => {
 const db_setFriendStatus = ( uid1, uid2, status ) => {
     try {
         db.collection("users").doc(uid1).collection("friends").doc(uid2).set({uid: uid2, status: status});
-        console.log("success")
+        // console.log("success")
     } catch (error) {
         console.log("Fail to set friend status")
     }
@@ -415,7 +415,7 @@ const db_setFriendStatus = ( uid1, uid2, status ) => {
 const db_updateFriendStatus = ( uid1, uid2, status ) => {
     try {
         db.collection("users").doc(uid1).collection("friends").doc(uid2).update({status: status});
-        console.log("success")
+        // console.log("success")
     } catch (error) {
         console.log("Fail to update friend status")
     }
@@ -467,6 +467,29 @@ export const db_acceptFriend = async( friend_id ) => {
         db_updateFriendStatus(friend_id, user_id, "friend");
     } catch (error) {
         console.log("Fail to accept  friend request")
+    }
+}
+
+export const db_friendStatus = async(friend_id, onExist, onNotExist) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        const docRef = db.collection("users").doc(user_id).collection("friends").doc(friend_id)
+        // console.log("here")
+
+        docRef.get().then((docSnapshot) => {
+            // console.log("doc exists?", docSnapshot.exists)
+            if (docSnapshot.exists) {
+                docRef.onSnapshot((documentSnapshot) => {
+                    const userData = documentSnapshot.data()
+                    // console.log("userData", userData)
+                    return onExist(userData);
+                })     
+            } else {
+                return onNotExist();
+            }
+        })
+    } catch (error) {
+        console.log("fail to check status", error)
     }
 }
 
