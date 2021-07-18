@@ -57,20 +57,26 @@ export const changePassword = async (currentPassword, newPassword) => {
         //Change PW after re-authentication
         await user.updatePassword(newPassword);
 
-        console.log("Password changed");
+        // console.log("Password changed");
 
-        Alert.alert(
-          "Change Password",
-          "Password Changed Successfully",
-          [{ text: 'Ok', onPress: ()=>{} }],
-        );
         return true; //successful
-    } catch (e) {
+    } catch (error) {
+
+      if (error.code == "auth/wrong-password") {
         Alert.alert(
-          "Change Password",
-          "Password change failed: " + e,
-          [{ text: 'Ok', onPress: ()=>{} }],
-        );
+          "Current Password Wrong",
+          "Please ensure that the current password you've entered is correct.",
+          [ { text:"Understood", onPress: () => {} } ]
+        )
+      }
+
+      if (error.code === 'auth/weak-password') {
+        Alert.alert(
+        "Weak New Password",
+        "Please ensure that the new password you've entered meets the minimum requirement of 6 characters.",
+        [ { text:"Understood", onPress: () => {} } ]
+        )
+    };
         return false;
     }
 }
@@ -80,17 +86,28 @@ export const resetPassword = async (email) => {
         await auth.sendPasswordResetEmail(email);
 
         Alert.alert(
-          "Reset Password",
-          "Password reset email sent!",
-          [{ text: 'Ok', onPress: ()=>{} }],
+          "Email Sent",
+          "The link to reset your password has been sent to your email.",
+          [{ text: 'Understood', onPress: ()=>{} }],
         );
         return true;
-    } catch (e) {
-        Alert.alert(
-          "Change Password",
-          "" + e,
-          [{ text: 'Ok', onPress: ()=>{} }],
-        );
+    } catch (error) {
+        if (error.code == "auth/invalid-email") {
+          Alert.alert(
+            "Invalid Email",
+            "Please ensure that the email you've entered is valid.",
+            [ { text:"Understood", onPress: () => {} } ]
+            )
+        }
+        if (error.code == "auth/user-not-found") {
+          Alert.alert(
+            "User Not Found",
+            "There are no accounts with the email address. Please ensure the email address is associated to your account.",
+            [{ text: 'Ok', onPress: ()=>{} }],
+          );
+        }
+        console.log(error)
+        
         return false;
     }
 }
