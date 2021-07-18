@@ -1,10 +1,10 @@
-import React, { useState, useRef, useContext } from 'react';
-import {  SafeAreaView, StyleSheet, Text, View, ScrollView, TouchableOpacity, Keyboard, Dimensions } from 'react-native';
+import React, { useState, useRef, useContext, useEffect } from 'react';
+import {  SafeAreaView, StyleSheet, Text, View, ScrollView, TouchableOpacity, Keyboard, Dimensions, Image } from 'react-native';
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import * as Authentication from '../../api/auth';
 import * as Firestore from '../../api/firestore';
+import * as ImagePicker from 'expo-image-picker';
 
 const {width, height} = Dimensions.get('window');
 
@@ -12,7 +12,7 @@ const EditProfileScreen = ({navigation, route}) => {
     const userData = route.params.userData;
     const [username, setUsername] = useState(userData.displayName);
     const [description, setDescription] = useState(userData.description);
-    const [picture, setPicture] = useState({uri:""});
+    const [displayPicture, setDisplayPicture] = useState({uri: ""});
     const [isUpdateLoading, setIsUpdateLoading] = useState(false);
 
     const updateProfile = () => {
@@ -22,18 +22,41 @@ const EditProfileScreen = ({navigation, route}) => {
         Firestore.db_updateProfile(
             {displayName: username, description: description},
             () => {
+                if (displayPicture.uri != "") {
+                    Firestore.storage_uploadProfilePic(displayPicture.uri);
+                } else {
+                    Firestore.storage_removeProfilePic();
+                }
                 setIsUpdateLoading(false);
                 navigation.goBack();
+                //navigation.navigate("AppTab", {screen: "ProfileScreen"});
             },
             () => {
                 setIsUpdateLoading(false);
                 return console.error(error);
             },
         )
-
-        //Update image storage (userData.uid)
-            
+        
     }
+
+    useEffect(() => {
+        Firestore.storage_retrieveOtherProfilePic(userData.uid, setDisplayPicture, () => setDisplayPicture({uri: ""}));
+    }, []);
+
+    const uploadProfilePic = async () => {
+
+        let results = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [2, 2],
+        })
+
+        if (!results.cancelled) {
+            //console.log('Image location/uri: ');
+            //console.log(results.uri);
+            setDisplayPicture({uri: results.uri});
+        }
+    };
 
     return (
         <SafeAreaView style={styles.screen}>
@@ -70,21 +93,22 @@ const EditProfileScreen = ({navigation, route}) => {
                     mode="contained"
                     style={{ marginTop: 10, marginBottom: 10, borderRadius: 10 , width: width * 0.3}}
                     contentStyle={{ paddingVertical: 5 }}
-                    onPress={() => {}}
+                    onPress={uploadProfilePic}
                     theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}
                 >
                     <Text style={{color: '#FFFFFF'}}>Upload</Text>
                 </Button>
 
                 {/* Picure Preview */}
-                {(picture.uri == "") ? 
+                {(displayPicture.uri == "") ? 
                 <View style={styles.noPictureContainer}>
                     <Text style={styles.noPictureText}>No Image</Text>
                 </View>
                 :
                 <View style={styles.pictureContainer}>
                     {/* Image */}
-                    <TouchableOpacity style={styles.removePictureContainer} onPress={() => {setPicture({uri:""})}}>
+                    <Image style={styles.pictureContainer} source={displayPicture} />
+                    <TouchableOpacity style={styles.removePictureContainer} onPress={() => {setDisplayPicture({uri:""})}}>
                         <AntDesign name="close" color="#FFFFFF"/>
                     </TouchableOpacity>
                 </View>
