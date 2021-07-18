@@ -29,7 +29,7 @@ const FriendItem = (props) => {
     }, [])
 
     return (
-        <TouchableWithoutFeedback onPress={() => {navigation.navigate("UserProfile", {userData: userData})}}>
+        <TouchableWithoutFeedback onPress={() => {navigation.navigate("UserProfileScreen", {userData: userData})}}>
             <View style={styles.componentContainer}>
 
                 {/* profile image */}
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         aspectRatio: 1,
         borderRadius: height,
         marginLeft: width * 0.05,
-        //backgroundColor: 'pink',
+        backgroundColor: '#4F535C',
     },
     dataContainer:{
         height: height * 0.1,
