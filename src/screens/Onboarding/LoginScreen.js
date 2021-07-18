@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import {  SafeAreaView, StyleSheet, Text, View, Dimensions, Keyboard, Image, ScrollView, Alert } from 'react-native';
+import {  SafeAreaView, StyleSheet, Text, View, Dimensions, Keyboard, Image, ScrollView, Alert, Pressable } from 'react-native';
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 
@@ -118,19 +118,16 @@ const LoginScreen = ({navigation}) => {
 
               <Button
                   mode="outlined"
-                  style={{ marginTop: 20, borderRadius: 10, backgroundColor: '#424549', }}
+                  style={{ marginTop: 20, borderRadius: 10, backgroundColor: '#424549', borderWidth:2, borderColor: '#7289DA' }}
                   contentStyle={{ paddingVertical: 5 }}
                   onPress={() => navigation.navigate("RegisterScreen")}
                   theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}
               >Create an account</Button>
 
-              <Button
-                  mode="outlined"
-                  style={{ marginTop: 20, borderRadius: 10, backgroundColor: '#424549', }}
-                  contentStyle={{ paddingVertical: 5 }}
-                  onPress={() => navigation.navigate("ForgotPasswordScreen")}
-                  theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}
-              >Forgot Password</Button>
+              <Pressable onPress={() => navigation.navigate("ForgotPasswordScreen")} style={{alignSelf: 'center'}}>
+                  <Text style={styles.forgotPasswordLink}>Forgot Your Password?</Text>
+              </Pressable>
+              
 
           </ScrollView>
         </SafeAreaView>
@@ -174,6 +171,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     textDecorationLine: 'underline',
-    color: '#4f5b62',
+    color: '#BABBBF',
   },
 });
