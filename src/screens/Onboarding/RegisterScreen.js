@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import {  SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable, Keyboard, Dimensions, TouchableOpacity, Image } from 'react-native';
+import {  SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable, Keyboard, Dimensions, TouchableOpacity, Image, Alert } from 'react-native';
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -21,6 +21,7 @@ const RegisterScreen = ({navigation}) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isPassword2Visible, setIsPassword2Visible] = useState(false);
     const [isRegisterLoading, setIsRegisterLoading] = useState(false);
+    const usernameTextInput = useRef();
     const emailTextInput = useRef();
     const passwordTextInput = useRef();
     const password2TextInput = useRef();
@@ -29,54 +30,97 @@ const RegisterScreen = ({navigation}) => {
         Keyboard.dismiss();
         setIsRegisterLoading(true);
 
-        //Password match check first then proceed to firebase things + focus
-    
-        Authentication.createAccount(
-            { name: username, email, password },
-            (user) => {
-
-                const Credentials = {
-                    displayName: user.displayName,
-                    email: user.email,
-                    uid: user.uid,
-                    totalDistance: 0,
-                    runCount: 0,
-                    goalDistance: 0,
-                    goalTime: 0,
-                    strideDistance: 0,
-                    longestDistance: 0,
-                    fastestPace: 0,
-                    joinDate: moment().format('MMMM Do YYYY, h:mm:ss a'),
-                    description: description,
-                }
-
-                Firestore.db_createAccount(Credentials, 
-                    () => {
-                        navigation.dispatch(CommonActions.reset({ 
-                            index: 0, 
-                            routes: [{ name: "GuideScreen" }]
-                        }))
-                    },
-                    () => {
-                        console.log('registration failed')
-                        setIsRegisterLoading(false);
-                    },
-                )
-
-                //Image store function
-                if (displayPicture.uri !== "") {
-                    Firestore.storage_newUserUploadProfilePic(user.uid, displayPicture.uri);
-                }
-          },
-          (error) => {
+        if (username == "") {
             setIsRegisterLoading(false);
-            // auth/email-already-in-use
-            // auth/invalid-email
-            // auth/operation-not-allowed
-            // auth/weak-password
-            return console.error(error);
-          }
-        );
+            usernameTextInput.current.focus()
+        } else if (email == "") {
+            setIsRegisterLoading(false);
+            emailTextInput.current.focus()
+        } else if (password == "") {
+            setIsRegisterLoading(false);
+            passwordTextInput.current.focus()
+        } else if (password2 == "") {
+            setIsRegisterLoading(false);
+            password2TextInput.current.focus()
+        }  else if (password != password2) {
+            setIsRegisterLoading(false);
+            Alert.alert(
+                "Passwords Do Not Match",
+                "Please ensure that the passwords you've entered matches.",
+                [ { text:"Understood", onPress: () => {password2TextInput.current.focus()} } ]
+            )
+        } else {
+            Authentication.createAccount(
+                { name: username, email, password },
+                (user) => {
+
+                    const Credentials = {
+                        displayName: user.displayName,
+                        email: user.email,
+                        uid: user.uid,
+                        totalDistance: 0,
+                        runCount: 0,
+                        goalDistance: 0,
+                        goalTime: 0,
+                        strideDistance: 0,
+                        longestDistance: 0,
+                        fastestPace: 0,
+                        joinDate: moment().format('MMMM Do YYYY, h:mm:ss a'),
+                        description: description,
+                    }
+
+                    Firestore.db_createAccount(Credentials, 
+                        () => {
+                            navigation.dispatch(CommonActions.reset({ 
+                                index: 0, 
+                                routes: [{ name: "GuideScreen" }]
+                            }))
+                        },
+                        () => {
+                            console.log('registration failed')
+                            setIsRegisterLoading(false);
+                        },
+                    )
+
+                    if (displayPicture.uri !== "") {
+                        Firestore.storage_newUserUploadProfilePic(user.uid, displayPicture.uri);
+                    }
+            },
+            (error) => {
+                setIsRegisterLoading(false);
+
+                if (error.code === 'auth/email-already-in-use') {
+                    Alert.alert(
+                    "Email Already In-use",
+                    "The email you've entered is already in-use. Please use another email.",
+                    [ { text:"Understood", onPress: () => {emailTextInput.current.focus()} } ]
+                    )
+                };
+                if (error.code === 'auth/invalid-email') {
+                    Alert.alert(
+                    "Invalid Email",
+                    "Please ensure that the email you've entered is valid.",
+                    [ { text:"Understood", onPress: () => {emailTextInput.current.focus()} } ]
+                    )
+                };
+                if (error.code === 'auth/operation-not-allowed') {
+                    Alert.alert(
+                    "System Unavailable",
+                    "Creation of account is disabled at the moment. Please try again after a moment",
+                    [ { text:"Understood", onPress: () => {} } ]
+                    )
+                };
+                if (error.code === 'auth/weak-password') {
+                    Alert.alert(
+                    "Weak Password",
+                    "Please ensure that the password you've entered meets the minimum requirements",
+                    [ { text:"Understood", onPress: () => {passwordTextInput.current.focus()} } ]
+                    )
+                }; 
+                return console.error(error);
+            }
+            );
+        }
         
     };
 
@@ -108,6 +152,7 @@ const RegisterScreen = ({navigation}) => {
                 <Text style={styles.subtitle}>Create your account</Text>
 
                 <TextInput
+                    ref={usernameTextInput}
                     mode="outlined"
                     label="Username"
                     style={{ marginTop: 10 }}
@@ -177,7 +222,7 @@ const RegisterScreen = ({navigation}) => {
 
                 <Text style={styles.subtitle}>Setup your profile</Text>
 
-                <Text style={styles.labelText}>Profile picture</Text>
+                <Text style={styles.labelText}>Profile picture (Optional)</Text>
 
                 <Button
                     mode="contained"
@@ -204,7 +249,7 @@ const RegisterScreen = ({navigation}) => {
                 
                 <TextInput
                     mode="outlined"
-                    label="Description (Max 80 Character)"
+                    label="Description (Optional)"
                     style={{ marginTop: 30 }}
                     placeholder="Enter your description (Max 80 Character)"
                     value={description}

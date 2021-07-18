@@ -4,41 +4,13 @@ import * as Authentication from "./auth";
 // const auth = firebase.auth();
 const db = firebase.firestore();
 
-const db_createAccount1 = (credentials, onSuccess, onError) => {
+export const db_createAccount = (credentials, onSuccess, onError) => {
     try {
         db.collection("users").doc(credentials.uid).set(credentials);
         return onSuccess();
     } catch (error) {
         return onError(error);
     }
-}
-
-const db_createAccount2 = (region) => {
-    try {
-        db.collection("region").doc(region).update({participants:firebase.firestore.FieldValue.increment(1)})
-    } catch (error) {
-
-    }
-}
-
-const db_createAccount3 = (uid, region) => {
-    try {
-        db.collection("region").doc(region).collection("users").doc(uid).set({distance: 0})
-    } catch (error) {
-        
-    }
-}
-
-/**Store user information & update region fields upon account creation
- * 
- * @param {object} credentials 
- * @param {function} onSuccess 
- * @param {function} onError 
- */
-export const db_createAccount = (credentials, onSuccess, onError) => {
-    db_createAccount1(credentials, onSuccess, onError);
-    // db_createAccount2(credentials.region);
-    // db_createAccount3(credentials.uid, credentials.region);
 }
 
 //Upload profile picture: ***** This uses Firebase.storage, not firestore *****
