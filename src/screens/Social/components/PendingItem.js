@@ -11,7 +11,7 @@ const PendingItem = (props) => {
     const uid = item.uid;
 
     const [displayName, setDisplayName] = useState('');
-    const [displayPicture, setDisplayPicture] = useState(require('../../../assets/icons/defaultprofile.png'));
+    const [displayPicture, setDisplayPicture] = useState({uri: ""});
     const [userData, setUserData] = useState({});
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const PendingItem = (props) => {
             },
             (error) => {console.log(error)},
         );
-        Firestore.storage_retrieveOtherProfilePic(uid, setDisplayPicture, () => console.log(uid + ' User has no profile picture (PENDING ITEM)'));
+        Firestore.storage_retrieveOtherProfilePic(uid, setDisplayPicture, () => setDisplayPicture({uri: ""}));
     }, [])
 
     return (
@@ -33,8 +33,10 @@ const PendingItem = (props) => {
             <View style={styles.componentContainer}>
 
                 {/* profile image */}
-                <View>
-                    <Image style={styles.pictureContainer} source={displayPicture} />
+                <View style={styles.pictureContainer}>
+                    { (displayPicture.uri != "") &&
+                        <Image style={styles.pictureContainer} source={displayPicture} />
+                    }
                 </View>
 
                 {/* Data Container */}
@@ -80,6 +82,7 @@ const styles = StyleSheet.create({
         height: height * 0.15,
         flexDirection: 'row',
         alignItems: 'center',
+        paddingLeft: width * 0.03,
         // justifyContent: 'space-around',
         // backgroundColor: 'purple',
         // borderColor: '#FFFFFF',
@@ -89,7 +92,6 @@ const styles = StyleSheet.create({
         height: height * 0.1,
         aspectRatio: 1,
         borderRadius: height,
-        marginLeft: width * 0.03,
         backgroundColor: '#4F535C',
     },
     dataContainer:{
