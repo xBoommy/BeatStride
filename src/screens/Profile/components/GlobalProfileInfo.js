@@ -9,14 +9,13 @@ const GlobalProfileInfo = (props) => {
     const userData = props.userData;
     
     const [displayName, setDisplayName] = useState(userData.displayName);
-    const [displayPicture, setDisplayPicture] = useState(require('../../../assets/icons/defaultprofile.png'));
+    const [displayPicture, setDisplayPicture] = useState({uri: ""});
     const [description, setDescription] = useState(userData.description);
     const [uid, setUID] = useState(userData.uid);
 
     useEffect(() => {
         setDisplayName(userData.displayName);
         setUID(userData.uid);
-        Firestore.storage_retrieveProfilePic(setDisplayPicture, () => setDisplayPicture({uri:""}));
         setDescription(userData.description);
     }, [userData]);
 

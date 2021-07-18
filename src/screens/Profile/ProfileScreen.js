@@ -69,7 +69,7 @@ const ProfileScreen = ({navigation}) => {
             <View style={styles.ButtonContainer}>
                 <Button
                     mode="contained"
-                    style={{width: width * 0.8, borderRadius: 10,  backgroundColor: '#72767D'}}
+                    style={{width: width * 0.8, borderRadius: 10,  backgroundColor: '#424549', borderWidth:2, borderColor: '#7289DA' }}
                     contentStyle={{paddingVertical: 5}}
                     onPress={() => {navigation.navigate("EditProfileScreen", {userData: userData});}}
                     theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}>
