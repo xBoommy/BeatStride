@@ -3,46 +3,43 @@ import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity,
 import { Button } from 'react-native-paper';
 import { CommonActions } from "@react-navigation/native";
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import * as Firestore from '../../../api/firestore';
+import * as Firestore from '../../api/firestore';
 
-import UserGlobalInfo from './UserGlobalInfo'
-import UserPrivateInfo from './UserPrivateInfo'
+import UserGlobalInfo from './components/UserGlobalInfo'
+import UserPrivateInfo from './components/UserPrivateInfo'
 
 const {width, height} = Dimensions.get("window")
 
-const UserProfile = ({navigation, route}, props) => {
+const UserProfileScreen = ({navigation, route}, props) => {
     const userData = route.params.userData;
     const [status, setStatus] = useState("");
-    const [unsubscribe, setUnsubscribe] = useState();
 
     useEffect(() => {
-        Firestore.db_getFriendStatus(
+
+        const unsub = Firestore.db_getFriendStatus(
             userData.uid,
-            (userData, unsubscribe) => {
-                console.log("exist")
+            (userData) => {
+                // console.log("exist")
                 setStatus(userData.status);
-                setUnsubscribe(unsubscribe);
             },
             () => {
-                console.log("dont exist")
+                // console.log("dont exist")
                 setStatus("none");
             },
         )
     }, [])
 
     useEffect(() => {
-        Firestore.db_getFriendStatus(
+        const unsub = Firestore.db_getFriendStatus(
             userData.uid,
-            (userData, unsubscribe) => {
+            (userData) => {
                 setStatus(userData.status);
-                setUnsubscribe(unsubscribe);
             },
             () => {
                 setStatus("none");
             },
         )
     }, [status])
-
 
     return (
         <SafeAreaView style={styles.screen}>
@@ -84,8 +81,6 @@ const UserProfile = ({navigation, route}, props) => {
                                         [ {text: 'Cancel', onPress: () => {} },
                                         {text: 'Confirm', onPress: () => {
                                             Firestore.db_withdrawRejectRequest(userData.uid);
-                                            unsubscribe();
-                                            setStatus("none");
                                         } }]
                                     )
                                 }}
@@ -133,8 +128,6 @@ const UserProfile = ({navigation, route}, props) => {
                                         [ {text: 'Cancel', onPress: () => {} },
                                         {text: 'Confirm', onPress: () => {
                                             Firestore.db_withdrawRejectRequest(userData.uid);
-                                            unsubscribe();
-                                            setStatus("none");
                                         } }]
                                     )
                                 }}
@@ -191,7 +184,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 5,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#4F535C',
+        backgroundColor: '#36393E',
     },
     buttonContainer:{
         width: width,
@@ -220,4 +213,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default UserProfile;
+export default UserProfileScreen;

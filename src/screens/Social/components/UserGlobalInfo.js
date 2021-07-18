@@ -3,22 +3,17 @@ import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity,
 
 const {width, height} = Dimensions.get("window")
 
-// max 12 characters
-const name = "WWWWWWWWWWWW"
-
-// max 5 lines
-// max 80 characters
-const description = "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
-
 const UserGlobalInfo = (props) => {
     const userData = props.userData;
     
     const [displayName, setDisplayName] = useState(userData.displayName);
+    const [description, setDescription] = useState(userData.description);
     const [uid, setUID] = useState(userData.uid);
 
     useEffect(() => {
         setDisplayName(userData.displayName);
         setUID(userData.uid);
+        setDescription(userData.description);
     }, [userData])
 
     return (
@@ -26,7 +21,7 @@ const UserGlobalInfo = (props) => {
 
             {/* Profile Picture */}
             <View style={styles.profilePicContainer}>
-
+                
             </View>
 
             {/* User Info */}
@@ -61,7 +56,7 @@ const styles = StyleSheet.create({
         height: height * 0.15,
         aspectRatio: 1,
         borderRadius: width,
-        backgroundColor: 'brown',
+        backgroundColor: '#4F535C',
     },
     infoContainer:{
         width: (width * 0.95) - (height * 0.15) - (width * 0.05),

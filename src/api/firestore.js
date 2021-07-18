@@ -430,15 +430,6 @@ const db_updateFriendStatus = ( uid1, uid2, status ) => {
     }
 }
 
-//delete friend status
-const db_deleteFriendDoc = ( uid1, uid2 ) => {
-    try {
-        db.collection("users").doc(uid1).collection("friends").doc(uid2).delete();
-    } catch (error) {
-        console.log("Fail to remove friend doc")
-    }
-}
-
 //Request Friend
 export const db_requestFriend = async( friend_id ) => {
     const user_id = Authentication.getCurrentUserId()
@@ -458,9 +449,9 @@ export const db_withdrawRejectRequest = async( friend_id ) => {
     const user_id = Authentication.getCurrentUserId()
     try {
         //update user
-        db_deleteFriendDoc(user_id, friend_id);
+        db_setFriendStatus(user_id, friend_id, "none");
         //update friend
-        db_deleteFriendDoc(friend_id, user_id);
+        db_setFriendStatus(friend_id, user_id, "none");
     } catch (error) {
         console.log("Fail to withdraw friend request")
     }
@@ -482,7 +473,7 @@ export const db_acceptFriend = async( friend_id ) => {
 export const db_getFriendStatus = async(friend_id, onExist, onNotExist) => {
     const user_id = Authentication.getCurrentUserId()
 
-    let unsubscribe
+    let unsub
     try {
         const docRef = db.collection("users").doc(user_id).collection("friends").doc(friend_id)
         // console.log("here")
@@ -490,17 +481,46 @@ export const db_getFriendStatus = async(friend_id, onExist, onNotExist) => {
         docRef.get().then((docSnapshot) => {
             // console.log("doc exists?", docSnapshot.exists)
             if (docSnapshot.exists) {
-                unsubscribe = docRef.onSnapshot((documentSnapshot) => {
+                unsub = docRef.onSnapshot((documentSnapshot) => {
                     const userData = documentSnapshot.data()
                     // console.log("userData", userData)
-                    return onExist(userData, unsubscribe);
-                })     
+                    return onExist(userData);
+                }) 
+
             } else {
                 return onNotExist();
             }
         })
     } catch (error) {
         console.log("fail to check status", error)
+    }
+}
+
+const db_updateDisplayName = (data) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users").doc(user_id).update({displayName: data.displayName});
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const db_updateDescription = (data) => {
+    const user_id = Authentication.getCurrentUserId()
+    try {
+        db.collection("users").doc(user_id).update({description: data.description});
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const db_updateProfile = async(data, onSuccess, onError) => {
+    try {
+        db_updateDisplayName(data);
+        db_updateDescription(data);
+        return onSuccess()
+    } catch (error) {
+        return onError(error)
     }
 }
 
