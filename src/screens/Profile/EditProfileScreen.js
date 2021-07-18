@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
-import {  SafeAreaView, StyleSheet, Text, View, ScrollView, TouchableOpacity, Keyboard, Dimensions, Image } from 'react-native';
+import {  SafeAreaView, StyleSheet, Text, View, ScrollView, TouchableOpacity, Keyboard, Dimensions, Image, Alert } from 'react-native';
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -14,29 +14,38 @@ const EditProfileScreen = ({navigation, route}) => {
     const [description, setDescription] = useState(userData.description);
     const [displayPicture, setDisplayPicture] = useState({uri: ""});
     const [isUpdateLoading, setIsUpdateLoading] = useState(false);
+    const usernameTextInput = useRef();
 
     const updateProfile = () => {
         Keyboard.dismiss();
         setIsUpdateLoading(true);
 
-        Firestore.db_updateProfile(
-            {displayName: username, description: description},
-            () => {
-                if (displayPicture.uri != "") {
-                    Firestore.storage_uploadProfilePic(displayPicture.uri);
-                } else {
-                    Firestore.storage_removeProfilePic();
-                }
-                setIsUpdateLoading(false);
-                navigation.goBack();
-                //navigation.navigate("AppTab", {screen: "ProfileScreen"});
-            },
-            () => {
-                setIsUpdateLoading(false);
-                return console.error(error);
-            },
-        )
-        
+        if (username == "") {
+            setIsUpdateLoading(false);
+            Alert.alert(
+                "Invalid Username",
+                "Username field cannot be left blank.",
+                [ { text:"Understood", onPress: () => {usernameTextInput.current.focus()} } ]
+            )
+        } else {
+            Firestore.db_updateProfile(
+                {displayName: username, description: description},
+                () => {
+                    if (displayPicture.uri != "") {
+                        Firestore.storage_uploadProfilePic(displayPicture.uri);
+                    } else {
+                        Firestore.storage_removeProfilePic();
+                    }
+                    setIsUpdateLoading(false);
+                    navigation.goBack();
+                    //navigation.navigate("AppTab", {screen: "ProfileScreen"});
+                },
+                () => {
+                    setIsUpdateLoading(false);
+                    return console.error(error);
+                },
+            )
+        }
     }
 
     useEffect(() => {
@@ -72,6 +81,7 @@ const EditProfileScreen = ({navigation, route}) => {
                 
                 {/* Username */}
                 <TextInput
+                    ref={usernameTextInput}
                     mode="outlined"
                     label="Username"
                     style={{ marginTop: 10 }}
@@ -132,6 +142,16 @@ const EditProfileScreen = ({navigation, route}) => {
                     left={<TextInput.Icon name="pencil" color={description ? '#7289DA' : '#BABBBF'} />}
                     theme={{colors: {primary: "#7289DA", placeholder : '#72767D', text: '#FFFFFF', underlineColor: 'transparent', background: '#4F535C'},}}
                 />
+
+                <Button
+                    mode="outlined"
+                    style={{ marginTop: 20, marginBottom: 10, borderRadius: 10 , width: width * 0.8,  backgroundColor: '#424549', borderWidth:2, borderColor: '#7289DA'}}
+                    contentStyle={{ paddingVertical: 5 }}
+                    onPress={() => {navigation.navigate("ChangePasswordScreen")}}
+                    theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}
+                >
+                    <Text style={{color: '#FFFFFF'}}>Change Password</Text>
+                </Button>
 
                 <View style={styles.buttonContainer}>
                     <Button
@@ -228,7 +248,7 @@ const styles = StyleSheet.create({
     buttonContainer:{
         width: width * 0.8,
         height: height * 0.1,
-        marginTop: 20,
+        // marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'space-around',
         // backgroundColor: 'yellow',
