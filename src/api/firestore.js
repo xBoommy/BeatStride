@@ -56,6 +56,19 @@ export const storage_uploadProfilePic = async (uri) => {
     }
 }
 
+export const storage_newUserUploadProfilePic = async (uid, uri) => {
+
+    const path = `profilephotos/${uid}/${uid}.jpg`;
+    try {
+        const response = await fetch(uri);
+        const file = await response.blob();
+        console.log(file);
+        firebase.storage().ref(path).put(file);
+    } catch (e) {
+        console.error('Upload profile picture failed: ', e);
+    }
+}
+
 export const storage_retrieveProfilePic = async (onSuccess, onError) => {
     const user_id = Authentication.getCurrentUserId();
     const path = `profilephotos/${user_id}/${user_id}.jpg`;

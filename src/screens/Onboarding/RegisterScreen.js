@@ -1,9 +1,10 @@
 import React, { useState, useRef, useContext } from 'react';
-import {  SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable, Keyboard, Dimensions, TouchableOpacity } from 'react-native';
+import {  SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable, Keyboard, Dimensions, TouchableOpacity, Image } from 'react-native';
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import moment from 'moment';
+import * as ImagePicker from 'expo-image-picker';
 
 import * as Authentication from '../../api/auth';
 import * as Firestore from '../../api/firestore';
@@ -16,7 +17,7 @@ const RegisterScreen = ({navigation}) => {
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
     const [description, setDescription] = useState("");
-    const [picture, setPicture] = useState({uri: "a"});
+    const [displayPicture, setDisplayPicture] = useState({uri: ""});
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isPassword2Visible, setIsPassword2Visible] = useState(false);
     const [isRegisterLoading, setIsRegisterLoading] = useState(false);
@@ -36,6 +37,7 @@ const RegisterScreen = ({navigation}) => {
 
                 const Credentials = {
                     displayName: user.displayName,
+                    email: user.email,
                     uid: user.uid,
                     totalDistance: 0,
                     runCount: 0,
@@ -62,7 +64,9 @@ const RegisterScreen = ({navigation}) => {
                 )
 
                 //Image store function
-                
+                if (displayPicture.uri !== "") {
+                    Firestore.storage_newUserUploadProfilePic(user.uid, displayPicture.uri);
+                }
           },
           (error) => {
             setIsRegisterLoading(false);
@@ -73,7 +77,24 @@ const RegisterScreen = ({navigation}) => {
             return console.error(error);
           }
         );
-    }
+        
+    };
+
+    const uploadProfilePic = async () => {
+
+        let results = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [2, 2],
+          quality: 0.8,
+        })
+
+        if (!results.cancelled) {
+            console.log('Image location/uri: ');
+            console.log(results.uri);
+            setDisplayPicture({uri: results.uri});
+        }
+    };
     
     return (
         <SafeAreaView style={styles.screen}>
@@ -157,23 +178,25 @@ const RegisterScreen = ({navigation}) => {
                 <Text style={styles.subtitle}>Setup your profile</Text>
 
                 <Text style={styles.labelText}>Profile picture</Text>
+
                 <Button
                     mode="contained"
                     style={{ marginTop: 10, marginBottom: 10, borderRadius: 10 , width: width * 0.3}}
                     contentStyle={{ paddingVertical: 5 }}
-                    onPress={() => {}}
+                    onPress={ uploadProfilePic }
                     theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}
                 >
                     <Text style={{color: '#FFFFFF'}}>Upload</Text>
                 </Button>
-                {(picture.uri == "") ? 
+
+                {(displayPicture.uri == "") ? 
                 <View style={styles.noPictureContainer}>
                     <Text style={styles.noPictureText}>No Image</Text>
                 </View>
                 :
                 <View style={styles.pictureContainer}>
-                    {/* Image */}
-                    <TouchableOpacity style={styles.removePictureContainer} onPress={() => {setPicture({uri:""})}}>
+                    <Image style={styles.pictureContainer} source={displayPicture} />
+                    <TouchableOpacity style={styles.removePictureContainer} onPress={() => {setDisplayPicture({uri:""})}}>
                         <AntDesign name="close" color="#FFFFFF"/>
                     </TouchableOpacity>
                 </View>
