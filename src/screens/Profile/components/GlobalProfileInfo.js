@@ -20,6 +20,10 @@ const GlobalProfileInfo = (props) => {
         setDescription(userData.description);
     }, [userData]);
 
+    useEffect(() => {
+        Firestore.storage_retrieveProfilePic(setDisplayPicture, () => setDisplayPicture({uri:""}));
+    })
+
     const uploadProfilePic = async () => {
 
         let results = await ImagePicker.launchImageLibraryAsync({
@@ -40,11 +44,11 @@ const GlobalProfileInfo = (props) => {
         <View style={styles.componentContainer}>
 
             {/* Profile Picture */}
-            <View style={styles.profilePicContainer}>
-                <TouchableOpacity onPress={uploadProfilePic}>
+            <TouchableOpacity style={styles.profilePicContainer}>
+                {(displayPicture.uri != "") &&
                     <Image style={styles.profilePicContainer} source={displayPicture} />
-                </TouchableOpacity>
-            </View>
+                } 
+            </TouchableOpacity>
 
             {/* User Info */}
             <View style={styles.infoContainer}>
