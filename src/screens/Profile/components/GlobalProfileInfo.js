@@ -5,24 +5,19 @@ import * as Firestore from '../../../api/firestore';
 
 const {width, height} = Dimensions.get("window")
 
-// max 12 characters
-const name = "WWWWWWWWWWWW"
-
-// max 5 lines
-// max 80 characters
-const description = "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
-
 const GlobalProfileInfo = (props) => {
     const userData = props.userData;
     
     const [displayName, setDisplayName] = useState(userData.displayName);
     const [displayPicture, setDisplayPicture] = useState(require('../../../assets/icons/defaultprofile.png'));
+    const [description, setDescription] = useState(userData.description);
     const [uid, setUID] = useState(userData.uid);
 
     useEffect(() => {
         setDisplayName(userData.displayName);
         setUID(userData.uid);
-        Firestore.storage_retrieveProfilePic(setDisplayPicture, () => console.log('Failed to load profile picture'));
+        Firestore.storage_retrieveProfilePic(setDisplayPicture, () => setDisplayPicture({uri:""}));
+        setDescription(userData.description);
     }, [userData]);
 
     const uploadProfilePic = async () => {
@@ -79,13 +74,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        backgroundColor: '#4F535C',
+        // backgroundColor: '#4F535C',
     },
     profilePicContainer:{
         height: height * 0.15,
         aspectRatio: 1,
         borderRadius: width,
-        //backgroundColor: 'brown',
+        backgroundColor: '#4F535C',
     },
     infoContainer:{
         width: (width * 0.95) - (height * 0.15) - (width * 0.05),

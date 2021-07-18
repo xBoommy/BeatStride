@@ -71,7 +71,7 @@ const ProfileScreen = ({navigation}) => {
                     mode="contained"
                     style={{width: width * 0.8, borderRadius: 10,  backgroundColor: '#72767D'}}
                     contentStyle={{paddingVertical: 5}}
-                    onPress={() => {navigation.navigate('ChangePasswordScreen');}}
+                    onPress={() => {navigation.navigate("EditProfileScreen", {userData: userData});}}
                     theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}>
                     <Text style={{color: '#FFFFFF'}}>Edit Profile</Text>
                 </Button>
@@ -121,9 +121,11 @@ const styles = StyleSheet.create({
     globalInfoContainer:{
         width: width,
         height: height * 0.25,
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        backgroundColor: '#424549',
+        backgroundColor: '#36393E',
     },
     ButtonContainer:{
         width: width,

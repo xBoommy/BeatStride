@@ -14,8 +14,8 @@ import EndScreen from '../screens/RunEnd/EndScreen';
 import HistoryView from '../screens/Exercise/components/HistoryView';
 import RequestScreen from '../screens/Social/RequestScreen';
 import SearchScreen from '../screens/Social/SearchScreen';
-import UserProfile from '../screens/Social/components/UserProfile';
-
+import UserProfileScreen from '../screens/Social/UserProfileScreen';
+import EditProfileScreen from '../screens/Profile/EditProfileScreen';
 import ChangePasswordScreen from '../screens/Profile/ChangePasswordScreen';
 import ForgotPasswordScreen from '../screens/Onboarding/ForgotPasswordScreen';
 
@@ -125,9 +125,9 @@ const AppStack = () => {
                 }}
             />
             <Stack.Screen
-                key="UserProfile"
-                name="UserProfile"
-                component={UserProfile}
+                key="UserProfileScreen"
+                name="UserProfileScreen"
+                component={UserProfileScreen}
                 options={{
                     title: "User Profile ",
                     headerStyle: {
@@ -150,6 +150,12 @@ const AppStack = () => {
                 key="ForgotPasswordScreen"
                 name="ForgotPasswordScreen"
                 component={ForgotPasswordScreen}
+                options={{headerShown: false}}
+            />
+            <Stack.Screen
+                key="EditProfileScreen"
+                name="EditProfileScreen"
+                component={EditProfileScreen}
                 options={{headerShown: false}}
             />
             
