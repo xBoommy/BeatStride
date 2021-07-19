@@ -54,6 +54,11 @@ const PersonalPlaylistSearch = (props) => {
             <View style={styles.modal}>
                 <View style={styles.searchContainer}>
 
+                    <View style={styles.header}>
+                        <Text style={styles.headerText}>Select your personal playlists to add them</Text>
+                        <Text style={styles.headerText}>individually or simply import all at once</Text>
+                    </View>
+
                     {/* Playlist List */}
                     <FlatList
                         showsVerticalScrollIndicator ={false}
@@ -81,6 +86,13 @@ const PersonalPlaylistSearch = (props) => {
                                 <Text style={styles.buttonText}>Close</Text>
                             </View>
                         </TouchableOpacity>
+
+                        {/* Import All Button */}
+                        <TouchableOpacity onPress={() => {setSearchToggle(false)}}>
+                            <View style={styles.closeButton}>
+                                <Text style={styles.buttonText}>Import All</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
 
                 </View>
@@ -104,12 +116,20 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: '#36393E',
     },
-    searchBar: {
+    header: {
         width: width * 0.9,
         height: height * 0.1,
         alignSelf: 'center',
         marginTop: height * 0.01,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: width * 0.05,
         // backgroundColor: 'green',
+    },
+    headerText:{
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#BABBBF',
     },
     list:{
         width: width * 0.95,
@@ -138,9 +158,13 @@ const styles = StyleSheet.create({
         // backgroundColor: 'red',
     },
     buttonContainer:{
+        width: width * 0.7,
         position: 'absolute',
         bottom: height * 0.95 * 0.02 ,
         alignSelf: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        // backgroundColor: 'green',
     },
     closeButton:{
         width: width * 0.3,
