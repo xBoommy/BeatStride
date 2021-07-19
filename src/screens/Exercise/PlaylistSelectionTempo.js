@@ -40,8 +40,13 @@ const PlaylistSelectionTempo = (props) => {
             BPM, //should be target
             5, //should be allowance
             tracks => {
-                // console.log('selected tracks by bpm:');
-                // console.log(tracks);
+                function shuffle(array) { //Fisher-Yates Shuffle
+                    for (let i = array.length - 1; i > 0; i--) {
+                      let j = Math.floor(Math.random() * (i + 1));
+                      [array[i], array[j]] = [array[j], array[i]];
+                    }
+                }
+                shuffle(tracks);
                 dispatch(playlistActions.setTracksForRun(tracks));
             },
             error => {

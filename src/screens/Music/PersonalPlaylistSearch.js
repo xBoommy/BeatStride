@@ -10,21 +10,10 @@ import * as Firestore from '../../api/firestore';
 const {width, height} = Dimensions.get("window")
 
 
-const PlaylistSearch = (props) => {
+const PersonalPlaylistSearch = (props) => {
     const searchToggle = props.searchToggle;
     const setSearchToggle = props.setSearchToggle;
-    const [searchTitle, setSearchTitle] = useState('');
-    const [playlists, setPlaylists] = useState([]);
-
-    const getPlaylists = async () => {
-        const newPlaylists = await Spotify_Search({
-            offset: 0,
-            limit: 50,
-            q: searchTitle,
-        });
-        //If no playlist found empty playlist [],
-        setPlaylists(newPlaylists);
-    };
+    const playlists = props.playlists;
 
     const onSelect = (playlist) => {
         //do some alert/pop up, if ok then proceed with adding
@@ -53,39 +42,17 @@ const PlaylistSearch = (props) => {
         );
     };
 
+    const importAllHandler = () => {
+        for (let i = 0; i < playlists.length; i++) {
+            Firestore.db_addUserPlaylists(playlists[i]);
+        }
+        console.log("All loaded!");
+    }
+
     return (
         <Modal visible={searchToggle} transparent={true} animationType={'slide'}>
             <View style={styles.modal}>
                 <View style={styles.searchContainer}>
-
-                    {/* Search Bar */}
-                    <View style={styles.searchBar}>
-
-                        <TextInput
-                            mode="outlined"
-                            label="Search Playlists..."
-                            keyboardType="default"
-                            style={{width: 0.9 * width,}}
-                            placeholder="Name of playlist..."
-                            value={searchTitle}
-                            onChangeText={setSearchTitle}
-                            autoCapitalize="none"
-                            returnKeyType="default"
-                            onSubmitEditing={() => {
-                                            Keyboard.dismiss();
-                                            getPlaylists();
-                                        }}
-                            blurOnSubmit={false}
-                            right={<TextInput.Icon
-                                name={() => <Icon name="search" size={height * 0.03} color="#7289DA"/>}
-                                onPress={ () => {
-                                    Keyboard.dismiss();
-                                    getPlaylists();
-                                }}
-                            />}
-                            theme={{colors: {primary: "#7289DA", placeholder : '#72767D', text: '#BABBBF', underlineColor: 'transparent', background: '#4F535C'},}}
-                        />
-                    </View>
 
                     {/* Playlist List */}
                     <FlatList
@@ -191,4 +158,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PlaylistSearch;
+export default PersonalPlaylistSearch;

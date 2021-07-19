@@ -35,7 +35,14 @@ const PlaylistSelectionBasic = (props) => {
         setIsLoading(true);
         await TracksNoFilter(inSelected,
             (tracks) => {
-                dispatch(playlistActions.setTracksForRun(tracks))
+                function shuffle(array) { //Fisher-Yates Shuffle
+                    for (let i = array.length - 1; i > 0; i--) {
+                      let j = Math.floor(Math.random() * (i + 1));
+                      [array[i], array[j]] = [array[j], array[i]];
+                    }
+                }
+                shuffle(tracks);
+                dispatch(playlistActions.setTracksForRun(tracks));
             },
             (error) => {
                 setIsLoading(false);

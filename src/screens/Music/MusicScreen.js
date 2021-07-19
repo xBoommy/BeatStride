@@ -9,10 +9,12 @@ import Screen from '../MainScreen';
 import PlaylistItem from './components/PlaylistItem';
 import MusicPlayerMain from './components/MusicPlayerMain';
 import PlaylistSearch from './PlaylistSearch';
+import PersonalPlaylistSearch from './PersonalPlaylistSearch';
 import * as Firestore from '../../api/firestore';
 import Tracks_Getter from '../../api/spotify/spotify_tracks_getter';
 import * as Spotify from './components/spotify_player_controls';
 import spotify_personal_playlist from '../../api/spotify/spotify_personal_playlist';
+import { use } from 'ast-types';
 
 const {width, height} = Dimensions.get("window")
 
@@ -20,6 +22,8 @@ const {width, height} = Dimensions.get("window")
 const MusicScreen = () => {
     const navigation = useNavigation();
     const [searchToggle, setSearchToggle] = useState(false);
+    const [personalSearchToggle, setPersonalSearchToggle] = useState(false);
+    const [personalPlaylists, setPersonalPlaylists] = useState([]);
     const [playlists, setPlaylists] = useState([]);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentlyPlaying, setCurrentlyPlaying] = useState();
@@ -86,10 +90,12 @@ const MusicScreen = () => {
 
     const loadPersonalPlaylist = async () => {
         const personalPlaylist = await spotify_personal_playlist();
-        for (let i = 0; i < personalPlaylist.length; i++) {
-            Firestore.db_addUserPlaylists(personalPlaylist[i]);
+        if (personalPlaylist.length == 0) {
+            console.log("No Playlists Available");
+        } else {
+            setPersonalPlaylists(personalPlaylist);
+            setPersonalSearchToggle(true);
         }
-        console.log('All loaded!');
     };
 
   return (
@@ -162,6 +168,13 @@ const MusicScreen = () => {
                 searchToggle={searchToggle}
                 setSearchToggle={setSearchToggle}
             />       
+
+            {/* Personal Playlist Selection Popup */}
+            <PersonalPlaylistSearch
+                searchToggle={personalSearchToggle}
+                setSearchToggle={setPersonalSearchToggle}
+                playlists={personalPlaylists}
+            />
           
       </Screen>
   );
