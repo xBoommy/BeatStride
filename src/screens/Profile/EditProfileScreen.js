@@ -58,6 +58,7 @@ const EditProfileScreen = ({navigation, route}) => {
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
           aspect: [2, 2],
+          quality: 0.8,
         })
 
         if (!results.cancelled) {

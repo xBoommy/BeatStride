@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert, Keyboard } from 'react-native';
-import { TextInput } from "react-native-paper";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import SearchItem from './components/SearchItem';
-import Spotify_Search from '../../api/spotify/spotify_search';
 import * as Firestore from '../../api/firestore';
 
 const {width, height} = Dimensions.get("window")
@@ -88,7 +86,7 @@ const PersonalPlaylistSearch = (props) => {
                         </TouchableOpacity>
 
                         {/* Import All Button */}
-                        <TouchableOpacity onPress={() => {setSearchToggle(false)}}>
+                        <TouchableOpacity onPress={importAllHandler}>
                             <View style={styles.closeButton}>
                                 <Text style={styles.buttonText}>Import All</Text>
                             </View>
