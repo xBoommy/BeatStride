@@ -25,11 +25,11 @@ const MusicPlayer = props => {
         setTime( (prevTime) => prevTime + 500 );
     }
     const startTimer = () => {
-        setTick( BackgroundTimer.setInterval(ticking, 500) );
+        setTick( setInterval(ticking, 500) );
     };
 
     const stopTimer = () => {
-        BackgroundTimer.clearInterval(tick);
+        clearInterval(tick);
     };
   
     useEffect(() => {

@@ -61,22 +61,22 @@ export const changePassword = async (currentPassword, newPassword) => {
 
         return true; //successful
     } catch (error) {
+        if (error.code == "auth/wrong-password") {
+          Alert.alert(
+            "Current Password Wrong",
+            "Please ensure that the current password you've entered is correct.",
+            [ { text:"Understood", onPress: () => {} } ]
+          )
+        }
 
-      if (error.code == "auth/wrong-password") {
-        Alert.alert(
-          "Current Password Wrong",
-          "Please ensure that the current password you've entered is correct.",
+        if (error.code === 'auth/weak-password') {
+          Alert.alert(
+          "Weak New Password",
+          "Please ensure that the new password you've entered meets the minimum requirement of 6 characters.",
           [ { text:"Understood", onPress: () => {} } ]
-        )
-      }
-
-      if (error.code === 'auth/weak-password') {
-        Alert.alert(
-        "Weak New Password",
-        "Please ensure that the new password you've entered meets the minimum requirement of 6 characters.",
-        [ { text:"Understood", onPress: () => {} } ]
-        )
-    };
+          )
+        };
+        
         return false;
     }
 }
