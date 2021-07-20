@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native';
 import * as Firestore from '../../../api/firestore';
 
+import ProfilePictureView from './ProfilePictureView';
+
 const {width, height} = Dimensions.get("window")
 
 const UserGlobalInfo = (props) => {
@@ -22,15 +24,24 @@ const UserGlobalInfo = (props) => {
         Firestore.storage_retrieveOtherProfilePic(userData.uid, setDisplayPicture, () => setDisplayPicture({uri: ""}));
     }, []);
 
+    const [toggleImage, setToggleImage] = useState(false);
+
     return (
         <View style={styles.componentContainer}>
 
             {/* Profile Picture */}
-            <TouchableOpacity style={styles.profilePicContainer} onPress={() => console.log('Touched')}>
+            <TouchableOpacity style={styles.profilePicContainer} onPress={() => setToggleImage(true)}>
                 { (displayPicture.uri != "") &&
                     <Image style={styles.profilePicContainer} source={displayPicture} /> 
                 }
             </TouchableOpacity>
+
+            {/* View Profile Picture */}
+            <ProfilePictureView
+                toggleImage={toggleImage}
+                setToggleImage={setToggleImage}
+                displayPicture={displayPicture}
+            />
 
             {/* User Info */}
             <View style={styles.infoContainer}>

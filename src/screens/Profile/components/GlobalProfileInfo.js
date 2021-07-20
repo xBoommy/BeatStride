@@ -3,6 +3,8 @@ import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity,
 import * as ImagePicker from 'expo-image-picker';
 import * as Firestore from '../../../api/firestore';
 
+import ProfilePictureView from './ProfilePictureView';
+
 const {width, height} = Dimensions.get("window")
 
 const GlobalProfileInfo = (props) => {
@@ -23,31 +25,24 @@ const GlobalProfileInfo = (props) => {
         Firestore.storage_retrieveProfilePic(setDisplayPicture, () => setDisplayPicture({uri:""}));
     })
 
-    const uploadProfilePic = async () => {
-
-        let results = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          aspect: [2, 2],
-        })
-
-        if (!results.cancelled) {
-            console.log('Image location/uri: ');
-            console.log(results.uri);
-            setDisplayPicture({uri: results.uri});
-            Firestore.storage_uploadProfilePic(results.uri);
-        }
-    };
+    const [toggleImage, setToggleImage] = useState(false);
 
     return (
         <View style={styles.componentContainer}>
 
             {/* Profile Picture */}
-            <TouchableOpacity style={styles.profilePicContainer}>
+            <TouchableOpacity style={styles.profilePicContainer} onPress={() => setToggleImage(true)}>
                 {(displayPicture.uri != "") &&
                     <Image style={styles.profilePicContainer} source={displayPicture} />
                 } 
             </TouchableOpacity>
+
+            {/* View Profile Picture */}
+            <ProfilePictureView
+                toggleImage={toggleImage}
+                setToggleImage={setToggleImage}
+                displayPicture={displayPicture}
+            />
 
             {/* User Info */}
             <View style={styles.infoContainer}>
