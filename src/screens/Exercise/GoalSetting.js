@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, Keyboard, Modal, TouchableOpacity, Alert } from 'react-native';
 import { TextInput } from "react-native-paper";
+import Picker from '@gregfrench/react-native-wheel-picker'
+import moment from 'moment';
+var PickerItem = Picker.Item;
 
 import * as Firestore from '../../api/firestore';
 
@@ -9,15 +12,21 @@ const {width, height} = Dimensions.get("window")
 const PlaylistSelectionBasic = (props) => {
     const settingToggle = props.settingToggle;
     const setSettingToggle = props.setSettingToggle;
+    const strideDistance = props.strideDistance;
+    const goalDistance = props.goalDistance;
+    const goalTime = props.goalTime;
+    const time = moment.duration(goalTime);
 
-    const [kilometre, setKilometre] = useState(0);
-    const [metre, setMetre] = useState(0);
-    const [hour, setHour] = useState(0);
-    const [minute, setMinute] = useState(0);
+    const [kilometre, setKilometre] = useState(parseInt((goalDistance / 1000).toFixed(0)));
+    const [metre, setMetre] = useState(goalDistance % 1000);
+    const [hour, setHour] = useState(time.hours());
+    const [minute, setMinute] = useState(time.minutes());
+    const [second, setSecond] = useState(time.seconds());
+    const [BPM, setBPM] = useState(0);
 
     const updateGoals = () => {
         const distance = parseFloat(metre) + (parseFloat(kilometre) * 1000)
-        const time = parseFloat(minute) + (parseFloat(hour) * 60)
+        const time = second * 1000 + (minute) * 60000 + (hour) * 60 * 60000;
 
         // console.log(parseFloat(kilometre) * 1000)
         // console.log(typeof distance)
@@ -27,6 +36,7 @@ const PlaylistSelectionBasic = (props) => {
         // console.log(metre)
         // console.log(hour)
         // console.log(minute)
+        // console.log(goalDistance);
 
         if ((typeof distance === 'number') && (typeof time === 'number') && (distance >= 10) && (time > 0)) {
             Firestore.db_editGoals(distance, time, 
@@ -41,14 +51,30 @@ const PlaylistSelectionBasic = (props) => {
                 [ { text:"Understood", onPress: () => {console.log("Alert closed")} } ]
             )
         }
-    }
+    };
+
+    const round5 = (num) => {
+        return (num % 5) >= 2.5 ? parseInt(num/5)*5 + 5 : parseInt(num / 5) * 5
+    };
+
+    const recommendedBPM = () => {
+        const distance = parseFloat(metre) + (parseFloat(kilometre) * 1000)
+        const time = second * 1000 + (minute) * 60000 + (hour) * 60 * 60000;
+
+        if (strideDistance > 0 && time > 0){
+            const numOfSteps = (distance / strideDistance)
+            const BPM = numOfSteps / (time/60000)
+
+            const rounded_BPM = round5(BPM)
+
+            setBPM(rounded_BPM);
+            // console.log(rounded_BPM)
+        }
+    };
 
     useEffect(() => {
-        setKilometre(0);
-        setMetre(0);
-        setHour(0);
-        setMinute(0);
-    },[settingToggle])
+        recommendedBPM();
+    },[hour, minute, second, kilometre, metre]);
 
     return (
         <Modal visible={settingToggle} transparent={true} animationType={'slide'}>
@@ -72,6 +98,7 @@ const PlaylistSelectionBasic = (props) => {
                             <View style={styles.unitContainer}>
                                 {/* Kilometre */}
                                 <TextInput
+                                    value={kilometre.toString()}
                                     mode="outlined"
                                     label="Distance (km)"
                                     keyboardType="phone-pad"
@@ -90,6 +117,7 @@ const PlaylistSelectionBasic = (props) => {
                             <View style={styles.unitContainer}>
                                 {/* Metre */}
                                 <TextInput
+                                    value={metre.toString()}
                                     mode="outlined"
                                     label="Distance (m)"
                                     keyboardType="phone-pad"
@@ -110,43 +138,59 @@ const PlaylistSelectionBasic = (props) => {
                             <Text style={styles.subHeaderText}>Set Goal Time</Text>
                         </View>
 
-                        <View style={styles.inputContainer}>
-                            <View style={styles.unitContainer}>
-                                {/* Hour */}
-                                <TextInput
-                                    mode="outlined"
-                                    label="Time (hr)"
-                                    keyboardType="phone-pad"
-                                    style={styles.textInput}
-                                    placeholder="Hour(s)"
-                                    onChangeText={setHour}
-                                    autoCapitalize="none"
-                                    returnKeyType="default"
-                                    onSubmitEditing={() => {Keyboard.dismiss()}}
-                                    blurOnSubmit={false}
-                                    theme={{colors: {primary: "#7289DA", placeholder : '#72767D', text: '#BABBBF', underlineColor: 'transparent', background: '#4F535C'},}}
-                                />
-                                <Text style={styles.unitText}> hr</Text>
+                        <View style={styles.scrollPickerComponent}>
+
+                            {/* Hour */}
+                            <View style={styles.scrollPickerContainer}>
+                                <Text>Hours</Text>
+                                <Text>
+                                    <Picker style={styles.scrollPickerContainer}
+                                        lineColor="#FFFFFF"
+                                        selectedValue={hour}
+                                        itemStyle={{color:"#FFFFFF", fontSize: 14}}
+                                        onValueChange={(index) => setHour(index) }>
+                                        {[...Array(24).keys()].map((value, i) => (
+                                            <PickerItem label={value.toString()} value={i} key={i}/>
+                                        ))}
+                                    </Picker>
+                                </Text>
                             </View>
 
-                            <View style={styles.unitContainer}>
-                                {/* Minute */}
-                                <TextInput
-                                    mode="outlined"
-                                    label="Time (min)"
-                                    keyboardType="phone-pad"
-                                    style={styles.textInput}
-                                    placeholder="Minute(s)"
-                                    onChangeText={setMinute}
-                                    autoCapitalize="none"
-                                    returnKeyType="default"
-                                    onSubmitEditing={() => {Keyboard.dismiss()}}
-                                    blurOnSubmit={false}
-                                    theme={{colors: {primary: "#7289DA", placeholder : '#72767D', text: '#BABBBF', underlineColor: 'transparent', background: '#4F535C'},}}
-                                />
-                                <Text style={styles.unitText}> min</Text>
+                            {/* Minutes */}
+                            <View style={styles.scrollPickerContainer}>
+                                <Text>Minutes</Text>
+                                <Text>
+                                    <Picker style={styles.scrollPickerContainer}
+                                        lineColor="#FFFFFF"
+                                        selectedValue={minute}
+                                        itemStyle={{color:"#FFFFFF", fontSize: 14}}
+                                        onValueChange={(index) => setMinute(index) }>
+                                        {[...Array(60).keys()].map((value, i) => (
+                                            <PickerItem label={value.toString()} value={i} key={i}/>
+                                        ))}
+                                    </Picker>
+                                </Text>
                             </View>
+                            
+                            {/* Seconds */}
+                            <View style={styles.scrollPickerContainer}>
+                                <Text>Seconds</Text>
+                                <Text>
+                                    <Picker style={styles.scrollPickerContainer}
+                                        lineColor="#FFFFFF"
+                                        selectedValue={second}
+                                        itemStyle={{color:"#FFFFFF", fontSize: 14}}
+                                        onValueChange={(index) => setSecond(index) }>
+                                        {[...Array(60).keys()].map((value, i) => (
+                                            <PickerItem label={value.toString()} value={i} key={i}/>
+                                        ))}
+                                    </Picker>
+                                </Text>
+                            </View>
+                            
                         </View>
+
+                        <Text>Recommended BPM: {BPM}</Text>
                         
                     </View>
 
@@ -192,7 +236,7 @@ const styles = StyleSheet.create({
     },
     settingContainer:{
         width: width * 0.95,
-        height: height * 0.5,
+        height: height * 0.7,
         borderRadius: 5,
         backgroundColor: '#36393E',
     },
@@ -270,6 +314,21 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         color: '#FFFFFF',
+    },
+    scrollPickerComponent: {
+        width: width * 0.95, 
+        height: height * 0.1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: 'green',
+    },
+    scrollPickerContainer:{
+        height: height * 0.05,
+        width: width * 0.15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'blue',
     },
 })
 export default PlaylistSelectionBasic

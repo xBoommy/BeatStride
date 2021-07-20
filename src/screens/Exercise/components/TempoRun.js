@@ -3,6 +3,7 @@ import { StyleSheet,  Text,  View, Dimensions, ScrollView, Alert, TouchableOpaci
 import { useNavigation, CommonActions } from '@react-navigation/native'; 
 import * as Location from 'expo-location';
 import * as Firestore from '../../../api/firestore';
+import moment from 'moment';
 
 import PlaylistSelectionTempo from '../PlaylistSelectionTempo';
 import GoalSetting from '../GoalSetting';
@@ -22,6 +23,7 @@ const TempoRun = () => {
     const [goalTime, setGoalTime] = useState(0);
     const [strideDistance, setStrideDistance] = useState(0);
     const [BPM, setBPM] = useState(0);
+    const time = moment.duration(goalTime);
 
     /* [Check GPS Service Enabled? + Prompt] */
     const seviceCheck = async() => {
@@ -91,7 +93,7 @@ const TempoRun = () => {
     const recommendedBPM = () => {
         if (strideDistance > 0 && goalTime > 0){
             const numOfSteps = (goalDistance / strideDistance)
-            const BPM = numOfSteps / goalTime
+            const BPM = numOfSteps / (goalTime/60000)
             const rounded_BPM = round5(BPM)
 
             setBPM(rounded_BPM);
@@ -142,7 +144,9 @@ const TempoRun = () => {
                     <View style={styles.goalValue}>
                         <Text style={styles.goalText}>Time</Text>
                         <Text style={styles.goalText}>
-                            {((Math.floor(goalTime / 60)) != 0) ? (Math.floor(goalTime / 60)) + " hr" : ""} {goalTime - (Math.floor(goalTime / 60)) * 60} min
+                            {(time.hours() != 0) ? time.hours() + "hr " : ""} 
+                            {time.minutes() != 0 ? time.minutes() + "min " : ""} 
+                            {time.seconds() != 0 ? time.seconds() + "s" : ""}
                         </Text>
                     </View>
                     
@@ -171,6 +175,9 @@ const TempoRun = () => {
             <GoalSetting
                 settingToggle={settingToggle}
                 setSettingToggle={setSettingToggle}
+                strideDistance={strideDistance}
+                goalDistance={goalDistance}
+                goalTime={goalTime}
             />
 
             {/* Loading Modal */}
