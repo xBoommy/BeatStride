@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         // backgroundColor: 'green',
     },
     headerText:{
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: 'bold',
         color: '#BABBBF',
     },

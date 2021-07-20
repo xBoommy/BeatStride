@@ -121,3 +121,18 @@ export async function queueTracks(arrOfTracks) {
     console.error('Error with queueTracks: ', e);
   }
 }
+
+//Check user play state
+export async function getState() {
+  try {
+    const isConnected = await SpotifyRemote.isConnectedAsync();
+    if (!isConnected) {
+      const session = await SpotifyAuth.authorize(spotifyConfig);
+      await SpotifyRemote.connect(session.accessToken);
+    }
+    const state = await SpotifyRemote.getPlayerState();
+    return state.isPaused;
+  } catch (e) {
+    console.error('Error with getting state: ', e);
+  }
+}

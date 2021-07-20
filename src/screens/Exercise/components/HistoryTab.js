@@ -66,7 +66,7 @@ const HistoryTab = () => {
                 }
                 ListEmptyComponent={
                     <View style={styles.emptyList}>
-                        <IconButton icon="run" style={{ margin: 0 }} color={'#72767D'} />
+                        <IconButton icon="run" style={{ margin: 0 }} color={'#72767D'} size={height * 0.045}/>
                         <Text style={styles.emptyText}>No Run History</Text>
                     </View>
                 }
