@@ -166,7 +166,7 @@ const RunningScreen = ({navigation, route}) => {
 
     /* [ON GPS Subscription/Tracking] */
     const subscribePosition = async() => {
-        const options = {accuracy: 6,  timeInterval: 500, distanceInterval: 2};
+        const options = {accuracy: 6,  timeInterval: 500, distanceInterval: 1};
 
         if ( Location.hasServicesEnabledAsync() ){
             try {
@@ -224,7 +224,7 @@ const RunningScreen = ({navigation, route}) => {
         const distGain = distanceCalculate(prevPos, currPos)
 
         /* Validation of position update */
-        const minGain = 2.5;
+        const minGain = 1.5;
         const maxGain= 20;
         if ( (minGain < distGain) && (distGain < maxGain) ) {
             setDistance((prevCurrentDistance) => (Math.round( (prevCurrentDistance + distGain)*100 ))  / 100);
