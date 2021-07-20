@@ -45,9 +45,9 @@ const SocialScreen = ({navigation}) => {
             </View>
             
             {/* Friends Info */}
-            <View style={styles.infoContainer}>
+            {/* <View style={styles.infoContainer}>
 
-            </View>
+            </View> */}
 
             {/* Friend List */}
             <FlatList
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     },
     list:{
         width: width,
-        height: height * 0.7,
+        height: height * 0.8,
         // backgroundColor: 'pink',
     },
     listContent:{
