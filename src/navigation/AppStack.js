@@ -18,6 +18,7 @@ import UserProfileScreen from '../screens/Social/UserProfileScreen';
 import EditProfileScreen from '../screens/Profile/EditProfileScreen';
 import ChangePasswordScreen from '../screens/Profile/ChangePasswordScreen';
 import ForgotPasswordScreen from '../screens/Onboarding/ForgotPasswordScreen';
+import GoalSettingScreen from '../screens/Exercise/GoalSettingScreen';
 
 const {width, height} = Dimensions.get("window")
 
@@ -157,6 +158,23 @@ const AppStack = () => {
                 name="EditProfileScreen"
                 component={EditProfileScreen}
                 options={{headerShown: false}}
+            />
+
+            <Stack.Screen
+                key="GoalSettingScreen"
+                name="GoalSettingScreen"
+                component={GoalSettingScreen}
+                options={{
+                    title: "Edit Goals",
+                    headerStyle: {
+                        backgroundColor: '#1E2124',
+                        height: height * 0.1,
+                    },
+                    headerTintColor: '#FFFFFF',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                    }
+                }}
             />
             
         </Stack.Navigator>

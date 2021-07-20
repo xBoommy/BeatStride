@@ -6,7 +6,6 @@ import * as Firestore from '../../../api/firestore';
 import moment from 'moment';
 
 import PlaylistSelectionTempo from '../PlaylistSelectionTempo';
-import GoalSetting from '../GoalSetting';
 import SelectLoading from './SelectLoading';
 
 const {width, height} = Dimensions.get("window")
@@ -15,7 +14,6 @@ const TempoRun = () => {
     const navigation = useNavigation();
 
     const [selectToggle, setSelectToggle] = useState(false)
-    const [settingToggle, setSettingToggle] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
 
     const [status, setStatus] = useState(0);
@@ -59,7 +57,7 @@ const TempoRun = () => {
                 } else {
                     Alert.alert(
                         "Set a Goal",
-                        "Tempo Run requires a goal for calibration. Please set your goal and try again",
+                        "Tempo Run requires distance and time for calibration. Please set your goal and try again.",
                         [ { text:"Understood", onPress: () => {console.log("Alert closed")} } ]
                     )
                 }
@@ -109,8 +107,6 @@ const TempoRun = () => {
         recommendedBPM();
     }, [strideDistance, goalDistance, goalTime])
     
-
-
     return (
         <View style={styles.componentContainer}>
 
@@ -146,14 +142,20 @@ const TempoRun = () => {
                         <Text style={styles.goalText}>
                             {(time.hours() != 0) ? time.hours() + "hr " : ""} 
                             {time.minutes() != 0 ? time.minutes() + "min " : ""} 
-                            {time.seconds() != 0 ? time.seconds() + "s" : ""}
+                            {time.seconds() + "s"}
                         </Text>
                     </View>
                     
                 </View>
 
                 {/* Goal Button */}
-                <TouchableOpacity onPress={() => {setSettingToggle(true)}}>
+                <TouchableOpacity 
+                    onPress={() => {
+                        navigation.navigate("GoalSettingScreen", 
+                            {goalDistance:goalDistance, goalTime:goalTime, strideDistance:strideDistance}
+                        )
+                    }}
+                    >
                     <View style={styles.goalButton}>
                         <Text style={styles.buttonText}>Edit Goal</Text>
                     </View>
@@ -169,15 +171,6 @@ const TempoRun = () => {
                 mode={"Tempo"}
                 setIsLoading={setIsLoading}
                 BPM={BPM}
-            />
-
-            {/* Goal Setting Popup */}
-            <GoalSetting
-                settingToggle={settingToggle}
-                setSettingToggle={setSettingToggle}
-                strideDistance={strideDistance}
-                goalDistance={goalDistance}
-                goalTime={goalTime}
             />
 
             {/* Loading Modal */}
