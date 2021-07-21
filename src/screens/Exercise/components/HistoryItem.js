@@ -90,9 +90,9 @@ const HistoryItem = (props) => {
                             </View> 
 
                             <Text style={styles.substatsText}>
-                                {displayTime.minutes() < 10 ? `0${displayTime.minutes()}` : displayTime.minutes()}
+                                {displayPace.minutes() < 10 ? `0${displayPace.minutes()}` : displayPace.minutes()}
                                 '
-                                {displayTime.seconds() < 10 ? `0${displayTime.seconds()}` : displayTime.seconds()}
+                                {displayPace.seconds() < 10 ? `0${displayPace.seconds()}` : displayPace.seconds()}
                                 " /km
                             </Text>
                         </View>
