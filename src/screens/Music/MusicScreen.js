@@ -14,10 +14,8 @@ import * as Firestore from '../../api/firestore';
 import Tracks_Getter from '../../api/spotify/spotify_tracks_getter';
 import * as Spotify from './components/spotify_player_controls';
 import spotify_personal_playlist from '../../api/spotify/spotify_personal_playlist';
-import { use } from 'ast-types';
 
 const {width, height} = Dimensions.get("window")
-
 
 const MusicScreen = () => {
     const navigation = useNavigation();
@@ -174,6 +172,7 @@ const MusicScreen = () => {
                 searchToggle={personalSearchToggle}
                 setSearchToggle={setPersonalSearchToggle}
                 playlists={personalPlaylists}
+                
             />
           
       </Screen>

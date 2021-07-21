@@ -2,7 +2,7 @@ export default [
     {
         id: '1',
         title: 'Import Your Playlists',
-        description: 'Add your favourite playlist from Spotify & Run with music',
+        description: 'Add your favourite playlist from Spotify & Run with music \n\n** Spotify Premium Required **',
         image: require('../../../assets/icons/Guide1.png'),
     },
     {

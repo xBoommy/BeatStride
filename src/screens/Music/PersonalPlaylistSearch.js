@@ -40,11 +40,20 @@ const PersonalPlaylistSearch = (props) => {
         );
     };
 
-    const importAllHandler = () => {
+    const importAllHandler = async() => {
+
         for (let i = 0; i < playlists.length; i++) {
             Firestore.db_addUserPlaylists(playlists[i]);
         }
-        console.log("All loaded!");
+        return console.log("All loaded!");
+
+        
+    }
+
+    const sequenceImport = () => {
+        importAllHandler().then(() => {
+            setSearchToggle(false);
+        })
     }
 
     return (
@@ -86,7 +95,7 @@ const PersonalPlaylistSearch = (props) => {
                         </TouchableOpacity>
 
                         {/* Import All Button */}
-                        <TouchableOpacity onPress={importAllHandler}>
+                        <TouchableOpacity onPress={sequenceImport}>
                             <View style={styles.closeButton}>
                                 <Text style={styles.buttonText}>Import All</Text>
                             </View>

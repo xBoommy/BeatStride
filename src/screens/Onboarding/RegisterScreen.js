@@ -251,7 +251,7 @@ const RegisterScreen = ({navigation}) => {
                     mode="outlined"
                     label="Description (Optional)"
                     style={{ marginTop: 30 }}
-                    placeholder="Enter your description (Max 80 Character)"
+                    placeholder="Enter your description (Max 80 Character, 5 Lines)"
                     value={description}
                     onChangeText={setDescription}
                     multiline={true}

@@ -99,7 +99,8 @@ const PlaylistSelectionTempo = (props) => {
                         </View>
                         
                         <View style={styles.messageContainer}>
-                            <Text style={styles.messageText}>Select Playlists you would like to add songs from</Text>
+                            <Text style={styles.messageText}>Select Music to accompany your run</Text>
+                            <Text style={styles.messageText}>(Tracks from selected playlists are shuffled)</Text>
                         </View>
                         
                     </View>
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         width: width * 0.9,
-        height: height * 0.12,
+        height: height * 0.14,
         alignSelf: 'center',
         marginTop: height * 0.01,
         // backgroundColor: 'green',
@@ -194,7 +195,7 @@ const styles = StyleSheet.create({
     },
     messageContainer:{
         width: width * 0.9,
-        height: height * 0.04,
+        height: height * 0.06,
         alignItems: 'center', 
         justifyContent: 'center',
         // backgroundColor: 'yellow',
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
     },
     emptyMessageContainer:{
         width: width * 0.90,
-        height: height * 0.6,
+        height: height * 0.65,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
@@ -222,7 +223,8 @@ const styles = StyleSheet.create({
         color: '#72767D',
     },
     list:{
-    //    backgroundColor: 'pink',
+        height : height * 0.65,
+        // backgroundColor: 'pink',
     },
     listContent:{
         paddingBottom: (height * 0.95 * 0.02) + (height * 0.13 * 0.5) ,

@@ -129,20 +129,21 @@ const EditProfileScreen = ({navigation, route}) => {
                 <TextInput
                     mode="outlined"
                     label="Description (Max 80 Character)"
-                    style={{ marginTop: 20 }}
-                    placeholder="Enter your description (Max 80 Character)"
+                    style={{ marginTop: 20}}
+                    placeholder="Enter your description (Max 80 Character, 5 Lines)"
                     value={description}
                     onChangeText={setDescription}
                     multiline={true}
                     numberOfLines={5}
                     maxLength={80}
-                    onSubmitEditing={() => Keyboard.dismiss()}
+                    onSubmitEditing={() => {}}
                     autoCapitalize="sentences"
                     returnKeyType="done"
                     blurOnSubmit={false}
                     left={<TextInput.Icon name="pencil" color={description ? '#7289DA' : '#BABBBF'} />}
                     theme={{colors: {primary: "#7289DA", placeholder : '#72767D', text: '#FFFFFF', underlineColor: 'transparent', background: '#4F535C'},}}
                 />
+               
 
                 <Button
                     mode="outlined"

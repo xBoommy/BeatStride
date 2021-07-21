@@ -69,6 +69,7 @@ const PlaylistSelectionBasic = (props) => {
                     {/* Text Bar */}                    
                     <View style={styles.messageContainer}>
                         <Text style={styles.messageText}>Select Music to accompany your run</Text>
+                        <Text style={styles.messageText}>(Tracks from selected playlists are shuffled)</Text>
                     </View>
 
                     {/* Playlist List */}
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
     },
     messageContainer:{
         width: width * 0.95,
-        height: height * 0.05,
+        height: height * 0.1,
         alignItems: 'center', 
         justifyContent: 'center',
         // backgroundColor: 'yellow',
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
     },
     emptyMessageContainer:{
         width: width * 0.90,
-        height: height * 0.6,
+        height: height * 0.7,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
@@ -166,6 +167,7 @@ const styles = StyleSheet.create({
         color: '#72767D',
     },
     list:{
+        height: height * 0.7,
     //    backgroundColor: 'pink',
     },
     listContent:{
