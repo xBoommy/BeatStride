@@ -13,12 +13,24 @@ const {width, height} = Dimensions.get("window")
 const SocialScreen = ({navigation}) => {
     
     const [friendList , setFriendList] = useState([]);
+    const [empty, setEmpty] = useState(true);
 
     useEffect(() => {
         Firestore.db_friendsList(
             (userList) => {
                 setFriendList(userList)
                 // console.log(userList)
+            },
+            (error) => {console.log(error)},
+        )
+
+        Firestore.db_requestList(
+            (userList) => {
+                if (userList.length == 0) {
+                    setEmpty(true);
+                } else {
+                    setEmpty(false);
+                }  
             },
             (error) => {console.log(error)},
         )
@@ -35,6 +47,7 @@ const SocialScreen = ({navigation}) => {
                     {/* Friend Request Icon */}
                     <TouchableOpacity style={styles.iconContainer} onPress={() => {navigation.navigate("RequestScreen")}}>
                         <Ionicons name="person-add-sharp" size={width * 0.07} color="#BABBBF"/>
+                        <View style={{...styles.notifyDot, backgroundColor: empty ? "transparent" : "red"}}/>
                     </TouchableOpacity>
 
                     {/* Search Icon */}
@@ -159,6 +172,14 @@ const styles = StyleSheet.create({
     emptyText:{
         fontSize: 14,
         color: '#72767D'
+    },
+    notifyDot:{
+        position: 'absolute',
+        bottom: width * 0.03,
+        right: width * 0.03,
+        width: width * 0.03,
+        aspectRatio: 1,
+        borderRadius: width,
     },
 })
 
