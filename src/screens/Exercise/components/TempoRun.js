@@ -142,7 +142,7 @@ const TempoRun = () => {
                         <Text style={styles.goalText}>
                             {(time.hours() != 0) ? time.hours() + "hr " : ""} 
                             {time.minutes() != 0 ? time.minutes() + "min " : ""} 
-                            {time.seconds() + "s"}
+                            {((time.hours() != 0) || (time.minutes() != 0)) ? ((time.seconds() != 0) ? (time.seconds() + "s") : ("")) : (time.seconds() + "s")}
                         </Text>
                     </View>
                     

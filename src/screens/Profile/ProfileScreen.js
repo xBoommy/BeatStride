@@ -65,23 +65,24 @@ const ProfileScreen = ({navigation}) => {
 
             </View>
 
-            {/* Edit Profile */}
+            
             <View style={styles.ButtonContainer}>
+                {/* Edit Profile */}
                 <Button
-                    mode="contained"
-                    style={{width: width * 0.8, borderRadius: 10,  backgroundColor: '#424549', borderWidth:2, borderColor: '#7289DA' }}
-                    contentStyle={{paddingVertical: 5}}
+                    mode="outlined"
+                    style={{ width: width * 0.8, height: height * (0.15 / 2) * 0.95, borderRadius: 10, backgroundColor: '#424549', borderWidth:2, borderColor: '#7289DA' }}
+                    contentStyle={{ paddingVertical: 5 }}
+                    icon="pencil"
                     onPress={() => {navigation.navigate("EditProfileScreen", {userData: userData});}}
                     theme={{ dark: true, colors: { primary: '#7289DA', underlineColor:'transparent',} }}>
                     <Text style={{color: '#FFFFFF'}}>Edit Profile</Text>
                 </Button>
-            </View>
+            
 
-            {/* Logout button */}
-            <View style={styles.ButtonContainer}>
+                {/* Logout button */}
                 <Button
                     mode="contained"
-                    style={{width: width * 0.8, borderRadius: 10}}
+                    style={{width: width * 0.8, height: height * (0.15 / 2) * 0.9, borderRadius: 10}}
                     contentStyle={{paddingVertical: 5}}
                     onPress={handleLogout}
                     loading={isLogoutLoading}
@@ -129,8 +130,8 @@ const styles = StyleSheet.create({
     },
     ButtonContainer:{
         width: width,
-        height: height * 0.15 / 2,
-        justifyContent: 'center',
+        height: height * 0.15,
+        justifyContent: 'space-between',
         alignItems: 'center',
         // backgroundColor: 'yellow',
     },

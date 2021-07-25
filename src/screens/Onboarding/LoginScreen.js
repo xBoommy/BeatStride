@@ -59,7 +59,11 @@ const LoginScreen = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.screen}>
-          <ScrollView contentContainerStyle={styles.screenScroll} keyboardShouldPersistTaps="always">
+          <ScrollView 
+              contentContainerStyle={styles.screenScroll} 
+              keyboardShouldPersistTaps="always" 
+              showsVerticalScrollIndicator={false}
+          >
 
               <View style={styles.brand}>
                   <IconButton icon="run" style={{ margin: 0 }} color={'#BABBBF'} />
