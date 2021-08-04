@@ -1,6 +1,6 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
 import {  SafeAreaView, StyleSheet, Text, View, ScrollView, Pressable, Keyboard, Dimensions, TouchableOpacity, Image, Alert } from 'react-native';
-import { Button, TextInput, IconButton } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import moment from 'moment';
@@ -11,6 +11,11 @@ import * as Firestore from '../../api/firestore';
 
 const {width, height} = Dimensions.get('window');
 
+/**
+ * This is a functional component representing the registering screen.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const RegisterScreen = ({navigation}) => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");

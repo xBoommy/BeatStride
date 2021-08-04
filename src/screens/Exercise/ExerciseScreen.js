@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet,  Text,  View, Dimensions, ScrollView, Animated, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions, Animated, TouchableWithoutFeedback } from 'react-native';
 import { auth as SpotifyAuth,  remote as SpotifyRemote } from 'react-native-spotify-remote';
 
 import Screen from '../MainScreen';
@@ -11,6 +11,12 @@ import * as LocationLib from '../../api/LocationPermissions';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing the Exercise screen.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const ExerciseScreen = () => {
 
     const [permissionsStatus, setPermissionsStatus] = useState(3);

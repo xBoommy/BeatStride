@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions } from 'react-native';
 import { Button } from 'react-native-paper';
 import { CommonActions } from "@react-navigation/native";
 import * as Authentication from "../../api/auth";
@@ -11,6 +11,12 @@ import PrivateProfileInfo from './components/PrivateProfileInfo'
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing the Profile page the users see on the profile tab.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const ProfileScreen = ({navigation}) => {
 
     const [userData, setUserData] = useState({

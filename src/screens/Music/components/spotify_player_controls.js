@@ -15,7 +15,13 @@ export const spotifyConfig = {
     ApiScope.PlaylistReadPrivateScope,
   ],
 };
-  
+
+
+/**
+ * A method that plays the track from defaultUri or simply resumes playing the previous track.
+ * 
+ * @param {String} defaultUri  A link to a default track to be played if no track is available.
+ */
 export async function play(defaultUri) {
   try {
     const isConnected = await SpotifyRemote.isConnectedAsync(); //returns a boolean, true/false
@@ -34,7 +40,13 @@ export async function play(defaultUri) {
     console.log('Problem with Playing: ...', e);
   }
 }
-  
+
+
+/**
+ * This method plays the tracks specified by the uri by overriding the current player.
+ * 
+ * @param {String} uri  A String representing the song to be played immediately.
+ */
 export async function playDirect(uri) {
   try {
     const isConnected = await SpotifyRemote.isConnectedAsync(); //returns a boolean, true/false
@@ -48,6 +60,10 @@ export async function playDirect(uri) {
   }
 }
   
+
+/**
+ * This method pauses the Spotify Player.
+ */
 export async function pause() {
   try {
     const isConnected = await SpotifyRemote.isConnectedAsync(); //returns a boolean, true/false
@@ -62,6 +78,10 @@ export async function pause() {
   }
 }
   
+
+/**
+ * This method skips to the next track in queue.
+ */
 export async function next() {
   try {
     const isConnected = await SpotifyRemote.isConnectedAsync();
@@ -74,7 +94,11 @@ export async function next() {
     console.error('Error with skipping: ', e);
   }
 }
-  
+
+
+/**
+ * This method goes back to the previous track.
+ */
 export async function previous() {
   try {
     const isConnected = await SpotifyRemote.isConnectedAsync();
@@ -87,7 +111,13 @@ export async function previous() {
     console.error('Error with going previous: ', e);
   }
 }
-  
+
+
+/**
+ * This method retrieves the track object of the current playing track on Spotify.
+ * 
+ * @returns   A track object.
+ */
 export async function currentPlayingTrack() {
   try {
     const isConnected = await SpotifyRemote.isConnectedAsync();
@@ -103,36 +133,4 @@ export async function currentPlayingTrack() {
       return trackObj;
     }
   } catch (e) {}
-}
-  
-  //For RunningPlayer
-  
-export async function queueTracks(arrOfTracks) {
-  try {
-    const isConnected = await SpotifyRemote.isConnectedAsync();
-    if (!isConnected) {
-      const session = await SpotifyAuth.authorize(spotifyConfig);
-      await SpotifyRemote.connect(session.accessToken);
-    }
-    for (let i = 0; i < arrOfTracks.length; i++) {
-      await SpotifyRemote.queueUri(arrOfTracks[i].trackUri);
-    }
-  } catch (e) {
-    console.error('Error with queueTracks: ', e);
-  }
-}
-
-//Check user play state
-export async function getState() {
-  try {
-    const isConnected = await SpotifyRemote.isConnectedAsync();
-    if (!isConnected) {
-      const session = await SpotifyAuth.authorize(spotifyConfig);
-      await SpotifyRemote.connect(session.accessToken);
-    }
-    const state = await SpotifyRemote.getPlayerState();
-    return state.isPaused;
-  } catch (e) {
-    console.error('Error with getting state: ', e);
-  }
 }

@@ -6,6 +6,12 @@ import * as Authentication from "../../api/auth";
 
 const {width, height} = Dimensions.get('window');
 
+
+/**
+ * This is a functional component representing the loading page when a user first enters the app.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 export default ({ navigation }) => {
   useEffect(() => {
     return Authentication.setOnAuthStateChanged(
@@ -33,4 +39,4 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#282B30',
     }
-  });
+});

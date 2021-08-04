@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef} from 'react';
-import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image} from 'react-native';
-import {  CommonActions } from '@react-navigation/native'; 
+import React, { useState, useEffect, useRef } from 'react';
+import { SafeAreaView, StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { CommonActions } from '@react-navigation/native'; 
 import moment from 'moment';
 import TTS from 'react-native-tts';
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -12,6 +12,13 @@ import ShareImage from '../Share/ShareImage';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing the Screen displayed to the user after
+ * ending their run.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const EndScreen = ({navigation, route}) => {
     const message = route.params.message        //message
     const distance = route.params.distance;     //Total Distance Ran

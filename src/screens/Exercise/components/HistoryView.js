@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image} from 'react-native';
-import {  CommonActions } from '@react-navigation/native'; 
+import { SafeAreaView, StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/AntDesign'
 import Share from 'react-native-share';
@@ -11,6 +10,12 @@ import ShareImage from '../../Share/ShareImage';
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing the History View when tapping onto a record on the  
+ * History Tab of Exercise page.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const HistoryView = ({navigation, route}) => {
     const message = route.params.message        //message
     const distance = route.params.distance;     //Total Distance Ran

@@ -1,8 +1,14 @@
 import React from 'react';
-import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions} from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions } from 'react-native';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing the Distance display during a run.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const RunDistance = (props) => {
     const distance = props.distance
 

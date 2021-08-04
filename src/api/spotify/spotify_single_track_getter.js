@@ -1,12 +1,16 @@
-/* eslint-disable prettier/prettier */
 import Spotify_token from './spotify_token';
-const apiPrefix = 'https://api.spotify.com/v1/tracks';
 
-//Used in Spotify player controls, currentPlayingTracks
-export default async (trackID) => {
-  const uri = `${apiPrefix}/${trackID}`;
+/**
+ * This is a method that obtains a track object based on its track id.
+ * 
+ * @param {String} trackId   A string that represents the id of a track in Spotify's database.
+ * @return                   A track object with its important details.
+ */
+export default async (trackId) => {
+
+  const apiPrefix = 'https://api.spotify.com/v1/tracks';
+  const uri = `${apiPrefix}/${trackId}`;
   const spotify_token = await Spotify_token();
-  //console.log(uri);
   const res = await fetch(uri, {
     method: 'GET',
     headers: {
@@ -22,10 +26,6 @@ export default async (trackID) => {
     return undefined;
   }
 
-
-//   if (items.length === 0) {
-//     return [];
-//   }
 //   console.log(trackObj.id);
 //   console.log(trackObj.name);
 //   console.log(trackObj.album.artists[0].name);
@@ -39,4 +39,5 @@ export default async (trackID) => {
       imageUri: trackObj.album.images.length >= 1 ? trackObj.album.images[0].url : 'undefined',
       trackUri: trackObj.uri,
   };
+
 };

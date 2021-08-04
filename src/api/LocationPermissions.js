@@ -1,8 +1,12 @@
-import * as Location from 'expo-location'; 
-import React from 'react';
-import { Alert } from 'react-native';
+import * as Location from 'expo-location';
 
-// App FOREGROUND Location Permission - Check + Request 
+
+/**
+ * This is a method to checks and requests for the App to access FOREGROUND Location Permission.
+ * 
+ * @param {Function} onSuccess  A function that triggers when successful.
+ * @returns 
+ */
 export const forePermissionCheck = async(onSuccess) => {
     try {
         forePermissions = await Location.getForegroundPermissionsAsync()
@@ -26,7 +30,12 @@ export const forePermissionCheck = async(onSuccess) => {
     }
 }
 
-// App BACKGROUND Location Permission - Check + Request 
+/**
+ * This is a method to checks and requests for the App to access BACKGROUND Location Permission.
+ * 
+ * @param {Function} onSuccess  A function that triggers when successful.
+ * @returns 
+ */
 export const backPermissionCheck = async(onSuccess) => {
     try {
         backPermissions = await Location.getBackgroundPermissionsAsync()

@@ -5,6 +5,12 @@ import { useNavigation, CommonActions } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
+
+/**
+ * This is a functional component to render each guiding page.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 export default GuideItem = ({item}) => {
     const navigation = useNavigation();
     return (

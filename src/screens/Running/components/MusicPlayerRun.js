@@ -1,13 +1,17 @@
-import React, {useState, useEffect} from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native';
 import { useSelector } from 'react-redux';
-import BackgroundTimer from 'react-native-background-timer';
 
 import * as Spotify from '../../Music/components/spotify_player_controls';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing the Music Player used during a run.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const MusicPlayer = props => {
 
     const runStatus = props.runStatus;
@@ -249,6 +253,6 @@ const styles = StyleSheet.create({
         transform: [{translateX: width * 0.008}],
         tintColor: '#BABBBF',
     }
-})
+});
 
-export default MusicPlayer
+export default MusicPlayer;

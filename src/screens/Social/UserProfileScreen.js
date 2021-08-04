@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
-import { CommonActions } from "@react-navigation/native";
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import * as Firestore from '../../api/firestore';
 
@@ -10,7 +9,14 @@ import UserPrivateInfo from './components/UserPrivateInfo'
 
 const {width, height} = Dimensions.get("window")
 
-const UserProfileScreen = ({navigation, route}, props) => {
+
+/**
+ * This is a functional component representing a user's profile screen.
+ * This contains both global and private information which is only shown to users with permission.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
+const UserProfileScreen = ({route}) => {
     const userData = route.params.userData;
     const [status, setStatus] = useState("");
 

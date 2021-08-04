@@ -9,6 +9,11 @@ import * as Firestore from '../../api/firestore';
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing the Goal Setting Screen.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const GoalSettingScreen = ({navigation, route}) => {
     const strideDistance = route.params.strideDistance;
     const goalDistance = route.params.goalDistance;

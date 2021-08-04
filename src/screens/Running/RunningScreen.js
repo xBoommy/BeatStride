@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image, Alert, BackHandler } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {  SafeAreaView, StyleSheet, View, Dimensions, TouchableOpacity, Image, Alert } from 'react-native';
 import { CommonActions } from '@react-navigation/native'; 
 import * as Location from 'expo-location';
 import * as geolib from 'geolib';
@@ -18,6 +18,11 @@ import HoldableButton from './components/CircularProgressBar/HoldableButton';
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is the main screen displaying all the components during a run.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const RunningScreen = ({navigation, route}) => {
     /* [Page Navigation Render] - Triggered upon screen focused  */
     const PageTrigger = navigation.addListener( 'focus', () => {
@@ -430,20 +435,13 @@ const RunningScreen = ({navigation, route}) => {
                     
                     {/* Stop button */}
                     {(runStatus === 3 || (runStatus === 8 && paused) || (runStatus === 9 && paused)) ? 
-                    // <TouchableOpacity style={styles.button} onPress={() => setRunStatus(5)}>
-                    //     <Image 
-                    //         source={require('../../assets/icons/ExerciseStop.png')}
-                    //         resizeMode= 'contain'
-                    //         style={styles.buttonIcon}
-                    //     />
-                    // </TouchableOpacity> 
-                    <HoldableButton 
-                        radius={0.05 * height}
-                        onSuccess={() => setRunStatus(5)}
-                        imageSource={require('../../assets/icons/ExerciseStop.png')}
-                    />
-                    
-                    : <></>}
+                    ( 
+                        <HoldableButton 
+                            radius={0.05 * height}
+                            onSuccess={() => setRunStatus(5)}
+                            imageSource={require('../../assets/icons/ExerciseStop.png')}
+                        />
+                    ) : <></>}
                     
                 </View>
 
@@ -553,6 +551,6 @@ const styles = StyleSheet.create({
         bottom: height * 0.01,
         alignSelf: 'center',
     },
-})
+});
 
 export default RunningScreen;

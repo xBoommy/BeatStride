@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity, Image, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import * as Firestore from '../../api/firestore';
@@ -10,6 +9,12 @@ import FriendItem from './components/FriendItem'
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing the main screen under social tab.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const SocialScreen = ({navigation}) => {
     
     const [friendList , setFriendList] = useState([]);

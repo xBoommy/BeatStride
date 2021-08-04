@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions, FlatList } from 'react-native';
 import * as Firestore from '../../../api/firestore';
 
 import PendingItem from './PendingItem';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing a list of pending friend request to other users.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const PendingTab = () => {
 
     const [pendingList , setPendingList] = useState([]);

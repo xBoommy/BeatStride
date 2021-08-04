@@ -1,11 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet,  Text,  View, Dimensions } from 'react-native';
 import moment from 'moment';
 import TTS from 'react-native-tts';
 import BackgroundTimer from 'react-native-background-timer';
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing the time display during a run.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const RunTimer = (props) => {
     const runStatus = props.runStatus;
     const setDuration = props.setDuration;
@@ -122,6 +127,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#BABBBF',
     },
-})
+});
 
 export default RunTimer;

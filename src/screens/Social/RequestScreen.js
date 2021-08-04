@@ -1,12 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { SafeAreaView, StyleSheet,  Text,  View, Dimensions, ScrollView, Animated, TouchableWithoutFeedback } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useRef } from 'react';
+import { SafeAreaView, StyleSheet,  Text,  View, Dimensions, Animated, TouchableWithoutFeedback } from 'react-native';
 
 import RequestsTab from './components/RequestsTab';
 import PendingTab from './components/PendingTab';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing main screen when an user view their request screen.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const RequestScreen = () => {
 
     /* SCROLL ANIMATIONS */

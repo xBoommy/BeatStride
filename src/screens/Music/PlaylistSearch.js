@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert, Keyboard } from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert, Keyboard } from 'react-native';
 import { TextInput } from "react-native-paper";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -9,7 +9,12 @@ import * as Firestore from '../../api/firestore';
 
 const {width, height} = Dimensions.get("window")
 
-
+/**
+ * This is a functional component representing the pop up on the Music Tab,
+ * when searching for playlist on Spotify.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const PlaylistSearch = (props) => {
     const searchToggle = props.searchToggle;
     const setSearchToggle = props.setSearchToggle;

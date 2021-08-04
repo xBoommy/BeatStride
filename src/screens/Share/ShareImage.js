@@ -1,11 +1,9 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet,  Text,  View, Dimensions } from 'react-native';
 import MapView, { Polyline } from 'react-native-maps';
 import * as geolib from 'geolib';
 import moment from 'moment';
-import LinearGradient from 'react-native-linear-gradient';
 import { IconButton } from "react-native-paper";
-import ViewShot, {captureScreen, captureRef} from 'react-native-view-shot';
 
 const {width, height} = Dimensions.get("window")
 
@@ -204,7 +202,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#000000',
     },
-})
+});
 
 const mapStyle = [
     {

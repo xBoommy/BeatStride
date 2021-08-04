@@ -1,10 +1,15 @@
 import React from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native';
 
 import * as Spotify from './spotify_player_controls';
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing the Music Player on the main page of Music Tab.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const MusicPlayer = props => {
 
     const {isPlaying, setIsPlaying, currentlyPlaying} = props;
@@ -174,6 +179,6 @@ const styles = StyleSheet.create({
         transform: [{translateX: width * 0.008}],
         tintColor: '#BABBBF',
     }
-})
+});
 
-export default MusicPlayer
+export default MusicPlayer;

@@ -17,6 +17,11 @@ import spotify_personal_playlist from '../../api/spotify/spotify_personal_playli
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing the main Screen on the Music Tab.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const MusicScreen = () => {
     const navigation = useNavigation();
     const [searchToggle, setSearchToggle] = useState(false);

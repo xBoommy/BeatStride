@@ -3,6 +3,12 @@ import { View, StyleSheet, Animated, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
+/**
+ * This is a functional component representing the indicator under
+ * private profile info.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 export default PageIndicator = ({ scrollX }) => {
     const data = [{},{},{},{}]
     return (

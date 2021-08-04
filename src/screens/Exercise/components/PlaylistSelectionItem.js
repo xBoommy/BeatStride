@@ -1,10 +1,16 @@
 import React, {useState} from 'react';
 import {  TouchableOpacity,  StyleSheet,  Text,  View, Dimensions, Image } from 'react-native';
-import { set } from 'react-native-reanimated';
 
 const {width, height} = Dimensions.get("window")
 
-const MusicItem = props => {
+
+/**
+ * This is a functional component representing a Playlist object on the PlaylistSelection pages.
+ * Used in PlaylistSelectionBasic and PlaylistSelectionTempo.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
+const PlaylistSelectionItem = props => {
 
     const {inserted, insert, item} = props;
     const [highlight, setHighlight] = useState(false)
@@ -91,4 +97,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default MusicItem;
+export default PlaylistSelectionItem;

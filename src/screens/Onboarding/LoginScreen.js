@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
 import {  SafeAreaView, StyleSheet, Text, View, Dimensions, Keyboard, Image, ScrollView, Alert, Pressable } from 'react-native';
 import { Button, TextInput, IconButton } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
@@ -7,6 +7,12 @@ import * as Authentication from "../../api/auth";
 
 const {width, height} = Dimensions.get('window');
 
+
+/**
+ * This is a functional component representing the Login screen.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

@@ -5,6 +5,11 @@ import CircularProgress from './CircularProgress';
 
 const {height} = Dimensions.get('window');
 
+/**
+ * This is a functional component representing the button used to create a holdable button.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const Button = ({ progress, radius, onSuccess, imageSource }) => {
 
     useCode(() => cond(eq(progress, 1), call([], () => onSuccess())));

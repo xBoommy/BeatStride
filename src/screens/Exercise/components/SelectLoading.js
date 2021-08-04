@@ -1,8 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, Modal, ActivityIndicator } from 'react-native';
+import React from 'react';
+import { StyleSheet,  Text,  View, Dimensions, Modal, ActivityIndicator } from 'react-native';
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing loading page when the App is loading.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const SelectLoading = (props) => {
     const isLoading = props.isLoading;
 

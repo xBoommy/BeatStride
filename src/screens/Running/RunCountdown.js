@@ -1,8 +1,13 @@
-import React, { useState, useEffect, BackHandler } from 'react';
-import {  Dimensions, Modal, Text, View, StyleSheet } from 'react-native';
+import React from 'react';
+import { Dimensions, Modal, Text, View, StyleSheet } from 'react-native';
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing the countdown page just before the start of the run.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const RunningCountdown = (props) => {
     const countdown = props.countdown;
     const countdownMsg = props.countdownMsg;
@@ -37,5 +42,6 @@ const styles = StyleSheet.create({
         color: '#7289DA',
         fontWeight: 'bold',
     }
-})
+});
+
 export default RunningCountdown;

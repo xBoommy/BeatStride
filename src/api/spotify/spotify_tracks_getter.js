@@ -1,6 +1,12 @@
 import Spotify_token from './spotify_token';
-const apiPrefix = 'https://api.spotify.com/v1/playlists';
 
+/**
+ * This is the method to obtain all the track objects from a playlist.
+ * 
+ * @param {String} playlistUri  The link to the playlist that contains the playlist id.
+ * @param {Number} totalSongs   The number of songs the playlist contains.
+ * @return                      An array containing all track objects in the playlist.
+ */
 export default async (playlistUri, totalSongs) => {
 
     const numberOfIterations = Math.ceil(totalSongs / 100);
@@ -18,11 +24,20 @@ export default async (playlistUri, totalSongs) => {
     return resultantPlaylist;
 };
 
+/**
+ * This is a helper method that obtains 100 or less track objects from a playlist.
+ * 
+ * @param {String} playlistUri  The link to the playlist that contains the playlist id.
+ * @param {Number} offset       The number of songs to ignore before taking.
+ * @returns                     An array of 100 or less track objects.
+ */
 async function tracks_getter_helper(playlistUri, offset) {
-    //console.log('in tracks getter:' + playlistUri);
+
+    const apiPrefix = 'https://api.spotify.com/v1/playlists';
     const playlistID = playlistUri.split(':').pop();
     const uri = `${apiPrefix}/${playlistID}/tracks?offset=${offset}`;
     const spotify_token = await Spotify_token();
+
     const res = await fetch(uri, {
       method: 'GET',
       headers: {

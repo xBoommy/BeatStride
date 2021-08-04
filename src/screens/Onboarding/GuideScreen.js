@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import { View, Text, StyleSheet, FlatList, Animated, Dimensions} from 'react-native';
+import { View, StyleSheet, FlatList, Animated, Dimensions} from 'react-native';
 
 import GuideItem from './components/GuideItem';
 import guideSlides from './components/GuideSlides';
@@ -7,6 +7,12 @@ import PageIndicator from './components/PageIndicator';
 
 const { width, height } = Dimensions.get('window');
 
+/**
+ * This is a functional component representing the guide pages that users see after creating
+ * their account.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const Guide = props => {
 
     const [currentIndex, setCurrentIndex] = useState(0);

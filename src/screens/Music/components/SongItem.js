@@ -1,8 +1,14 @@
 import React from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity, Image } from 'react-native';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing Track objects in the SongsScreen.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const SongItem = props => {
     return (
         <TouchableOpacity onPress={props.playThis}>
@@ -63,5 +69,6 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#BABBBF',
     },
-})
-export default SongItem
+});
+
+export default SongItem;

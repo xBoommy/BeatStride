@@ -1,8 +1,16 @@
-/* eslint-disable prettier/prettier */
 import Spotify_token from './spotify_token';
-const apiPrefix = 'https://api.spotify.com/v1';
 
+/**
+ * This is a method to search and obtain playlists from the Spotify Database.
+ * 
+ * @param {Number} offset  The number of playlists to ignore before taking.
+ * @param {Number} limit   The number of playlists to show as results.
+ * @param {String} q       The title of playlist to search.
+ * @return                 An array of playlists objects.
+ */
 export default async ({offset, limit, q}) => {
+
+  const apiPrefix = 'https://api.spotify.com/v1';
   //limit is number of results ==> 1, offset, demo put 0, q is the query eg, title of track,
   const uri = `${apiPrefix}/search?type=playlist&limit=${limit}&offset=${offset}&q=${encodeURIComponent(q)}*`;
   const spotify_token = await Spotify_token();
@@ -25,7 +33,6 @@ export default async ({offset, limit, q}) => {
 
   const { playlists: { items } } = json;
 
-  //console.log('searching:... One playlist only ...');
   if (items.length === 0) {
       return [];
   }
@@ -35,7 +42,6 @@ export default async ({offset, limit, q}) => {
   // console.log(items[0].id);
   // console.log(items[0].uri);
 
-  //Searches playlists
   return items.map(item => ({
     id: item.id,
     title: item.name,

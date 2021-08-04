@@ -9,6 +9,11 @@ import Animated, {
 
 import SemiCircle from "./SemiCircle";
 
+/**
+ * This is a functional component representing circular progress bar that makes up the holdable button.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const CircularProgress = ({ progress, bg, fg, radius }) => {
     const PI = Math.PI;
 

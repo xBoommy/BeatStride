@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert, Image } from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert, Image } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
@@ -10,6 +10,12 @@ import * as playlistActions from '../../../store/playlist-actions';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing the playlist selection page for Tempo Run.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const PlaylistSelectionTempo = (props) => {
     const selectToggle = props.selectToggle;
     const setSelectToggle = props.setSelectToggle;
@@ -252,6 +258,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#FFFFFF',
     },
-})
+});
 
-export default PlaylistSelectionTempo
+export default PlaylistSelectionTempo;

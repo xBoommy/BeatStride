@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { StyleSheet,  Text,  View, Dimensions, ScrollView, Animated, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 
 import TempoRun from './TempoRun';
 import BasicRun from './BasicRun';
@@ -7,6 +7,13 @@ import CalibRun from './CalibRun';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing the Run Tab on the Exercise page.
+ * It contains the TempoRun, BasicRun, CalibrationRun components.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const RunTab = () => {
     return (
         <ScrollView 

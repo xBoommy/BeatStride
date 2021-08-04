@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet,  Text,  View, Dimensions, ScrollView, Alert, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet,  Text,  View, Dimensions, Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import moment from 'moment';
 import * as Firestore from '../../../api/firestore';
+
+/**
+ * This is a History Item component.
+ * This component is used to render the statistics of past records in HistoryTab.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 
 const {width, height} = Dimensions.get("window")
 
@@ -111,12 +118,12 @@ const HistoryItem = (props) => {
 
 const styles = StyleSheet.create({
     itemContainer:{
-       width: width * 0.95,
-       height: height * 0.13,
-       flexDirection: 'row',
-       alignItems: 'center',
-       justifyContent: 'space-between',
-    //    backgroundColor: 'red',
+        width: width * 0.95,
+        height: height * 0.13,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        //backgroundColor: 'red',
     },  
     modeContainer:{
         width: width * 0.2,

@@ -1,8 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {  TouchableOpacity,  StyleSheet,  Text,  View, Dimensions, Image } from 'react-native';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing the playlist objects.
+ * It is used to render the list of saved playlist on the main page of Music Tab.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const PlaylistItem = props => {
 
     return (

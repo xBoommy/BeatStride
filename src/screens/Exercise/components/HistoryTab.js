@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet,  Text,  View, Dimensions, ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions, FlatList } from 'react-native';
 import { IconButton } from "react-native-paper";
 import * as Firestore from '../../../api/firestore';
 
@@ -7,6 +7,11 @@ import HistoryItem from './HistoryItem';
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing the History Tab in Exercise page.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const HistoryTab = () => {
     const [history, setHistory] = useState([])
     const [totalDistance, setTotalDistance] = useState(0)

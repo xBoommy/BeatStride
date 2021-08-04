@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, Animated, ScrollView } from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions, Animated, ScrollView } from 'react-native';
 
 import PageIndicator from './Page Item/PageIndicator';
 import DistancePage from './Page Item/DistancePage';
@@ -9,6 +9,12 @@ import JoinPage from './Page Item/JoinPage';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing private user information only available to friends.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const UserPrivateInfo = (props) => {
     const userData = props.userData;
 

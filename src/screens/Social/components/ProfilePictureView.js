@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import {  SafeAreaView,  StyleSheet,  Modal,  View, Dimensions, TouchableOpacity, Image, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet,  Modal,  View, Dimensions, TouchableOpacity, Image, Text } from 'react-native';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing the profile picture display of users.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const ProfilePictureView = (props) => {
     const toggleImage = props.toggleImage;
     const setToggleImage = props.setToggleImage;

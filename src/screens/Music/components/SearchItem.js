@@ -1,8 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {  TouchableOpacity,  StyleSheet,  Text,  View, Dimensions, Image } from 'react-native';
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing the Playlist Objects from search results.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const PlaylistSearchItem = props => {
 
     const {item, onSelect} = props;

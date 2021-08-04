@@ -1,10 +1,17 @@
-import React, {useState, useRef} from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, Alert, Dimensions, Keyboard } from 'react-native';
-import { Button, TextInput, IconButton } from "react-native-paper";
+import React, {useState} from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, Text, Dimensions, Keyboard } from 'react-native';
+import { Button, TextInput } from "react-native-paper";
 import { resetPassword } from '../../api/auth';
 
 const {width, height} = Dimensions.get('window');
 
+
+/**
+ * This is a functional component representing the screen where users are redirected
+ * upon forgetting their password.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const ForgotPasswordScreen = ({navigation}) => {
 
     const [email, setEmail] = useState('');

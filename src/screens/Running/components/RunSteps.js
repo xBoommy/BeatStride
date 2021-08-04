@@ -1,9 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet,  Text,  View, Dimensions } from 'react-native';
 import { startCounter, stopCounter } from 'react-native-accurate-step-counter';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing the steps display during a run.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const RunSteps = (props) => {
     const steps = props.steps;
     const setSteps = props.setSteps;
@@ -65,6 +71,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#BABBBF',
     },
-})
+});
 
-export default RunSteps
+export default RunSteps;

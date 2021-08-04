@@ -1,3 +1,8 @@
+/**
+ * This is an Array that includes information to be used for rendering guide pages.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 export default [
     {
         id: '1',

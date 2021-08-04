@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions, FlatList } from 'react-native';
 import * as Firestore from '../../../api/firestore';
 
 import RequestItem from './RequestsItem';
 
 const {width, height} = Dimensions.get("window")
 
-const data = [
-    {id:1, displayName: "james", uid: 123124},
-    {id:2, displayName: "alfred", uid: 346815},
-    {id:3, displayName: "max", uid: 16818},
-    {id:4, displayName: "john", uid: 321685},
-    {id:5, displayName: "mary", uid: 92623},
-    {id:6, displayName: "pepe", uid: 184626},
-    {id:7, displayName: "gabriel", uid: 16282},
-    {id:8, displayName: "jet", uid: 126653},
-    {id:9, displayName: "cheryl", uid: 84512},
-    {id:10, displayName: "gerald", uid: 518451}
-]
 
+/**
+ * This is a functional component representing a list of friend requests from other users.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const RequestsTab = () => {
 
     const [requestList , setRequestList] = useState([]);

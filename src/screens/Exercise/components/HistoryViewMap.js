@@ -1,10 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import {  SafeAreaView,  ScrollView,  StyleSheet,  Text,  View, Dimensions} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import MapView, { Polyline } from 'react-native-maps';
 import * as geolib from 'geolib';
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing the map rendered in HistoryView.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const HistoryViewMap = (props) => {
     const positions = props.positions;
         // [{latitude: 1.377745 , longitude: 103.805124},

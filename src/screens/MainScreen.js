@@ -3,6 +3,11 @@ import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions } from 'react-nati
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing the main styling screen throughout the application.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const Screen = (props) => {
 
   return (
@@ -24,21 +29,6 @@ const styles = StyleSheet.create({
         height: height,
         backgroundColor: '#282b30',
     },
-    // header:{
-    //     width: width,
-    //     height: height * 0.1,
-    //     justifyContent:'center',
-    //     paddingHorizontal: '10%',
-    //     backgroundColor: '#1e2124',
-    // },
-    // headerText:{
-    //     color: '#BABBBF',
-    //     fontSize: 28,
-    //     fontWeight: 'bold',
-    //     height: height * 0.1,
-    //     includeFontPadding: false,
-    //     textAlignVertical: 'center',
-    // },
     navigationBar:{
         width: width,
         height: height * 0.1,

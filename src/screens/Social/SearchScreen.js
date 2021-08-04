@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableOpacity, Alert, Keyboard } from 'react-native';
+import { SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Keyboard } from 'react-native';
 import { TextInput } from "react-native-paper";
-import { useNavigation } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import * as Firestore from '../../api/firestore';
 
@@ -9,6 +8,13 @@ import FriendItem from './components/FriendItem';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing the search screen where users can
+ * search for other users.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const SearchScreen = () => {
     const [selfID, setSelfID] = useState('')
     const [data, setData] = useState([])

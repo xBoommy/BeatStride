@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import React, { } from 'react';
-import {  StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import ExerciseScreen from '../screens/Exercise/ExerciseScreen';
@@ -13,6 +13,11 @@ const {width, height} = Dimensions.get("window")
 
 const Tab = createBottomTabNavigator();
 
+/**
+ * This is a functional component representing the bottom tabs of our App.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const AppTab = () => {
     return (
         <Tab.Navigator
@@ -141,5 +146,6 @@ const styles = StyleSheet.create({
         fontSize: 12,
         padding: 5,
     },
-})
-export default AppTab
+});
+
+export default AppTab;

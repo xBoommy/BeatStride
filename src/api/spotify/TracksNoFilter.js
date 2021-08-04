@@ -1,5 +1,10 @@
 import Tracks_Getter from './spotify_tracks_getter';
 
+/**
+ * This is a method to get all the track object in a playlist without filter.
+ * 
+ * @return   An array of track objects.
+ */
 export default async (playlists, onSuccess, onError) => {
     try{
 

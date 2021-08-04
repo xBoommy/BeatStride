@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {} from 'react';
+import React from 'react';
 import { Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -24,6 +24,11 @@ const {width, height} = Dimensions.get("window")
 
 const Stack = createStackNavigator();
 
+/**
+ * This is a functional component containing the Stacks of our App.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const AppStack = () => {
     return(
         <Stack.Navigator

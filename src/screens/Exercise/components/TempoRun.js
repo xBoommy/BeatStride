@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet,  Text,  View, Dimensions, ScrollView, Alert, TouchableOpacity, Image } from 'react-native';
-import { useNavigation, CommonActions } from '@react-navigation/native'; 
+import { StyleSheet,  Text,  View, Dimensions, Alert, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; 
 import * as Location from 'expo-location';
 import * as Firestore from '../../../api/firestore';
 import moment from 'moment';
-
 import PlaylistSelectionTempo from '../PlaylistSelectionTempo';
 import SelectLoading from './SelectLoading';
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing the Tempo run on Run Tab on the Exercise page.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const TempoRun = () => {
     const navigation = useNavigation();
 

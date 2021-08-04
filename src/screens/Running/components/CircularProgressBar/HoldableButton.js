@@ -1,12 +1,16 @@
 import React from 'react';
-import { View, StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { State, PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, { eq, cond } from 'react-native-reanimated';
 import { withTransition, usePanGestureHandler } from 'react-native-redash/lib/module/v1';
 
 import Button from './components/Button';
 
-
+/**
+ * This is a functional component representing a holdable button.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const HoldableButton = ({radius, onSuccess, imageSource}) => {
 
     const { state, gestureHandler } = usePanGestureHandler();

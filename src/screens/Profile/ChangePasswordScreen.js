@@ -1,10 +1,17 @@
 import React, {useState, useRef} from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, Alert, Dimensions, Keyboard } from 'react-native';
-import { Button, TextInput, IconButton } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 import { changePassword } from '../../api/auth';
 
 const {width, height} = Dimensions.get('window');
 
+
+/**
+ * This is a functional component representing the screen users will be directed to
+ * to edit their password.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const ChangePasswordScreen = ({navigation}) => {
 
     const [password, setPassword] = useState('');

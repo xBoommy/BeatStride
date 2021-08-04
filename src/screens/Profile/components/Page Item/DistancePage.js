@@ -1,9 +1,14 @@
-import React, {useEffect} from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
-import moment from 'moment';
+import React from 'react';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
+/**
+ * This is a functional component representing the Longest Distance display under
+ * private profile info.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const DistancePage = (props) => {
     const longestDistance = props.longestDistance;
 

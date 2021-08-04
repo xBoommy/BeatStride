@@ -7,7 +7,11 @@ import * as Spotify from './components/spotify_player_controls';
 
 const {width, height} = Dimensions.get("window")
 
-
+/**
+ * This is a functional component displaying all the tracks of a playlist, when users tap onto a playlist.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const SongsScreen = props => {
 
     const tracks = props.route.params?.tracks ?? [];

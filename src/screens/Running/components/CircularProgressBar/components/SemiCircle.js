@@ -1,6 +1,12 @@
 import React from "react";
 import { View } from "react-native";
 
+
+/**
+ * This is a functional component representing semicircles that make up the circular progress bar.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 export default ({ color, radius }) => {
   return (
     <View

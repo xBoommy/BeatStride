@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, TouchableWithoutFeedback, TouchableOpacity, Image, Alert } from 'react-native';
+import { StyleSheet,  Text,  View, Dimensions, TouchableWithoutFeedback, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Firestore from '../../../api/firestore';
 
 const {width, height} = Dimensions.get("window")
 
+
+/**
+ * This is a functional component representing friend request from other users.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const RequestItem = (props) => {
     const navigation = useNavigation();
     const item = props.item;

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {  SafeAreaView,  StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert, Keyboard } from 'react-native';
+import React from 'react';
+import { StyleSheet,  Text,  View, Dimensions, FlatList, Modal, TouchableOpacity, Alert, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import SearchItem from './components/SearchItem';
@@ -7,7 +7,12 @@ import * as Firestore from '../../api/firestore';
 
 const {width, height} = Dimensions.get("window")
 
-
+/**
+ * This is a functional component representing the pop up on the Music Tab,
+ * when importing personal playlist.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const PersonalPlaylistSearch = (props) => {
     const searchToggle = props.searchToggle;
     const setSearchToggle = props.setSearchToggle;

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet,  Text,  View, Dimensions, ScrollView, Animated, TouchableOpacity, Image } from 'react-native';
-import { useNavigation, CommonActions } from '@react-navigation/native'; 
+import { StyleSheet,  Text,  View, Dimensions, TouchableOpacity, Image } from 'react-native'; 
 import * as Location from 'expo-location';
-
 import PlaylistSelectionBasic from '../PlaylistSelectionBasic';
 import SelectLoading from './SelectLoading';
 
 const {width, height} = Dimensions.get("window")
 
+/**
+ * This is a functional component representing the Calibration run on Run Tab on the Exercise page.
+ * 
+ * @author NUS Orbital 2021 Team Maple
+ */
 const CalibRun = () => {
-    const navigation = useNavigation();
 
     const [selectToggle, setSelectToggle] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
