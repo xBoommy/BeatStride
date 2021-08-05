@@ -32,6 +32,9 @@ const MusicScreen = () => {
     const [currentlyPlaying, setCurrentlyPlaying] = useState();
     const [selectedPlaylistUri, setSelectedPlaylistUri] = useState('');
 
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(() => {
         Firestore.db_playlists(
             (playlists) => { setPlaylists(playlists) },
@@ -40,11 +43,18 @@ const MusicScreen = () => {
         updatePlaying(); //To initialise the first thing loaded on Spotify
     }, []);
 
+    /**
+     * This is a constant render effect triggered upon component changes.
+     */
     useEffect(() => {
         if (isPlaying) {
             updatePlaying();
         }
     });
+
+    /**
+     * This is an event listener to listen to track the music playing status of Spotify.
+     */
     navigation.addListener('beforeRemove', () => {
         if (isPlaying) {
           setIsPlaying(false);
@@ -52,12 +62,22 @@ const MusicScreen = () => {
         }
     });
 
+    /**
+     * This is a method to obtain the obtain playlist tracks and navigate to 'SongScreen'.
+     * @param {String} playlistUri  A link to the selected playlist.
+     * @param {String} title        The title of the selected playlist.
+     * @param {Number} totalSongs   The value of the number of tracks within the playlist.
+     */
     const getPlaylistDetails = async (playlistUri, title, totalSongs) => {
         setSelectedPlaylistUri(playlistUri);
         const tracks = await Tracks_Getter(playlistUri, totalSongs);
         navigation.navigate('SongScreen', { tracks: tracks, title: title, currentlyPlaying: currentlyPlaying, isPlaying: isPlaying});
     };
 
+    /**
+     * This is a method to remove a playlist from library.
+     * @param {Object} item The playlist item object.
+     */
     const removePlaylist = (item) => {
         Alert.alert(
             'Delete Playlist',
@@ -82,6 +102,9 @@ const MusicScreen = () => {
         );
     };
 
+    /**
+     * This is a method to obtain & update the status of the Spotify player.
+     */
     const updatePlaying = async () => {
         const track = await Spotify.currentPlayingTrack();
         if (track === undefined) {
@@ -91,6 +114,9 @@ const MusicScreen = () => {
         }
     };
 
+    /**
+     * This is a method to load the user's personal playlist from Spotify database.
+     */
     const loadPersonalPlaylist = async () => {
         const personalPlaylist = await spotify_personal_playlist();
         if (personalPlaylist.length == 0) {

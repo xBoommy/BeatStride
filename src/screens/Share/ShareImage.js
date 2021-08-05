@@ -24,6 +24,9 @@ const ShareImage = (props) => {
     const [center, setCenter] = useState({latitude: 1.377621 , longitude: 103.805178});
     const [latDelta, setLatDelta] = useState(0.2);
 
+    /**
+     * This is a method to obtain the suitable coordinate delta for map display.
+     */
     const mapRange = () => {
         const boundary = geolib.getBounds(positions);
         setCenter({latitude: (boundary.maxLat + boundary.minLat)/2, longitude: (boundary.maxLng + boundary.minLng)/2 });
@@ -40,17 +43,12 @@ const ShareImage = (props) => {
         }
     }
 
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(async ()=> {
         mapRange();
-        //await getPicture();
     },[]);
-
-
-    // const viewShotRef = useRef();
-    // const getPicture = async () => {
-    //     const vsPic = await viewShotRef.current.capture();
-    //     props.getPicture(vsPic);
-    // };
 
     return (
         <View style={styles.componentContainer}>

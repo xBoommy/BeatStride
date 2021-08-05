@@ -20,6 +20,9 @@ const SocialScreen = ({navigation}) => {
     const [friendList , setFriendList] = useState([]);
     const [empty, setEmpty] = useState(true);
 
+    /**
+     * This is a render effect triggered upon component mount.
+     */
     useEffect(() => {
         Firestore.db_friendsList(
             (userList) => {

@@ -32,6 +32,9 @@ const HistoryItem = (props) => {
     const avgPace = duration / (distance/1000)
     const displayPace = moment.duration(avgPace)
 
+    /**
+     * This is a method to remove run history.
+     */
     const removeHistory = () => {
         Alert.alert(
             'Delete Run History',

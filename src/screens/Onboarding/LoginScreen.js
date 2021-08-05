@@ -20,6 +20,9 @@ const LoginScreen = ({navigation}) => {
     const [isLoginLoading, setIsLoginLoading] = useState(false);
     const passwordTextInput = useRef();
     
+    /**
+     * This method handles the login function of Firebase Authentication and navigates the user into the main interface upon success.
+     */
     const handleLogin = () => {
         Keyboard.dismiss();
         setIsLoginLoading(true);

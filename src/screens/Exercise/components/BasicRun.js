@@ -15,10 +15,11 @@ const BasicRun = () => {
 
     const [selectToggle, setSelectToggle] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
     const [status, setStatus] = useState(0);
 
-    /* [Check GPS Service Enabled? + Prompt] */
+    /**
+     * This is a method to check the status of device's location service.
+     */
     const seviceCheck = async() => {
         const check = await Location.hasServicesEnabledAsync()
         // console.log(check)
@@ -42,7 +43,9 @@ const BasicRun = () => {
         }
     }
 
-    /* [Status Control] */
+    /**
+     * This is a render effect based on "status" state.
+     */
     useEffect(() => {
         if (status === 1) {
             console.log("GPS Enabled")

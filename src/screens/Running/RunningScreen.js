@@ -24,13 +24,18 @@ const {width, height} = Dimensions.get("window")
  * @author NUS Orbital 2021 Team Maple
  */
 const RunningScreen = ({navigation, route}) => {
-    /* [Page Navigation Render] - Triggered upon screen focused  */
+    /* [Page Navigation Render] */
+    /**
+     * This is an event listener which triggers upon component focus
+     */
     const PageTrigger = navigation.addListener( 'focus', () => {
         getCurrentLocation();
         setRunStatus(1);
     } )
 
-
+    /**
+     * This is a render effect which setup an event listenser for the android device's "back" button.
+     */
     useEffect(() => {
         const back = navigation.addListener('beforeRemove', (e) => {
             if (runStatus === 2 || runStatus == 3 || runStatus == 8) {
@@ -73,6 +78,9 @@ const RunningScreen = ({navigation, route}) => {
     /              */
 
     /* [Get current location] */
+    /**
+     * This is a method to obtain the user's current location for starting purposes
+     */
     const getCurrentLocation = async() => {
         try {
             const { coords: {latitude, longitude} } = await Location.getCurrentPositionAsync()
@@ -87,6 +95,9 @@ const RunningScreen = ({navigation, route}) => {
     }
 
     /* [Get current location] */
+    /**
+     * This is a method to obtain the user's current location for resuming purposes
+     */
     const getResumeLocation = async() => {
         try {
             const { coords: {latitude, longitude} } = await Location.getCurrentPositionAsync()
@@ -100,6 +111,10 @@ const RunningScreen = ({navigation, route}) => {
     }
 
     /* [GPS Subcription countdown] */
+    /**
+     * This is a method to initiate a countdown to for GPS subscription for starting purposes.
+     * This countdown also works as a buffer for the GPS services to start up properly.
+     */
     const subcriptionCountdown = () => {
         /* 0 second */
         console.log('Starting in 3');
@@ -135,6 +150,10 @@ const RunningScreen = ({navigation, route}) => {
     }
 
     /* [GPS Subcription countdown] */
+    /**
+     * This is a method to initiate a countdown to for GPS subscription for resuming purposes.
+     * This countdown also works as a buffer for the GPS services to start up properly.
+     */
     const resumeCountdown = () => {
         /* 0 second */
         console.log('Starting in 3');
@@ -170,6 +189,9 @@ const RunningScreen = ({navigation, route}) => {
     }
 
     /* [ON GPS Subscription/Tracking] */
+    /**
+     * This method subscribes to the device's GPS location over a constant interval.
+     */
     const subscribePosition = async() => {
         const options = {accuracy: 6,  timeInterval: 500, distanceInterval: 1};
 
@@ -184,12 +206,21 @@ const RunningScreen = ({navigation, route}) => {
     }
 
     /* [OFF GPS Subscription/Tracking] */
+    /**
+     * This method unsubscribes to the device's GPS location.
+     */
     const unsubscribePosition = () => {
         promise.remove()
         console.log('GPS Tracking off')
     }
 
     /* [Distance Calculator] */
+    /**
+     * This method calculates the distance between 2 coordinates.
+     * @param {Object} prev_Pos A coordinate Object with the following fields: latitude (number) & longitude (number).
+     * @param {Object} curr_Pos A coordinate Object with the following fields: latitude (number) & longitude (number).
+     * @returns 
+     */
     const distanceCalculate = (prev_Pos, curr_Pos) => {
         const distGain = geolib.getDistance (prev_Pos, curr_Pos, 0.1)
         console.log('Distance Gained')
@@ -198,6 +229,10 @@ const RunningScreen = ({navigation, route}) => {
     }
 
     /* [Callback function for subscription update] */
+    /**
+     * This method stores the current location as coordinate Object (latitude & longitude) into an array.
+     * @param {Object} locationObj Refer to link: https://docs.expo.dev/versions/v41.0.0/sdk/location/#locationobject
+     */
     const onPositionChange = (locationObj) => {
         /* Current position from Update */
         const currLat = locationObj.coords.latitude
@@ -208,9 +243,11 @@ const RunningScreen = ({navigation, route}) => {
         setCurrCoord(currPos);
     }
 
-    /* [Position Validation] 
-    This checks the distance between the current position & previous position
-    Only movement within Limit Range would be taken into consideration of position */
+    /* [Position Validation] */
+    /**
+     * This method checks the distance between the current position & previous position.
+     * Only movement within Limit Range would be taken into consideration of position.
+     */
     const positionValidation = () => {
        
         let currPos
@@ -243,8 +280,11 @@ const RunningScreen = ({navigation, route}) => {
     /     Renders     /
     /                */
 
-    /* [Validation of position movement] 
-    This renders after every callback from GPS subscription. It validates movements and update accordingly */
+    /* [Validation of position movement] */
+    /**
+     * This is a render effect based on "positions" state.
+     * This renders after every callback from GPS subscription. It validates movements and update accordingly.
+     */
     useEffect(() => {
         if (runStatus == 2 || runStatus == 8 || runStatus == 9) {
             positionValidation();
@@ -253,8 +293,10 @@ const RunningScreen = ({navigation, route}) => {
     },[positions])
   
     const [paused , setPaused] = useState(false);
-    /* [Run Status Render] 
-    This render is triggered upon a change in app status */
+    /* [Run Status Render] */
+    /**
+     * This is a render effect based on "runStatus" state.
+     */
     useEffect(() => {
         if (runStatus === 0) {
             console.log("RunStatus - 0: Screen Focus");
@@ -366,18 +408,6 @@ const RunningScreen = ({navigation, route}) => {
             
         }
     },[runStatus])
-
-
-    /* [CHECKS] */
-    // useEffect(() => {
-    //     // console.log("start coordinates")
-    //     // console.log(startCoord)
-    //     console.log("Positions")
-    //     console.log(positions)
-    //     console.log("map pos")
-    //     console.log(mapPositions)
-    // },[positions])
-
 
     return (
         <SafeAreaView style={styles.screen}>

@@ -28,6 +28,9 @@ const ProfileScreen = ({navigation}) => {
         joinDate: ","
     });
 
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(() => {
         Firestore.db_getUserDataSnapshot(
             (userData) => { setUserData(userData) },
@@ -37,6 +40,9 @@ const ProfileScreen = ({navigation}) => {
 
     const [isLogoutLoading, setIsLogoutLoading] = useState(false);
 
+    /**
+     * This method handles the logout function of Firebase Authentication and navigates the user to Login Screen upon success.
+     */
     const handleLogout = () => {
         setIsLogoutLoading(true);
         Authentication.signOut(() => {

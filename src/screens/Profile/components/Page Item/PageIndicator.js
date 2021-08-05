@@ -11,6 +11,7 @@ const { width, height } = Dimensions.get('window');
  */
 export default PageIndicator = ({ scrollX }) => {
     const data = [{},{},{},{}]
+    
     return (
         <View style={{flexDirection: 'row'}}>
             {data.map((_, i) => {

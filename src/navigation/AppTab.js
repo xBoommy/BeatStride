@@ -49,7 +49,6 @@ const AppTab = () => {
                     )
                 }}
             />
-
             <Tab.Screen 
                 name="MusicScreen" 
                 component={MusicScreen}
@@ -72,7 +71,6 @@ const AppTab = () => {
                     )
                 }}
             />
-
             <Tab.Screen 
                 name="SocialScreen" 
                 component={SocialScreen}
@@ -95,7 +93,6 @@ const AppTab = () => {
                     )
                 }}
             />
-
             <Tab.Screen 
                 name="ProfileScreen" 
                 component={ProfileScreen}
@@ -118,7 +115,6 @@ const AppTab = () => {
                     )
                 }}
             />
-            
         </Tab.Navigator>
     )
 }

@@ -24,18 +24,34 @@ const MusicPlayer = props => {
     //Timer
     const [time, setTime] = useState(0);
     const [tick, setTick] = useState();
+
     /* [Tick every 500ms increase time by 0.5 second] */
+    /**
+     * This is a helper method for the increment of "time" state.
+     */
     const ticking = () => {
         setTime( (prevTime) => prevTime + 500 );
     }
+
+    /* [Start timing] */
+    /**
+     * This is a helper method to setup an interval function.
+     */
     const startTimer = () => {
         setTick( setInterval(ticking, 500) );
     };
 
+    /* [Stop timing] */
+    /**
+     * This is a helper method to clear the interval function. 
+     */
     const stopTimer = () => {
         clearInterval(tick);
     };
   
+    /**
+     * This is a render effect based on "time" state.
+     */
     useEffect(() => {
         //console.log('Time: ', time);
         if (time > duration) {
@@ -44,7 +60,10 @@ const MusicPlayer = props => {
         }
     },[time]);
 
-    /* [Start timing] */
+
+    /**
+     * This is a helper method to play music on Spotify.
+     */
     const playSong = async (id) => {
         console.log("Timer Start")
         if (tracks.length === 0) {
@@ -57,14 +76,26 @@ const MusicPlayer = props => {
         startTimer();
         setIsPlaying(true);
     }
+
+    /**
+     * This is a helper method to pause music on Spotify.
+     */
     const pause = async () => {
         await Spotify.pause();
         setIsPlaying(false);
     };
+
+    /**
+     * This is a helper method to resume music on Spotify.
+     */
     const resume = async () => {
         await Spotify.play(tracks[index].trackUri);
         setIsPlaying(true);
     }
+
+    /**
+     * This is a method to skip to the next track in the playlist.
+     */
     const nextSong = async () => {
         stopTimer();
         setTime(0);
@@ -76,6 +107,10 @@ const MusicPlayer = props => {
             playSong(index + 1);
         }
     };
+
+    /**
+     * This is a method to skip to the previous track in the playlist.
+     */
     const prevSong = async () => {
         stopTimer();
         setTime(0);
@@ -89,6 +124,9 @@ const MusicPlayer = props => {
     };
 
     /* [RUN STATUS RENDER] */
+    /**
+     * This is a render effect based on "runStatus" state.
+     */
     const [first, setFirst] = useState(true);
     useEffect(() => {
         if (runStatus == 2) {
@@ -104,7 +142,6 @@ const MusicPlayer = props => {
             stopTimer();
             pause();
         }
-
     }, [runStatus])
 
 

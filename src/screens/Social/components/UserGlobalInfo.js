@@ -19,12 +19,18 @@ const UserGlobalInfo = (props) => {
     const [displayPicture, setDisplayPicture] = useState({uri: ""});
     const [uid, setUID] = useState(userData.uid);
 
+    /**
+     * This is a render effect based on "userData" state.
+     */
     useEffect(() => {
         setDisplayName(userData.displayName);
         setUID(userData.uid);
         setDescription(userData.description);
     }, [userData]);
 
+    /**
+     * This is a render effect triggered upon component mount.
+     */
     useEffect(() => {
         Firestore.storage_retrieveOtherProfilePic(userData.uid, setDisplayPicture, () => setDisplayPicture({uri: ""}));
     }, []);

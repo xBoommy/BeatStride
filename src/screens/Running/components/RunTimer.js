@@ -23,24 +23,35 @@ const RunTimer = (props) => {
     const [tick, setTick] = useState();
 
     /* [Tick every 1000ms increase time by 1 second] */
+    /**
+     * This is a helper method for the increment of "time" state.
+     */
     const ticking = () => {
         setTime( (prevTime) => prevTime + 1000 )
     }
 
     /* [Start timing] */
+    /**
+     * This is a helper method to setup an interval function.
+     */
     const startTimer = () => {
         // console.log("Timer Start")
         setTick( BackgroundTimer.setInterval( ticking, 1000) )
     }
 
     /* [Stop timing] */
+    /**
+     * This is a helper method to clear the interval function. 
+     */
     const stopTimer = () => {
         // console.log("Timer Stop")
         BackgroundTimer.clearInterval(tick)
     }
     
-    /* [Run Status Render] 
-    This render is triggered upon a change in app status */
+    /* [Run Status Render] */
+    /**
+     * This is a render effect based on "runStatus" state.
+     */
     useEffect(() => {
         if (runStatus == 2){
             startTimer()
@@ -56,7 +67,10 @@ const RunTimer = (props) => {
         }
     },[runStatus])
 
-    //Additional (Audio Guidance) To detect changes in distance in terms of km and make announcements
+    /**
+     * This is a render effect based on "distance" & "time" state.
+     * Additional (Audio Guidance) To detect changes in distance in terms of km and make announcements
+     */
     useEffect(() => {
         if (Math.floor(distance/1000) > km) {
             const distInKm = Math.floor(distance/1000);

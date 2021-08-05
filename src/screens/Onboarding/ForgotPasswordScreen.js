@@ -17,6 +17,9 @@ const ForgotPasswordScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [isResetLoading, setIsResetLoading] = useState(false)
 
+    /**
+     * This method resets the password of the user's account and navigates the user back to Login Screen.
+     */
     const resetPasswordHandler = async () => {
         setIsResetLoading(true);
         Keyboard.dismiss();

@@ -16,6 +16,9 @@ const RequestsTab = () => {
 
     const [requestList , setRequestList] = useState([]);
 
+    /**
+     * This is a render effect triggered upon component mount.
+     */
     useEffect(() => {
         Firestore.db_requestList(
             (userList) => {

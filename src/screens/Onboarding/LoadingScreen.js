@@ -13,6 +13,10 @@ const {width, height} = Dimensions.get('window');
  * @author NUS Orbital 2021 Team Maple
  */
 export default ({ navigation }) => {
+
+  /**
+   * This is a render effect trigger on component mount.
+   */
   useEffect(() => {
     return Authentication.setOnAuthStateChanged(
       () => navigation.dispatch(CommonActions.reset({ index: 0, routes: [{ name: "AppTab" }] })),

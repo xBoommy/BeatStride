@@ -16,6 +16,9 @@ const PendingTab = () => {
 
     const [pendingList , setPendingList] = useState([]);
 
+    /**
+     * This is a render effect triggered upon component mount.
+     */
     useEffect(() => {
         Firestore.db_pendingList(
             (userList) => {

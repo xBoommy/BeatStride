@@ -22,12 +22,18 @@ const MusicPlayer = props => {
         nextSong,
         prevSong,
     } = props;
-  
+    
+    /**
+     * This is a method to pause music using Spotify.
+     */
     const pause = async () => {
           setIsPlaying(false);
           await Spotify.pause();
           stopTimer();
     };
+    /**
+     * This is a method to play music using Spotify.
+     */
     const resume = async () => {
         await Spotify.play(tracks[index].trackUri);
         startTimer();

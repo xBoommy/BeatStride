@@ -27,19 +27,12 @@ const GoalSettingScreen = ({navigation, route}) => {
     const [second, setSecond] = useState(time.seconds());
     const [BPM, setBPM] = useState(0);
 
+    /**
+     * This is a method to update & upload the newly set goals onto firestore.
+     */
     const updateGoals = () => {
         const distance = parseFloat(metre) + (parseFloat(kilometre) * 1000)
         const time = second * 1000 + (minute) * 60000 + (hour) * 60 * 60000;
-
-        // console.log(parseFloat(kilometre) * 1000)
-        // console.log(typeof distance)
-        // console.log(time)
-        // console.log(typeof time)
-        // console.log(kilometre)
-        // console.log(metre)
-        // console.log(hour)
-        // console.log(minute)
-        // console.log(goalDistance);
 
         if ((typeof distance === 'number') && (typeof time === 'number') && (distance >= 10) && (time > 0)) {
             Firestore.db_editGoals(distance, time, 
@@ -56,10 +49,18 @@ const GoalSettingScreen = ({navigation, route}) => {
         }
     };
 
+    /**
+     * This is a helper method to round a number value to the nearest 5-multiple value.
+     * @param {Number} num  A number value that is to be rounded.
+     * @returns A number that is rounded to the nearest 5-multiple value.
+     */
     const round5 = (num) => {
         return (num % 5) >= 2.5 ? parseInt(num/5)*5 + 5 : parseInt(num / 5) * 5
     };
 
+    /**
+     * This is a method to calculate the recommended BPM for the user.
+     */
     const recommendedBPM = () => {
         const distance = parseFloat(metre) + (parseFloat(kilometre) * 1000)
         const time = second * 1000 + (minute) * 60000 + (hour) * 60 * 60000;
@@ -75,13 +76,17 @@ const GoalSettingScreen = ({navigation, route}) => {
         }
     };
 
+    /**
+     * This is a render effect based on "hour", "minute", "second", "kilometre" & "metre" status.
+     */
     useEffect(() => {
         recommendedBPM();
     },[hour, minute, second, kilometre, metre]);
 
-    useEffect(() => {
-
-    })
+    /**
+     * This is a constant render effect triggered upon component changes.
+     */
+    useEffect(() => {})
 
     return (
         <SafeAreaView style={styles.screen}>

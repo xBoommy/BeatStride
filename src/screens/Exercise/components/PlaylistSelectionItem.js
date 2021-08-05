@@ -16,7 +16,6 @@ const PlaylistSelectionItem = props => {
     const [highlight, setHighlight] = useState(false)
 
     return (
-
         <View style={{...styles.itemContainer , backgroundColor: (highlight ? '#7289DA' : '#36393E')}}>
             <TouchableOpacity onPress={() => {
                 if (highlight) {
@@ -30,7 +29,6 @@ const PlaylistSelectionItem = props => {
                 } 
             }}>
                 
-
                 {/* Image */}
                 <View style={styles.imageContainer}> 
                     {/* The style in the view redundant, shifted over to Image, else cant see */}

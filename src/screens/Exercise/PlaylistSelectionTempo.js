@@ -29,6 +29,9 @@ const PlaylistSelectionTempo = (props) => {
     const [playlists, setPlaylists] = useState([]);
     const [inSelected, setInSelected] = useState([]);
     
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(() => {
         Firestore.db_playlists(
             (playlists) => { setPlaylists(playlists)},
@@ -39,6 +42,9 @@ const PlaylistSelectionTempo = (props) => {
     const LOWERLIMIT = BPM - 5; //suppose to pass in props, target, allowance
     const UPPERLIMIT = BPM + 5; //lower = target - allowance, upper - target + allowance
 
+    /**
+     * This is a method to retrieve the selected tracks and load them into the playlist for the run.
+     */
     const getTracksForRun = async () => {
         setIsLoading(true);
         const filteredTracks = await FilterbyBPM(
@@ -64,6 +70,9 @@ const PlaylistSelectionTempo = (props) => {
         return filteredTracks; //Can be array/empty array/ null (error)
     };
 
+    /**
+     * This is a method to seek user confirmation on their actiona on proceed with the run.
+     */
     const confirmation = () => {
         getTracksForRun().then((filteredTracks) => {
             setIsLoading(false);

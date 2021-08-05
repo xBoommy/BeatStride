@@ -9,6 +9,7 @@ import { View, StyleSheet, Animated, Dimensions } from 'react-native';
  */
 export default PageIndicator = ({ data, scrollX }) => {
     const { width } = Dimensions.get('window');
+    
     return (
         <View style={{flexDirection: 'row', height: 64, }}>
             {data.map((_, i) => {

@@ -13,15 +13,13 @@ const {width, height} = Dimensions.get("window")
  */
 const EndMap = (props) => {
     const positions = props.positions;
-        // [{latitude: 1.377745 , longitude: 103.805124},
-        // {latitude: 1.378413 , longitude: 103.804216},
-        // {latitude: 1.377841 , longitude: 103.8061333},
-        // {latitude: 1.374615 , longitude: 103.8091714},
-        // {latitude: 1.379615 , longitude: 103.8021714},]
 
     const [center, setCenter] = useState({latitude: 1.377621 , longitude: 103.805178});
     const [latDelta, setLatDelta] = useState(0.2);
 
+    /**
+     * This is a method to obtain the suitable coordinate delta for map display.
+     */
     const mapRange = () => {
         const boundary = geolib.getBounds(positions);
         setCenter({latitude: (boundary.maxLat + boundary.minLat)/2, longitude: (boundary.maxLng + boundary.minLng)/2 });
@@ -38,6 +36,9 @@ const EndMap = (props) => {
         }
     }
 
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(()=> {
         mapRange();
     },[])        

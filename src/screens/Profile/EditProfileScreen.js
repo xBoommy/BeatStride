@@ -22,6 +22,9 @@ const EditProfileScreen = ({navigation, route}) => {
     const [isUpdateLoading, setIsUpdateLoading] = useState(false);
     const usernameTextInput = useRef();
 
+    /**
+     * This method update of user data documentations on Firestore and return the user to Profile Screen upon success
+     */
     const updateProfile = () => {
         Keyboard.dismiss();
         setIsUpdateLoading(true);
@@ -54,10 +57,16 @@ const EditProfileScreen = ({navigation, route}) => {
         }
     }
 
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(() => {
         Firestore.storage_retrieveOtherProfilePic(userData.uid, setDisplayPicture, () => setDisplayPicture({uri: ""}));
     }, []);
 
+    /**
+     * This is a method that allows the user to select an image from their device's library to upload onto the application.
+     */
     const uploadProfilePic = async () => {
 
         let results = await ImagePicker.launchImageLibraryAsync({

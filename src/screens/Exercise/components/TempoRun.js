@@ -16,10 +16,8 @@ const {width, height} = Dimensions.get("window")
  */
 const TempoRun = () => {
     const navigation = useNavigation();
-
     const [selectToggle, setSelectToggle] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
-
     const [status, setStatus] = useState(0);
     const [goalDistance, setGoalDistance] = useState(0);
     const [goalTime, setGoalTime] = useState(0);
@@ -27,7 +25,9 @@ const TempoRun = () => {
     const [BPM, setBPM] = useState(0);
     const time = moment.duration(goalTime);
 
-    /* [Check GPS Service Enabled? + Prompt] */
+    /**
+     * This is a method to check the status of device's location service.
+     */
     const seviceCheck = async() => {
         const check = await Location.hasServicesEnabledAsync()
         // console.log(check)
@@ -51,7 +51,9 @@ const TempoRun = () => {
         }
     }
 
-    /* [Status Control] */
+    /**
+     * This is a render effect based on "status" state.
+     */
     useEffect(() => {
         if (status === 1) {
             console.log("GPS Enabled")
@@ -81,6 +83,9 @@ const TempoRun = () => {
         }
     },[status])
 
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(() => {
         Firestore.db_getUserDataSnapshot(
             (userData) => {
@@ -92,6 +97,9 @@ const TempoRun = () => {
         )
     }, [])
 
+    /**
+     * This is a method to calculate the recommended BPM for the user.
+     */
     const recommendedBPM = () => {
         if (strideDistance > 0 && goalTime > 0){
             const numOfSteps = (goalDistance / strideDistance)
@@ -103,10 +111,18 @@ const TempoRun = () => {
         }
     }
 
+    /**
+     * This is a helper method to round a number value to the nearest 5-multiple value.
+     * @param {Number} num  A number value that is to be rounded.
+     * @returns A number that is rounded to the nearest 5-multiple value.
+     */
     const round5 = (num) => {
         return (num % 5) >= 2.5 ? parseInt(num/5)*5 + 5 : parseInt(num / 5) * 5
     }
 
+    /**
+     * This is a render effect based on "strideDistance", "goalDistance" & "goalTime" state.
+     */
     useEffect(() => {
         recommendedBPM();
     }, [strideDistance, goalDistance, goalTime])

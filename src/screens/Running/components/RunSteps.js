@@ -25,6 +25,9 @@ const RunSteps = (props) => {
         onCheat: () => { console.log("User is Cheating") }
     }
 
+    /**
+     * This is a render effect based on "stepCounter" state.
+     */
     useEffect(() => {
         if (runStatus == 2 || runStatus == 8 || runStatus == 9){
             setSteps((prevSteps) => prevSteps + 1)
@@ -32,7 +35,9 @@ const RunSteps = (props) => {
     },[stepCounter])
 
     /* [Run Status Render] 
-    This render is triggered upon a change in app status */
+    /**
+     * This is a render effect based on "runStatus" state.
+     */
     useEffect(() => {
         if (runStatus == 2){
             startCounter(config)
@@ -44,9 +49,6 @@ const RunSteps = (props) => {
             stopCounter()
         }
     },[runStatus])
-
-
-
 
     return (
         <View style={styles.componentContainer}>

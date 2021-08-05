@@ -21,19 +21,27 @@ const ExerciseScreen = () => {
 
     const [permissionsStatus, setPermissionsStatus] = useState(3);
     
-    /* LOCATION PERMISSIONS */
+    /**
+     * This is a method to check for device's foreground location permission.
+     */
     const forePermissionHandler = () => {
         LocationLib.forePermissionCheck(() => {
             setPermissionsStatus(1);
         })
     } 
 
+    /**
+     * This is a method to check for device's background location permission.
+     */
     const backPermissionHandler = () => {
         LocationLib.backPermissionCheck(() => {
             setPermissionsStatus(2);
         })
     } 
 
+    /**
+     * This is a render effect based on "permissionsStatus" state.
+     */
     useEffect(() => {
         if (permissionsStatus === 0) {
             console.log ('P_Status : 0 - FOREGROUND:not granted / BACKGROUND:not granted')
@@ -52,8 +60,9 @@ const ExerciseScreen = () => {
         }
     }, [permissionsStatus])
 
-    /* SPOTIFY */
-
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(async() => {
         const spotifyConfig = Spotify.spotifyConfig
 
@@ -67,6 +76,10 @@ const ExerciseScreen = () => {
     /* SCROLL ANIMATIONS */
     const [scrollRef , setScrollRef] = useState(null)
 
+    /**
+     * This is a method to trigger the scroll effect on the "Run Tab" scrollview.
+     * @param {Number} num A number value to be multiplied with width value.
+     */
     const scrollHandler = (num) => {
         scrollRef.scrollTo({
             x: width * num,

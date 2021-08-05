@@ -25,7 +25,6 @@ const SongsScreen = props => {
         mapper.set(tracks[i].id, i);
     }
 
-
     const [isPlaying, setIsPlaying] = useState(playerState);
     const [currentlyPlaying, setCurrentlyPlaying] = useState(currPlaying);
     const [index, setIndex] = useState(0);
@@ -34,16 +33,32 @@ const SongsScreen = props => {
     const [time, setTime] = useState(0);
     const [tick, setTick] = useState();
     /* [Tick every 1000ms increase time by 1 second] */
+
+    /**
+     * This is a helper method for the increment of "time" state.
+     */
     const ticking = () => {
       setTime( (prevTime) => prevTime + 500 )
     }
+
+    /**
+     * This is a helper method to setup an interval function.
+     */
     const startTimer = () => {
         setTick( setInterval(ticking, 500) );
     };
+
+    /**
+     * This is a helper method to clear the interval function. 
+     */
     const stopTimer = () => {
         clearInterval(tick);
     };
 
+    /**
+     * This is a method to play all the tracks within the selected playlist.
+     * @returns 
+     */
     const playAll = async () => {
         try {
           if (tracks.length === 0) {
@@ -61,6 +76,10 @@ const SongsScreen = props => {
           console.error('Error in playAll in ListOfTracks: ', e);
         }
     };
+
+    /**
+     * This is a method to skip to the next track in the playlist.
+     */
     const nextSong = async () => {
       stopTimer();
       setTime(0);
@@ -72,6 +91,10 @@ const SongsScreen = props => {
         playSong(index + 1);
       }
     };
+
+    /**
+     * This is a method to skip to the previous track in the playlist.
+     */
     const prevSong = async () => {
       stopTimer();
       setTime(0);
@@ -83,6 +106,10 @@ const SongsScreen = props => {
         playSong(index - 1);
       }
     };
+
+    /**
+     * This is a helper method to play a song on Spotify.
+     */
     const playSong = async (id) => {
       //console.log("Timer Start")
       if (tracks.length === 0) {
@@ -96,6 +123,9 @@ const SongsScreen = props => {
       setIsPlaying(true);
     };
 
+    /**
+     * This is a render effect based on "time" state.
+     */
     useEffect(()=>{
       //console.log('Time is:' + time);
       if (time > duration) {
@@ -105,7 +135,9 @@ const SongsScreen = props => {
       }
     },[time]);
 
-    //PlaySpecific method
+    /**
+     * This is a method to play a specific track in the playlist.
+     */
     const playSpecific = async (id) => {
         //can do map... Its fine I guess?
         try {
@@ -122,8 +154,6 @@ const SongsScreen = props => {
           console.error('Error with playSpecific:', e);
         }
     };
-
-
 
     return (
         <SafeAreaView style={styles.screen}>

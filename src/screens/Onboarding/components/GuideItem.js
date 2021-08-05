@@ -13,6 +13,7 @@ const { width, height } = Dimensions.get('window');
  */
 export default GuideItem = ({item}) => {
     const navigation = useNavigation();
+    
     return (
         <View style={[styles.container, { width}]}>
 

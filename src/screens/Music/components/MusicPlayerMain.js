@@ -15,19 +15,31 @@ const MusicPlayer = props => {
     const {isPlaying, setIsPlaying, currentlyPlaying} = props;
     const playlistUri = props.defaultUri;
 
-    //Controls
+    /* Music Player Controls */
+    /**
+     * This is a method to play music using Spotify.
+     */
     const playHandler = async () => {
         await Spotify.play(playlistUri);
         setIsPlaying(true);
     };
+    /**
+     * This is a method to pause music using Spotify.
+     */
     const pauseHandler = () => {
         setIsPlaying(false);
         Spotify.pause();
     };
+    /**
+     * This is a method to skip to previous track using Spotify.
+     */
     const previousHandler = async () => {
         await Spotify.previous();
         setIsPlaying(true);
     };
+    /**
+     * This is a method to skip to next track using Spotify.
+     */
     const nextHandler = async () => {
         await Spotify.next();
         setIsPlaying(true);

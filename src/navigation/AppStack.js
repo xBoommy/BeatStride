@@ -164,7 +164,6 @@ const AppStack = () => {
                 component={EditProfileScreen}
                 options={{headerShown: false}}
             />
-
             <Stack.Screen
                 key="GoalSettingScreen"
                 name="GoalSettingScreen"
@@ -181,7 +180,6 @@ const AppStack = () => {
                     }
                 }}
             />
-            
         </Stack.Navigator>
     );
 };

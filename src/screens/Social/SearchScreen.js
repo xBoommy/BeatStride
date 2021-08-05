@@ -21,6 +21,11 @@ const SearchScreen = () => {
     const [search, setSearch] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
+    /**
+     * This helper method is a comparator to compare the keyword in the search bar to the displayName field in the userData.
+     * @param {Object} userData     A object which contains the user information retrieved from Firestore.
+     * @returns A boolean result based on string comparison.
+     */
     const searchMatch = (userData) => {
         const displayName = userData.displayName.toLowerCase()
         const uid = userData.uid.toLowerCase()
@@ -29,12 +34,20 @@ const SearchScreen = () => {
         return (displayName.includes(keyword)) || (uid.includes(keyword))
     }
 
+    /**
+     * This is a helper method to filter the user based on uid from the search results.
+     * @param {Object} userData     A object which contains the user information retrieved from Firestore.
+     * @returns A boolean result based on string comparison.
+     */
     const filterSelf = (userData) => {
         const uid = userData.uid
         return !(uid === selfID);
     }
 
-    // Retreive users
+    /**
+     * This is a render effect triggered upon component mount.
+     * This retreives all the user information from Firestore.
+     */
     useEffect(() => {
         Firestore.db_userList(
             (userList) => { setData(userList) },
@@ -51,6 +64,9 @@ const SearchScreen = () => {
     }, [])
 
 
+    /**
+     * This is a render effect based on "search" state.
+     */
     useEffect(() => {
         if (search == "") {
             setSearchResults([])

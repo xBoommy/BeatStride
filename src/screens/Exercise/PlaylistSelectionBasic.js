@@ -29,6 +29,9 @@ const PlaylistSelectionBasic = (props) => {
     const [playlists, setPlaylists] = useState([]);
     const [inSelected, setInSelected] = useState([]);
     
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(() => {
         Firestore.db_playlists(
             (playlists) => { setPlaylists(playlists)},
@@ -36,6 +39,9 @@ const PlaylistSelectionBasic = (props) => {
         );
     }, []);
 
+    /**
+     * This is a method to retrieve the selected tracks and load them into the playlist for the run.
+     */
     const getTracksForRun = async () => {
         setIsLoading(true);
         await TracksNoFilter(inSelected,
@@ -56,6 +62,9 @@ const PlaylistSelectionBasic = (props) => {
         );
     };
 
+    /**
+     * This is a method to seek user confirmation on their actiona on proceed with the run.
+     */
     const confirmation = () => {
         getTracksForRun().then(() => {
             setIsLoading(false);

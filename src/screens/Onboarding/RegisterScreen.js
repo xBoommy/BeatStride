@@ -31,6 +31,10 @@ const RegisterScreen = ({navigation}) => {
     const passwordTextInput = useRef();
     const password2TextInput = useRef();
 
+    /**
+     * This method handles the registration function of Firebase Authentication and creation of user data in Firestore.
+     * Upon success, user will be navigated to the Guide Screen.
+     */
     const handleRegister = () => {
         Keyboard.dismiss();
         setIsRegisterLoading(true);
@@ -129,6 +133,9 @@ const RegisterScreen = ({navigation}) => {
         
     };
 
+    /**
+     * This is a method that allows the user to select an image from their device's library to upload onto the application.
+     */
     const uploadProfilePic = async () => {
 
         let results = await ImagePicker.launchImageLibraryAsync({

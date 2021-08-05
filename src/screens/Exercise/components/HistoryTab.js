@@ -17,7 +17,9 @@ const HistoryTab = () => {
     const [totalDistance, setTotalDistance] = useState(0)
     const [totalRuns, setTotalRuns] = useState(0)
 
-
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(async() => {
         Firestore.db_historyView(
             (historyList) => { setHistory(historyList.reverse())},

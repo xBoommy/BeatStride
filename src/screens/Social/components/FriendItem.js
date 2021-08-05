@@ -20,6 +20,9 @@ const FriendItem = (props) => {
     const [displayPicture, setDisplayPicture] = useState({uri: ""});
     const [userData, setUserData] = useState({});
 
+    /**
+     * This is a render effect triggered upon component mount.
+     */
     useEffect(() => {
         // console.log(uid)
         Firestore.db_getOtherDataSnapshot(

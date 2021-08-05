@@ -28,6 +28,10 @@ const ChangePasswordScreen = ({navigation}) => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    /**
+     * This method handles the password change function on Firebase Authentication 
+     * and navigates the user back to Edit Profile Screen upon success.
+     */
     const changePasswordHandler = async () => {
         setIsLoading(true);
         Keyboard.dismiss();

@@ -21,6 +21,9 @@ const PlaylistSearch = (props) => {
     const [searchTitle, setSearchTitle] = useState('');
     const [playlists, setPlaylists] = useState([]);
 
+    /**
+     * This is a method to obtain the search results of playlists from Spotify.
+     */
     const getPlaylists = async () => {
         const newPlaylists = await Spotify_Search({
             offset: 0,
@@ -31,6 +34,10 @@ const PlaylistSearch = (props) => {
         setPlaylists(newPlaylists);
     };
 
+    /**
+     * This is a method to confirm the action of adding a playlist as a document in the user's playlists collection in Firestore.
+     * @param {Object} playlist   A playlist object that contains information of a Spotify playlist. 
+     */
     const onSelect = (playlist) => {
         //do some alert/pop up, if ok then proceed with adding
         Alert.alert(

@@ -20,8 +20,10 @@ const UserProfileScreen = ({route}) => {
     const userData = route.params.userData;
     const [status, setStatus] = useState("");
 
+    /**
+     * This is a render effect triggered upon component mount.
+     */
     useEffect(() => {
-
         const unsub = Firestore.db_getFriendStatus(
             userData.uid,
             (userData) => {
@@ -35,6 +37,9 @@ const UserProfileScreen = ({route}) => {
         )
     }, [])
 
+    /**
+     * This is a render effect based on "status" state.
+     */
     useEffect(() => {
         const unsub = Firestore.db_getFriendStatus(
             userData.uid,

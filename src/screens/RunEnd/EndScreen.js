@@ -33,6 +33,9 @@ const EndScreen = ({navigation, route}) => {
     /* [Convert miliseconds to time breakdown] */
     const displayDuration = moment.duration(duration);
 
+    /**
+     * This is a render effect based on "closed" state
+     */
     const [closed, setClosed] = useState(false);
     useEffect(() => {
         const back = navigation.addListener('beforeRemove', (e) => {
@@ -43,6 +46,9 @@ const EndScreen = ({navigation, route}) => {
         return back;
     }, [closed]);
 
+    /**
+     * This is a render effect based on "closed" state
+     */
     useEffect(() => { 
         //if remove this block, need to click close twice, note changes at the close onPress too, the codestyle
         //like trash
@@ -51,6 +57,9 @@ const EndScreen = ({navigation, route}) => {
         }
     }, [closed]);
 
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(() => {
         TTS.getInitStatus().then(() => {
             TTS.setDefaultLanguage('en-US');
@@ -61,8 +70,11 @@ const EndScreen = ({navigation, route}) => {
 
     const [shareToggle, setShareToggle] = useState(false);
     const viewShotRef = useRef();
-    const share = async () => {
 
+    /**
+     * This method handles the "screenshot" & share function for social media sharing.
+     */
+    const share = async () => {
         const sharePic = await viewShotRef.current.capture();
 
         const shareOptions = {
@@ -78,6 +90,9 @@ const EndScreen = ({navigation, route}) => {
         }
     };
     
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(() => {
         setTimeout(() => setShareToggle(true), 100);
     }, []);

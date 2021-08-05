@@ -25,6 +25,9 @@ const PrivateProfileInfo = (props) => {
     const [strideDistance, setStrideDistance] = useState(0);
     const [joinDate, setJoinDate] = useState(",");
 
+    /**
+     * This is a render effect based on "userData" state.
+     */
     useEffect(() => {
         setTotalDistance(userData.totalDistance);
         setRunCount(userData.runCount);
@@ -34,7 +37,7 @@ const PrivateProfileInfo = (props) => {
         setJoinDate(userData.joinDate);
     }, [userData])
 
-    // Page Scrolling
+    /* Page Scrolling Animation */
     const [currentIndex, setCurrentIndex] = useState(0);
     const scrollX = useRef(new Animated.Value(0)).current;
 

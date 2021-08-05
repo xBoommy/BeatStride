@@ -29,9 +29,12 @@ const HistoryView = ({navigation, route}) => {
 
     /* [Convert miliseconds to time breakdown] */
     const displayDuration = moment.duration(duration);
-
     const [shareToggle, setShareToggle] = useState(false);
     const viewShotRef = useRef();
+
+    /**
+     * This is method to trigger social media sharing.
+     */
     const share = async () => {
 
         const sharePic = await viewShotRef.current.capture();
@@ -49,6 +52,9 @@ const HistoryView = ({navigation, route}) => {
         }
     };
 
+    /**
+     * This is a render effect triggered on component mount.
+     */
     useEffect(() => {
         setTimeout(() => setShareToggle(true), 50);
     }, []);

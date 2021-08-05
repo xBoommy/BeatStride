@@ -18,6 +18,10 @@ const PersonalPlaylistSearch = (props) => {
     const setSearchToggle = props.setSearchToggle;
     const playlists = props.playlists;
 
+    /**
+     * This is a method to confirm the action of adding a playlist as a document in the user's playlists collection in Firestore.
+     * @param {Object} playlist   A playlist object that contains information of a Spotify playlist.
+     */
     const onSelect = (playlist) => {
         //do some alert/pop up, if ok then proceed with adding
         Alert.alert(
@@ -45,6 +49,10 @@ const PersonalPlaylistSearch = (props) => {
         );
     };
 
+    /**
+     * This is a method to add multiple (all) playlists as a document in the user's playlists collection in Firestore.
+     * @returns
+     */
     const importAllHandler = async() => {
 
         for (let i = 0; i < playlists.length; i++) {
@@ -52,9 +60,11 @@ const PersonalPlaylistSearch = (props) => {
         }
         return console.log("All loaded!");
 
-        
     }
 
+    /**
+     * This is a helper method to call "importAllHandler" & close the modal.
+     */
     const sequenceImport = () => {
         importAllHandler().then(() => {
             setSearchToggle(false);
