@@ -10,7 +10,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing a list of pending friend request to other users.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const PendingTab = () => {
 

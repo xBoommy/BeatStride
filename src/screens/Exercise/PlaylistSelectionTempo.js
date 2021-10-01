@@ -14,7 +14,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing the playlist selection page for Tempo Run.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const PlaylistSelectionTempo = (props) => {
     const selectToggle = props.selectToggle;

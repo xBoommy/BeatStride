@@ -11,7 +11,7 @@ const {width, height} = Dimensions.get("window")
  * This is a functional component representing the pop up on the Music Tab,
  * when importing personal playlist.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const PersonalPlaylistSearch = (props) => {
     const searchToggle = props.searchToggle;

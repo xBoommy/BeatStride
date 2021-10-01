@@ -10,7 +10,7 @@ import * as Firestore from '../../../api/firestore';
  * This is a History Item component.
  * This component is used to render the statistics of past records in HistoryTab.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 
 const {width, height} = Dimensions.get("window")

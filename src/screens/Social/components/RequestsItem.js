@@ -9,7 +9,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing friend request from other users.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const RequestItem = (props) => {
     const navigation = useNavigation();

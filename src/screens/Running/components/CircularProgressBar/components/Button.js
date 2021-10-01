@@ -8,7 +8,7 @@ const {height} = Dimensions.get('window');
 /**
  * This is a functional component representing the button used to create a holdable button.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const Button = ({ progress, radius, onSuccess, imageSource }) => {
 

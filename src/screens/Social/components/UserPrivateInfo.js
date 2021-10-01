@@ -13,7 +13,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing private user information only available to friends.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const UserPrivateInfo = (props) => {
     const userData = props.userData;

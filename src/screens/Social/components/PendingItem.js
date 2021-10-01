@@ -9,7 +9,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing a pending friend request to another user.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const PendingItem = (props) => {
     const navigation = useNavigation();

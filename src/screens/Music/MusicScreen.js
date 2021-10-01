@@ -20,7 +20,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing the main Screen on the Music Tab.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const MusicScreen = () => {
     const navigation = useNavigation();

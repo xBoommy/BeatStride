@@ -12,7 +12,7 @@ const {width, height} = Dimensions.get('window');
 /**
  * This is a functional component representing the screen users will edit their account details.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const EditProfileScreen = ({navigation, route}) => {
     const userData = route.params.userData;

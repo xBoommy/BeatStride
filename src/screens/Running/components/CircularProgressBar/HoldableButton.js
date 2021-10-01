@@ -9,7 +9,7 @@ import Button from './components/Button';
 /**
  * This is a functional component representing a holdable button.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const HoldableButton = ({radius, onSuccess, imageSource}) => {
 

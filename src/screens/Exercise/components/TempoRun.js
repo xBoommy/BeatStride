@@ -12,7 +12,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing the Tempo run on Run Tab on the Exercise page.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const TempoRun = () => {
     const navigation = useNavigation();

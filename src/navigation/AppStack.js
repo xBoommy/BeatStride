@@ -27,7 +27,7 @@ const Stack = createStackNavigator();
 /**
  * This is a functional component containing the Stacks of our App.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const AppStack = () => {
     return(

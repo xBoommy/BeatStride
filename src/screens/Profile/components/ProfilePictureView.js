@@ -7,7 +7,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component rendering user's profile picture.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const ProfilePictureView = (props) => {
     const toggleImage = props.toggleImage;

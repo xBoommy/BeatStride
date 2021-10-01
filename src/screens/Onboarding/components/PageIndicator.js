@@ -5,7 +5,7 @@ import { View, StyleSheet, Animated, Dimensions } from 'react-native';
 /**
  * This is a functional component representing the page numbers on the Guide pages.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 export default PageIndicator = ({ data, scrollX }) => {
     const { width } = Dimensions.get('window');

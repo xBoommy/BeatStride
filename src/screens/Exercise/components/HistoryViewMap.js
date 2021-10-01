@@ -8,7 +8,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing the map rendered in HistoryView.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const HistoryViewMap = (props) => {
     const positions = props.positions;

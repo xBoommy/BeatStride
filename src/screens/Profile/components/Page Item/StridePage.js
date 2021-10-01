@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get('window');
  * This is a functional component representing the stride distance display under
  * private profile info.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const StridePage = (props) => {
     const strideDistance = props.strideDistance;

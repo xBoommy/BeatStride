@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get('window');
  * This is a functional component representing the Longest Distance display under
  * private profile info.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const DistancePage = (props) => {
     const longestDistance = props.longestDistance;

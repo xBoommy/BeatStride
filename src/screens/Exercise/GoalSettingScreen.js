@@ -12,7 +12,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing the Goal Setting Screen.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const GoalSettingScreen = ({navigation, route}) => {
     const strideDistance = route.params.strideDistance;

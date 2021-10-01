@@ -10,7 +10,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing main screen when an user view their request screen.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const RequestScreen = () => {
 

@@ -10,7 +10,7 @@ const {width, height} = Dimensions.get('window');
  * This is a functional component representing the screen where users are redirected
  * upon forgetting their password.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const ForgotPasswordScreen = ({navigation}) => {
 

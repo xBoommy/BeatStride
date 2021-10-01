@@ -10,7 +10,7 @@ const {width, height} = Dimensions.get('window');
 /**
  * This is a functional component representing the loading page when a user first enters the app.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 export default ({ navigation }) => {
 

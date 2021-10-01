@@ -10,7 +10,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component displaying all the tracks of a playlist, when users tap onto a playlist.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const SongsScreen = props => {
 

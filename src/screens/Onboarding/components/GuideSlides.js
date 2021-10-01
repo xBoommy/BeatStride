@@ -1,7 +1,7 @@
 /**
  * This is an Array that includes information to be used for rendering guide pages.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 export default [
     {

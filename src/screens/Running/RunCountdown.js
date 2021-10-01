@@ -6,7 +6,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing the countdown page just before the start of the run.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const RunningCountdown = (props) => {
     const countdown = props.countdown;

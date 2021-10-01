@@ -8,7 +8,7 @@ const {width, height} = Dimensions.get("window")
  * This is a functional component representing the playlist objects.
  * It is used to render the list of saved playlist on the main page of Music Tab.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const PlaylistItem = props => {
 

@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get('window');
  * This is a functional component representing the joined date display under
  * private profile info.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const JoinPage = (props) => {
     const joinDate = props.joinDate;

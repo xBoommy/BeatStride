@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator();
 /**
  * This is a functional component representing the bottom tabs of our App.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const AppTab = () => {
     return (

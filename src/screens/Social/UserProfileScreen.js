@@ -14,7 +14,7 @@ const {width, height} = Dimensions.get("window")
  * This is a functional component representing a user's profile screen.
  * This contains both global and private information which is only shown to users with permission.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const UserProfileScreen = ({route}) => {
     const userData = route.params.userData;

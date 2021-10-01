@@ -21,7 +21,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is the main screen displaying all the components during a run.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const RunningScreen = ({navigation, route}) => {
     /* [Page Navigation Render] */

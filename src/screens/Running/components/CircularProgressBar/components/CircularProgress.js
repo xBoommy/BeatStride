@@ -12,7 +12,7 @@ import SemiCircle from "./SemiCircle";
 /**
  * This is a functional component representing circular progress bar that makes up the holdable button.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const CircularProgress = ({ progress, bg, fg, radius }) => {
     const PI = Math.PI;

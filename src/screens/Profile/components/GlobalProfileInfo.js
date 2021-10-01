@@ -9,7 +9,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing Information available for view to everyone.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const GlobalProfileInfo = (props) => {
     const userData = props.userData;

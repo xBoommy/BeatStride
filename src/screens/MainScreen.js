@@ -6,7 +6,7 @@ const {width, height} = Dimensions.get("window")
 /**
  * This is a functional component representing the main styling screen throughout the application.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const Screen = (props) => {
 

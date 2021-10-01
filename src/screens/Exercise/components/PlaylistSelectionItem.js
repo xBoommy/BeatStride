@@ -8,7 +8,7 @@ const {width, height} = Dimensions.get("window")
  * This is a functional component representing a Playlist object on the PlaylistSelection pages.
  * Used in PlaylistSelectionBasic and PlaylistSelectionTempo.
  * 
- * @author NUS Orbital 2021 Team Maple
+ * @author NTU CZ2006 Team Alpha
  */
 const PlaylistSelectionItem = props => {
 
