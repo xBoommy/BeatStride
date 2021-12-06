@@ -34,3 +34,5 @@ This is a react native project built from scratch and has many many areas to be 
 7. On your terminal run ``npx react-native run-android`` to initiate the application.
 
     7a. After starting up the app successfully, you may encounter repeated warnings regarding "Setting a timer for a long period of time ...". Click [here](https://stackoverflow.com/a/62638536/13624758) for the solution to solve it.
+    
+8. You are ready to make changes and evolve this app!
