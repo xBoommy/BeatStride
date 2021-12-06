@@ -59,5 +59,3 @@ buck-out/
 /ios/Pods/
 
 yarn.lock
-
-/src/api/firebase.js
