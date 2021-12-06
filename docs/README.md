@@ -10,7 +10,7 @@ BeatStride is an Android application using React-native that incorporates both G
 To test out the application, download the apk [here](https://drive.google.com/drive/u/1/folders/1D5kq661eeMDrrONGTpjmzqKQt99Ig83L).
 
 ## Contribute
-If you are interested to contribute and expand on this project, check out [here](docs/DeveloperGuide.md).
+If you are interested to contribute and expand on this project, check out [here](/DeveloperGuide.md).
 
 ## Authors
 Proudly presented to you by:
