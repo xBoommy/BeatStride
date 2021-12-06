@@ -25,7 +25,7 @@ This is a react native project built from scratch and has many many areas to be 
 5. Set up your firebase console by following the following steps:
     * Create a new project with any name you prefer
     * Go to project settings >> add web app >> Fill in any name you prefer and click on `Register app`.
-    * Fill in the [firebase.js](#./src/api/firebase.js) template file located at our project's directory './src/api/firebase.js' with your project's `firebaseConfig` as provided after you add firebase to web app.
+    * Fill in the [firebase.js](/src/api/firebase.js) template file located at our project's directory './src/api/firebase.js' with your project's `firebaseConfig` as provided after you add firebase to web app.
     * Go to `Authentication` tab, click on `Set up sign-in method` >> using `Email/Password`.
     * Go to `Firestore Database` tab, click on `create database` >> `start in test mode` >> Choose your location >> `Enable`
 
@@ -33,4 +33,4 @@ This is a react native project built from scratch and has many many areas to be 
 
 7. On your terminal run ``npx react-native run-android`` to initiate the application.
 
-    7a. After starting up the app successfully, you may encounter repeated warnings regarding "Setting a timer for a long period of time ...". Click [here](#https://stackoverflow.com/a/62638536/13624758) for the solution to solve it.
+    7a. After starting up the app successfully, you may encounter repeated warnings regarding "Setting a timer for a long period of time ...". Click [here](https://stackoverflow.com/a/62638536/13624758) for the solution to solve it.
