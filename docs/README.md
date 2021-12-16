@@ -6,6 +6,9 @@ BeatStride is an Android application using React-native that incorporates both G
 
 **NOTE:** This app requires spotify app on your phone to run properly and spotify premium to function normally (to freely navigate between songs).
 
+## Demo
+Check out our promotional video/mini-demo [here](https://drive.google.com/file/d/1vQdQW0FuUp5QBrD8IaU-40DhY5H8hvri/view?usp=sharing).
+
 ## Download
 To test out the application, download the apk [here](https://drive.google.com/drive/u/1/folders/1D5kq661eeMDrrONGTpjmzqKQt99Ig83L).
 
